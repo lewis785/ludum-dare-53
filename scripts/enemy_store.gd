@@ -11,12 +11,10 @@ func enemy_exists(enemy):
 	return enemies.find(enemy) >= 0 and !enemies_to_remove.find(enemy)
 
 func enemy_in_range_exists(enemy):
-	print(enemies_in_range.find(enemy))
 	return enemies_in_range.find(enemy) >= 0 and enemies_to_remove.find(enemy) == -1
 
 func remove_all_enemies():
 	for enemy_to_remove in enemies_to_remove:
-		print("removing...", enemy_to_remove)
 		var enemy_idx = enemies.find(enemy_to_remove)
 		var enemy_in_range_idx = enemies_in_range.find(enemy_to_remove)
 		enemies.remove_at(enemy_idx)

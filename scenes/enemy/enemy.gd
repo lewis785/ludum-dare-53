@@ -37,9 +37,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
 func find_targets() -> Array[Target]:
-	var tree : SceneTree = self.get_tree()
-	var root : Node = tree.current_scene
-	var targets : Array[Node] = root.find_children("*target*")
+	var targets : Array[Node] = get_tree().get_nodes_in_group("targets")
+	print("targets...", targets)
 	
 	return markers(targets)
 	

@@ -4,6 +4,8 @@ class_name Target extends Marker2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var parent = self.get_parent()
+	self.position = parent.position
 	pass # Replace with function body.
 
 
