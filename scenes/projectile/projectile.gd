@@ -1,5 +1,4 @@
-extends Node2D
-
+class_name Projectile extends Area2D
 
 @export var projectile_speed: int = 100
 
@@ -16,7 +15,6 @@ func _physics_process(delta):
 
 func destroy():
 	queue_free()
-
 
 
 func _on_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):

@@ -10,6 +10,8 @@ class_name Structure extends Node2D
 @export var structure_damage: int = 10
 @export var supplies_consumption: int = 1
 
+@export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
+
 var tick = false
 var time_til_tick: float = 0
 var enemies: Array[RigidBody2D] = []
@@ -63,14 +65,28 @@ func process_all_enemies_damage():
 		subtract_damage_from_health(enemy.damage)
 
 func subtract_damage_from_enemies(enemy):
+	var current_enemy_name = enemy.name
 	enemy.health -= structure_damage
+	if enemy.health <= 0:
+		remove_enemy_from_array(current_enemy_name)
 
 func consume_supplies():
 	supplies -= supplies_consumption
 
+func fire_turret(enemy):
+	if projectile:
+		var instnaced_projectile = projectile.instantiate()
+		get_tree().current_scene.add_child(instnaced_projectile)
+		instnaced_projectile.global_position = self.global_position
+		var instnaced_projectile_rotation = self.global_position.direction_to(enemy.global_position).angle()
+		instnaced_projectile.rotation = instnaced_projectile_rotation
+	
+	
+
 func process_all_attacks():
 	for enemy in enemies:
 		consume_supplies()
+		fire_turret(enemy)
 		subtract_damage_from_enemies(enemy)
 		break
 
@@ -80,6 +96,12 @@ func tick_manager(delta):
 		tick = true
 	pass
 	
+
+func remove_enemy_from_array(enemy_name):
+	for i in range(enemies.size()):
+			if enemies[i].name == enemy_name:
+				enemies.remove_at(i)
+				return
 
 func _on_structure_area_2d_body_entered(body):
 	var body_parent_name = body.get_parent().name
