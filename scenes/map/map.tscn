@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dtidvayd0rwdd"]
 
-[ext_resource type="Script" path="res://scenes/map/terrain_gen.gd" id="1_44ll4"]
+[ext_resource type="Script" path="res://scenes/map/map_initialise.gd" id="1_tc22o"]
 [ext_resource type="Texture2D" uid="uid://ls4yqr6qkp1c" path="res://assets/terrain/forest_.png" id="2_3gk87"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x2fwr"]
@@ -248,6 +248,7 @@ texture = ExtResource("2_3gk87")
 2:7/0 = 0
 3:7/0 = 0
 4:7/0 = 0
+4:7/0/terrain_set = 0
 6:7/0 = 0
 7:7/0 = 0
 8:7/0 = 0
@@ -281,8 +282,7 @@ terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_x2fwr")
 
 [node name="map" type="Node2D"]
-script = ExtResource("1_44ll4")
-height = 100
+script = ExtResource("1_tc22o")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_q730x")

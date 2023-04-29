@@ -1,14 +1,17 @@
 extends Node
 
-@onready var tilemap := $TileMap
-@export var width := 100
-@export var height := 80
-@export var noise_gate := 0.8
+var tilemap
+var width
+var height
+var noise_gate
 
 var noise_map = []
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _init(local_tilemap, local_width, local_height, local_noise_gate):
+	tilemap = local_tilemap
+	width = local_width
+	height = local_height
+	noise_gate = local_noise_gate
+	
 	generate_noise_map()
 	generate_map()
 	fill_map()
@@ -20,10 +23,10 @@ func generate_noise_map():
 		noise_map.append([])
 		noise_map[x] = []
 		for y in height:
-			var nx = x/width - 0.5
-			var ny = y/height - 0.5
+			#var nx = x/width - 0.5
+			#var ny = y/height - 0.5
 			noise_map[x].append([])
-			noise_map[x][y] = noise(nx, ny)
+			noise_map[x][y] = noise(x, y)
 
 func noise(nx, ny):
 	return randf()
@@ -31,12 +34,15 @@ func noise(nx, ny):
 func generate_map():
 	for x in width:
 		for y in height:
-			tilemap.set_cell(0, Vector2i(x,y),1)
+			tilemap.set_cell(0, Vector2i(x,y),0)
+			#tilemap.set_cell(0, Vector2i(x,y),1, Vector2i(4,7))
 
 func fill_map():
 	var terrain_count = tilemap.tile_set.get_terrain_sets_count()
 	for x in width:
+		print("X:", x)
 		for y in height:
+			#print("Y:", y)
 			var list_of_tiles = [Vector2i(x-1,y-1),Vector2i(x,y-1),Vector2i(x+1,y-1)
 								,Vector2i(x-1,y),  Vector2i(x,y),  Vector2i(x+1,y)
 								,Vector2i(x-1,y+1),Vector2i(x,y+1),Vector2i(x+1,y+1)]
@@ -44,8 +50,13 @@ func fill_map():
 			# Get random terrain
 			var terrain = cell_terrain(x,y)
 			
-			tilemap.set_cells_terrain_connect(0, list_of_tiles, 0, terrain, true)
+			#tilemap.set_cells_terrain_connect(0, list_of_tiles, 0, terrain, true)
 			#tilemap.set_cells_terrain_connect(0, [Vector2i(x,y)], 0, terrain, true) #Why does this not work???
+			
+			if terrain == 0:
+				tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(7,6))
+			else:
+				tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(4,7))
 			
 func recalculate_map():
 	for n in (width*height):
@@ -56,12 +67,15 @@ func recalculate_map():
 	
 
 func cell_terrain(x,y):
-	if randf_range(0,2) > cell_noise(x,y):
+	#if randf_range(0,4) > cell_noise(x,y):
+	var noise = cell_noise(x,y)
+	#print(noise)
+	if noise > noise_gate:
 		return 1
 	return 0
 
 func cell_noise(x,y):
-	var noise = 0
+	var noise = noise_map[x][y]
 	# Check if neighbour cells are water
 	if x > 1:
 		noise += noise_map[x-1][y]
@@ -71,4 +85,5 @@ func cell_noise(x,y):
 		noise += noise_map[x][y-1]
 	if y < height-1:
 		noise += noise_map[x][y+1]
+	noise = noise/4
 	return noise
