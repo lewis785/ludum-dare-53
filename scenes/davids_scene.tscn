@@ -111,7 +111,7 @@ animations = [{
 radius = 13.0
 height = 34.0
 
-[sub_resource type="PackedScene" id="PackedScene_ppsy6"]
+[sub_resource type="PackedScene" id="PackedScene_m4u66"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -127,12 +127,23 @@ _bundled = {
 
 [node name="davids_scene" type="Node2D"]
 
-[node name="structure" parent="." instance=ExtResource("4_ri4hn")]
-position = Vector2(707, 291)
-is_tower = true
+[node name="town" parent="." instance=ExtResource("4_ri4hn")]
+position = Vector2(647, 330)
 
 [node name="spawn" parent="." instance=ExtResource("2_dx6tg")]
-enemy_scene = SubResource("PackedScene_ppsy6")
+enemy_scene = SubResource("PackedScene_m4u66")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(705, 294)
+
+[node name="turret" parent="." instance=ExtResource("4_ri4hn")]
+position = Vector2(657, 189)
+is_tower = true
+
+[node name="turret2" parent="." instance=ExtResource("4_ri4hn")]
+position = Vector2(862, 455)
+is_tower = true
+
+[node name="turret3" parent="." instance=ExtResource("4_ri4hn")]
+position = Vector2(447, 427)
+is_tower = true

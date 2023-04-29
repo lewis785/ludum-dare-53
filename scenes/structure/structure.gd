@@ -17,24 +17,26 @@ enum structure_state{
 @export var supplies_consumption: int = 1
 @export var range: float = 100
 @export var rate_of_fire: float = 1
+var local_name:	String
 
 
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
 const supply_store = preload("res://scripts/supply_store.gd")
+const enemy_store_res = preload("res://scripts/enemy_store.gd")
 
 var tick = false
 var can_fire = false
 var time_til_fire: float = 0
 var time_til_tick: float = 0
-var enemies: Array[RigidBody2D] = []
-var enemies_in_range: Array[RigidBody2D] = []
 var supply_store_instance
+var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.local_name = self.name
 	signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect("do_damage_to_enemy", subtract_damage_from_enemies)
 	
@@ -47,8 +49,7 @@ func _ready():
 	var range_shape: CollisionShape2D = $StructureArea2D/RangeArea2D/RangeCollisionShape2D
 	label.set_text(str(health))
 	supply_store_instance = supply_store.new()
-
-
+	enemy_store = enemy_store_res.new()
 	pass # Replace with function body.
 
 
@@ -57,14 +58,15 @@ func _process(delta):
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
+	enemy_store.remove_all_enemies()
 	pass
 
 
 func can_take_damage():
 	return owned
 
-func can_attack():
-	return is_tower and enemies_in_range.size() >= 0 and can_fire
+func can_attack(enemy):
+	return is_tower and enemy_store.enemy_in_range_exists(enemy) and can_fire
 
 func subtract_damage_from_health(damage):
 	health -= damage
@@ -96,22 +98,24 @@ func state_manager():
 			process_all_enemies_damage()
 			update_health_label(health)
 		reset_tick()
-	if can_attack():
-		process_all_attacks()
-		reset_fire()
+		
+	for enemy in enemy_store.enemies_in_range:
+		if can_attack(enemy):
+			process_attacks(enemy)
+			reset_fire()
 
 
 func process_all_enemies_damage():
-	for enemy in enemies:
-		var damage = enemy.damage
-		subtract_damage_from_health(damage)
+	for enemy in enemy_store.enemies:
+		if enemy_store.enemy_exists(enemy):
+			var damage = enemy.damage
+			subtract_damage_from_health(damage)
 
 func subtract_damage_from_enemies(enemy):
 	var current_enemy_name = enemy.name
 	enemy.health -= structure_damage
 	if enemy.health <= 0:
-		remove_enemy_from_array(current_enemy_name)
-		remove_enemy_within_range_from_array(current_enemy_name)
+		enemy_store.add_enemy_to_remove(enemy)
 
 func consume_supplies():
 	supply_store_instance.remove_supply(supplies_consumption)
@@ -125,11 +129,10 @@ func fire_turret(enemy):
 		instnaced_projectile.rotation = instnaced_projectile_rotation
 	
 	
-func process_all_attacks():
-	for enemy in enemies_in_range:
+func process_attacks(enemy):
+	if enemy_store.enemy_in_range_exists(enemy):
 		consume_supplies()
 		fire_turret(enemy)
-		break
 
 func handle_fire_rate(delta):
 	time_til_fire += delta
@@ -143,38 +146,20 @@ func tick_manager(delta):
 		tick = true
 	pass
 
-func remove_enemy_from_array(enemy_name):
-	var found_enemy = enemies.find(enemy_name)
-	enemies.remove_at(found_enemy)
-	enemies.sort()
-
-func remove_enemy_within_range_from_array(enemy_name):
-	var found_enemy = enemies_in_range.find(enemy_name)
-	enemies_in_range.remove_at(found_enemy)
-	enemies_in_range.sort()
-
 func _on_structure_area_2d_body_entered(body):
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
-		enemies.append(body)
-	pass # Replace with function body.
-
-
-func _on_structure_area_2d_body_exited(body):
-	remove_enemy_from_array(body.name)
-
+		enemy_store.enemies.append(body)
 
 func _on_range_area_2d_body_entered(body):
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
-		enemies_in_range.append(body)
-	pass # Replace with function body.
+		enemy_store.enemies_in_range.append(body)
 
+func _on_structure_area_2d_body_exited(body):
+	# enemy_store.add_enemy_to_remove(body)
+	pass
 
 func _on_range_area_2d_body_exited(body):
-	remove_enemy_within_range_from_array(body.name)
-	#if str(body_parent_name).begins_with(parent_name):
-	#	for i in range(enemies_in_range.size()):
-	#		if enemies_in_range[i].name == body.name:
-	#			enemies_in_range.erase(i)
-	pass # Replace with function body.
+	# enemy_store.add_enemy_to_remove(body)
+	pass
