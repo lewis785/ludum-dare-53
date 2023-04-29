@@ -1,6 +1,7 @@
 extends Node
 
 signal update_ownership
+signal do_damage_to_enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
