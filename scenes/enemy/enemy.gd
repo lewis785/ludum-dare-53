@@ -22,9 +22,9 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
 func find_targets() -> Array[Marker2D]:
-	var parent : Node = self.get_parent()
-	var targets : Array[Node] = parent.find_children("", "Marker2D")
-	print(len(targets), " targets")
+	var tree : SceneTree = self.get_tree()
+	var root : Node = tree.current_scene
+	var targets : Array[Node] = root.find_children("", "Marker2D")
 	
 	return markers(targets)
 	
@@ -39,10 +39,7 @@ func closest_target(targets : Array[Marker2D]) -> Marker2D:
 	var closest : Marker2D = targets[0]
 	var closestDistance = (closest.position - self.position).length()
 	
-	print("first", closest.position)
-	
 	for target in targets:
-		print("loop", target.position)
 		var distance = (target.position - self.position).length()
 		if distance < closestDistance:
 			closestDistance = distance
