@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://droeowgjcvpms"]
+[gd_scene load_steps=3 format=3 uid="uid://dkme7nbothfq2"]
 
-[ext_resource type="PackedScene" uid="uid://cy8pee7brriqn" path="res://scenes/town/town.tscn" id="1_tblun"]
 [ext_resource type="PackedScene" uid="uid://bn1ar05oul7hp" path="res://scenes/enemy/enemy.tscn" id="2_wspl8"]
+[ext_resource type="PackedScene" uid="uid://sgasvpbvlp72" path="res://scenes/Camera/Camera.tscn" id="3_0rkqj"]
 
 [node name="main" type="Node2D"]
 
-[node name="town" parent="." instance=ExtResource("1_tblun")]
-position = Vector2(184, 193)
-
 [node name="enemy" parent="." instance=ExtResource("2_wspl8")]
 position = Vector2(134, 123)
+
+[node name="Camera" parent="." instance=ExtResource("3_0rkqj")]
+position = Vector2(478, 219)
