@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://dhvhfbd88ttoo"]
+
+[ext_resource type="Script" path="res://scripts/supply_store.gd" id="1_c7el6"]
+[ext_resource type="Script" path="res://scenes/supply_truck/truck_controller.gd" id="1_ifetn"]
+[ext_resource type="Texture2D" uid="uid://cenw8v3ing0xr" path="res://assets/truck.png" id="2_d0fgp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7074n"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lf5s"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3dw2x"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5h3g"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ga3tv"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki3kn"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aciel"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0idi7"]
+atlas = ExtResource("2_d0fgp")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pqpcf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7074n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4lf5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3dw2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5h3g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ga3tv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki3kn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aciel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0idi7")
+}],
+"loop": true,
+"name": &"truck-moving",
+"speed": 5.0
+}]
+
+[node name="supply_truck" type="Node2D"]
+script = ExtResource("1_c7el6")
+supply_capacity = 20
+supplies = 20
+
+[node name="truck" type="CharacterBody2D" parent="."]
+script = ExtResource("1_ifetn")
+
+[node name="TruckSprite" type="AnimatedSprite2D" parent="truck"]
+texture_filter = 1
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_pqpcf")
+animation = &"truck-moving"

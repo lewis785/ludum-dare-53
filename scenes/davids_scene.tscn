@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bv1oo5bv5o5rs"]
+
+[ext_resource type="PackedScene" uid="uid://cef7nfykxy18e" path="res://scenes/enemy/spawn.tscn" id="2_dx6tg"]
+[ext_resource type="PackedScene" uid="uid://sd50xggadb4x" path="res://scenes/structure/structure.tscn" id="4_ri4hn"]
+
+[node name="davids_scene" type="Node2D"]
+
+[node name="spawn" parent="." instance=ExtResource("2_dx6tg")]
+
+[node name="structure" parent="." instance=ExtResource("4_ri4hn")]
+position = Vector2(673, 230)
