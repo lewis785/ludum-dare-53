@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlqnysqwtx28v"]
+
+[ext_resource type="PackedScene" uid="uid://bwfdgsyl37x5t" path="res://scenes/enemy/target.tscn" id="1_p6oom"]
+[ext_resource type="PackedScene" uid="uid://c5aqawlwxtlhk" path="res://scenes/enemy/spawn.tscn" id="2_3l6eg"]
+
+[node name="kerri" type="Node2D"]
+
+[node name="target" parent="." instance=ExtResource("1_p6oom")]
+position = Vector2(841, 416)
+
+[node name="target2" parent="." instance=ExtResource("1_p6oom")]
+position = Vector2(189, 156)
+
+[node name="target3" parent="." instance=ExtResource("1_p6oom")]
+position = Vector2(673, 65)
+
+[node name="target4" parent="." instance=ExtResource("1_p6oom")]
+position = Vector2(203, 540)
+
+[node name="spawn" parent="." instance=ExtResource("2_3l6eg")]
