@@ -19,6 +19,7 @@ func draw_road(start, end):
 	# Set the points property to draw a line from (0, 0) to (100, 100)
 	line.points = [start.position, end.position]
 	line.width = 2
+	line.default_color = Color(0.43921, 0.3647, 0.3372, 0.8)
 	# Add the Line2D node as a child of the scene
 	add_child(line)
 	
