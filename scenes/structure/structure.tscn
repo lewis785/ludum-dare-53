@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=15 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="Texture2D" uid="uid://du01wukscfhwe" path="res://assets/village/turret_01_mk1.png" id="2_t3pye"]
 [ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="3_6g6dh"]
+[ext_resource type="PackedScene" uid="uid://cbd2nrreh7t81" path="res://scenes/projectile/projectile.tscn" id="4_ahby2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
 size = Vector2(83, 79)
@@ -95,6 +96,8 @@ offset_top = -63.0
 offset_right = -1.0
 offset_bottom = -40.0
 theme_override_fonts/font = ExtResource("3_6g6dh")
+
+[node name="projectile" parent="." instance=ExtResource("4_ahby2")]
 
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]

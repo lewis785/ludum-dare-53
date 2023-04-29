@@ -1,4 +1,4 @@
-extends Node2D
+class_name Structure extends Node2D
 
 @export var health: int = 100
 @export var owned: bool = true
@@ -11,7 +11,7 @@ extends Node2D
 @export var supplies_consumption: int = 1
 
 var tick = false
-var time_til_tick: int = 0
+var time_til_tick: float = 0
 var enemies: Array[RigidBody2D] = []
 
 # Called when the node enters the scene tree for the first time.
