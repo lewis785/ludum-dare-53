@@ -75,6 +75,7 @@ animations = [{
 script = ExtResource("1_lu5co")
 
 [node name="StructureArea2D" type="Area2D" parent="."]
+position = Vector2(1, 1)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StructureArea2D"]
