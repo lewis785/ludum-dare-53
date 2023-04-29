@@ -8,7 +8,7 @@ func add_enemy_to_remove(enemy):
 	enemies_to_remove.append(enemy)
 
 func enemy_exists(enemy):
-	return enemies.find(enemy) >= 0 and !enemies_to_remove.find(enemy)
+	return enemies.find(enemy) >= 0 and enemies_to_remove.find(enemy) == -1
 
 func enemy_in_range_exists(enemy):
 	return enemies_in_range.find(enemy) >= 0 and enemies_to_remove.find(enemy) == -1
