@@ -2,6 +2,7 @@ extends Node2D
 
 const Structure = preload("res://scenes/structure/structure.gd")
 
+
 func structures(nodes : Array[Node]) -> Array[Structure]:
 	var structures : Array[Structure] = []
 	for node in nodes:
@@ -20,9 +21,9 @@ func draw_road(start, end):
 	line.width = 2
 	# Add the Line2D node as a child of the scene
 	add_child(line)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
+	
+func update_roads():
+	print("Updating roads")
 	var root = self.get_tree().current_scene
 	var depot = root.find_child('supply_depot')
 	var structs = structures(root.find_children('*structure*'))
@@ -30,6 +31,14 @@ func _ready():
 	for struct in structs:
 		if (struct.owned):
 			draw_road(depot, struct)
+	
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var signal_bus = get_node("/root/SignalBus")
+	signal_bus.connect('update_ownership', update_roads)
+	update_roads()
+	
 	pass # Replace with function body.
 
 

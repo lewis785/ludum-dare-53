@@ -1,6 +1,6 @@
 extends Node
 
-signal do_damage
+signal update_ownership
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

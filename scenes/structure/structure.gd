@@ -21,12 +21,11 @@ var time_til_tick: float = 0
 var enemies: Array[RigidBody2D] = []
 var enemies_in_range: Array[RigidBody2D] = []
 var supply_store_instance
-
-signal update_ownership
-signal do_damage
+var signal_bus
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	signal_bus = get_node("/root/SignalBus")
 	label = $StructureHealth
 	var range_shape: CollisionShape2D = $StructureArea2D/RangeArea2D/RangeCollisionShape2D
 	label.set_text(str(health))
@@ -61,7 +60,7 @@ func reset_tick():
 
 func manage_ownership():
 	owned = false
-	self.emit_signal("update_ownership", owned)
+	signal_bus.emit_signal('update_ownership')
 
 func setup_connections():
 	var projectiles = get_tree().get_nodes_in_group("projectiles")
