@@ -1,35 +1,100 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhf8loxej1fdg"]
+[gd_scene load_steps=16 format=3 uid="uid://dhf8loxej1fdg"]
 
+[ext_resource type="Script" path="res://scenes/supply_depot/supply_depot.gd" id="1_8fqxo"]
+[ext_resource type="Texture2D" uid="uid://o6r78b3qslt7" path="res://assets/depot-light.png" id="1_pfjkr"]
 [ext_resource type="PackedScene" uid="uid://dpmoir6bxfdp7" path="res://scenes/supply_truck/truck_coordinator.tscn" id="2_gcobm"]
-[ext_resource type="Texture2D" uid="uid://dwyf8qkm7tp1r" path="res://icon.svg" id="2_lfrlf"]
-[ext_resource type="PackedScene" uid="uid://dhvhfbd88ttoo" path="res://scenes/supply_truck/supply_truck.tscn" id="3_kphkt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uovtp"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cvj7"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqh17"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hatp"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dx3su"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84oia"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkx8b"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_btsgi"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4x36"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jp1n5"]
+atlas = ExtResource("1_pfjkr")
+region = Rect2(288, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u2thd"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_lfrlf")
+"texture": SubResource("AtlasTexture_uovtp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cvj7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqh17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hatp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dx3su")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84oia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkx8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_btsgi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4x36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jp1n5")
 }],
 "loop": true,
-"name": &"default",
+"name": &"depot-healthy",
 "speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2igs"]
-size = Vector2(38, 38)
+size = Vector2(6.94, 3.94)
 
-[node name="supply_depot" type="Node2D"]
-metadata/_edit_lock_ = true
+[node name="supply_depot" type="Area2D"]
+script = ExtResource("1_8fqxo")
 
-[node name="sprite" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
+[node name="DepotSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.13139, -2.57812)
 sprite_frames = SubResource("SpriteFrames_u2thd")
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_t2igs")
-metadata/_edit_lock_ = true
+animation = &"depot-healthy"
 
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
-truck = ExtResource("3_kphkt")
-metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.01861, -0.00811672)
+shape = SubResource("RectangleShape2D_t2igs")
