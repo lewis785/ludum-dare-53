@@ -1,11 +1,10 @@
-extends Node
-
 var tilemap
 var width
 var height
 var noise_gate
 
 var noise_map = []
+
 func _init(local_tilemap, local_width, local_height, local_noise_gate):
 	tilemap = local_tilemap
 	width = local_width
@@ -40,7 +39,7 @@ func generate_map():
 func fill_map():
 	var terrain_count = tilemap.tile_set.get_terrain_sets_count()
 	for x in width:
-		print("X:", x)
+		#print("X:", x)
 		for y in height:
 			#print("Y:", y)
 			var list_of_tiles = [Vector2i(x-1,y-1),Vector2i(x,y-1),Vector2i(x+1,y-1)
@@ -57,14 +56,6 @@ func fill_map():
 				tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(7,6))
 			else:
 				tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(4,7))
-			
-func recalculate_map():
-	for n in (width*height):
-		var randx = randi_range(0, width)
-		var randy = randi_range(0, height)
-		var terrain = cell_terrain(randx,randy)
-		tilemap.set_cells_terrain_connect(0, [Vector2i(randx, randy)], 0, terrain, true)
-	
 
 func cell_terrain(x,y):
 	#if randf_range(0,4) > cell_noise(x,y):
