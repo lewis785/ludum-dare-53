@@ -1,42 +1,42 @@
-[gd_scene load_steps=14 format=3 uid="uid://cy8pee7brriqn"]
+[gd_scene load_steps=14 format=3 uid="uid://sd50xggadb4x"]
 
-[ext_resource type="Script" path="res://scenes/town/town.gd" id="1_fxa2p"]
-[ext_resource type="Texture2D" uid="uid://du01wukscfhwe" path="res://assets/village/turret_01_mk1.png" id="2_aenup"]
-[ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="3_7mre3"]
+[ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
+[ext_resource type="Texture2D" uid="uid://du01wukscfhwe" path="res://assets/village/turret_01_mk1.png" id="2_t3pye"]
+[ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="3_6g6dh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
 size = Vector2(83, 79)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwcnm"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(0, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ul5a8"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(128, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_agfc8"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(256, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cbr16"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(384, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mu2p8"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(512, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gy6rs"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(640, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g7uyo"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(768, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qjbq5"]
-atlas = ExtResource("2_aenup")
+atlas = ExtResource("2_t3pye")
 region = Rect2(896, 0, 128, 128)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_d1qeo"]
@@ -72,7 +72,12 @@ animations = [{
 }]
 
 [node name="town" type="Node2D"]
-script = ExtResource("1_fxa2p")
+script = ExtResource("1_lu5co")
+health = null
+owned = null
+supplies = null
+tick_threshold = null
+enemy_name = null
 
 [node name="TownArea2D" type="Area2D" parent="."]
 metadata/_edit_group_ = true
@@ -92,6 +97,7 @@ offset_left = -41.0
 offset_top = -63.0
 offset_right = -1.0
 offset_bottom = -40.0
-theme_override_fonts/font = ExtResource("3_7mre3")
+theme_override_fonts/font = ExtResource("3_6g6dh")
 
 [connection signal="body_entered" from="TownArea2D" to="." method="_on_town_area_2d_body_entered"]
+[connection signal="body_exited" from="TownArea2D" to="." method="_on_town_area_2d_body_exited"]
