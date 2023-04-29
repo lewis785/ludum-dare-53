@@ -1,4 +1,4 @@
-extends Node2D
+class_name Structure extends Node2D
 
 @export var health: int = 100
 @export var owned: bool = true
@@ -8,9 +8,10 @@ extends Node2D
 @export var label: Label
 @export var is_tower: bool
 @export var structure_damage: int = 10
+@export var supplies_consumption: int = 1
 
 var tick = false
-var time_til_tick = 0
+var time_til_tick: float = 0
 var enemies: Array[RigidBody2D] = []
 
 # Called when the node enters the scene tree for the first time.
@@ -64,8 +65,12 @@ func process_all_enemies_damage():
 func subtract_damage_from_enemies(enemy):
 	enemy.health -= structure_damage
 
+func consume_supplies():
+	supplies -= supplies_consumption
+
 func process_all_attacks():
 	for enemy in enemies:
+		consume_supplies()
 		subtract_damage_from_enemies(enemy)
 		break
 
