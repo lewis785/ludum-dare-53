@@ -23,4 +23,3 @@ func get_input(delta):
 		movement.y += camera_speed
 	
 	position = movement
-	print(movement)
