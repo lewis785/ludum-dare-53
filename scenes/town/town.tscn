@@ -1,7 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cy8pee7brriqn"]
+[gd_scene load_steps=14 format=3 uid="uid://cy8pee7brriqn"]
 
 [ext_resource type="Script" path="res://scenes/town/town.gd" id="1_fxa2p"]
 [ext_resource type="Texture2D" uid="uid://du01wukscfhwe" path="res://assets/village/turret_01_mk1.png" id="2_aenup"]
+[ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="3_7mre3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
+size = Vector2(83, 79)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwcnm"]
 atlas = ExtResource("2_aenup")
@@ -70,8 +74,24 @@ animations = [{
 [node name="town" type="Node2D"]
 script = ExtResource("1_fxa2p")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(70, 70)
+[node name="TownArea2D" type="Area2D" parent="."]
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TownArea2D"]
+shape = SubResource("RectangleShape2D_0drnf")
+debug_color = Color(0, 0.545098, 0.937255, 0.419608)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TownArea2D"]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_d1qeo")
-frame = 3
-frame_progress = 0.279227
+frame = 4
+frame_progress = 0.245583
+
+[node name="TownHealth" type="Label" parent="."]
+offset_left = -41.0
+offset_top = -63.0
+offset_right = -1.0
+offset_bottom = -40.0
+theme_override_fonts/font = ExtResource("3_7mre3")
+
+[connection signal="body_entered" from="TownArea2D" to="." method="_on_town_area_2d_body_entered"]

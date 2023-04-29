@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://dtm3flmgnagl5"]
+[gd_scene load_steps=2 format=3 uid="uid://bet0mrp27kjaj"]
+
+[ext_resource type="PackedScene" uid="uid://cy8pee7brriqn" path="res://scenes/town/town.tscn" id="1_tblun"]
 
 [node name="main" type="Node2D"]
+
+[node name="town" parent="." instance=ExtResource("1_tblun")]
+position = Vector2(184, 193)
