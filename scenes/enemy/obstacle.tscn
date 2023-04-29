@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://c42uutkvkk8cc"]
+
+[ext_resource type="Script" path="res://scenes/enemy/obstacle.gd" id="1_v8fc7"]
+[ext_resource type="Texture2D" uid="uid://tr4hcju0y0w7" path="res://assets/enemy/barrel.png" id="3_5vn5i"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7ebi6"]
+blend_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0bibm"]
+radius = 120.0
+
+[node name="Obstacle" type="Node2D"]
+material = SubResource("CanvasItemMaterial_7ebi6")
+position = Vector2(218, 155)
+script = ExtResource("1_v8fc7")
+metadata/_edit_group_ = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_7ebi6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("CircleShape2D_0bibm")
+debug_color = Color(0, 0.6, 0.701961, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("3_5vn5i")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

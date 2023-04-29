@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://bwfdgsyl37x5t"]
+[gd_scene load_steps=2 format=3 uid="uid://bwfdgsyl37x5t"]
+
+[ext_resource type="Script" path="res://scenes/enemy/target.gd" id="1_icxir"]
 
 [node name="target" type="Marker2D"]
+script = ExtResource("1_icxir")
