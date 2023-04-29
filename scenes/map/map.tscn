@@ -211,7 +211,7 @@ sources/0 = SubResource("TileSetAtlasSource_x2fwr")
 
 [node name="map" type="Node2D"]
 script = ExtResource("1_44ll4")
-width = 50
+height = 100
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_q730x")
