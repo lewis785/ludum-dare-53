@@ -17,8 +17,6 @@ func set_level(level) -> void:
 	self.level = level
 	self.health = level
 	self.damage = level
-	
-	print(self.level)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
