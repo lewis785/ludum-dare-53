@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhf8loxej1fdg"]
+[gd_scene load_steps=6 format=3 uid="uid://dhf8loxej1fdg"]
 
-[ext_resource type="Script" path="res://scenes/supply_depot/supply_depot.gd" id="1_igk3f"]
+[ext_resource type="PackedScene" uid="uid://dpmoir6bxfdp7" path="res://scenes/supply_truck/truck_coordinator.tscn" id="2_gcobm"]
 [ext_resource type="Texture2D" uid="uid://dwyf8qkm7tp1r" path="res://icon.svg" id="2_lfrlf"]
+[ext_resource type="PackedScene" uid="uid://dhvhfbd88ttoo" path="res://scenes/supply_truck/supply_truck.tscn" id="3_kphkt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u2thd"]
 animations = [{
@@ -18,7 +19,7 @@ animations = [{
 size = Vector2(38, 38)
 
 [node name="supply_depot" type="Node2D"]
-script = ExtResource("1_igk3f")
+metadata/_edit_lock_ = true
 
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.3, 0.3)
@@ -27,4 +28,8 @@ metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_t2igs")
+metadata/_edit_lock_ = true
+
+[node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
+truck = ExtResource("3_kphkt")
 metadata/_edit_lock_ = true
