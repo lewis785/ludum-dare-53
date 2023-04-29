@@ -111,7 +111,7 @@ animations = [{
 radius = 13.0
 height = 34.0
 
-[sub_resource type="PackedScene" id="PackedScene_8tvqk"]
+[sub_resource type="PackedScene" id="PackedScene_ppsy6"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -129,9 +129,10 @@ _bundled = {
 
 [node name="structure" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(707, 291)
+is_tower = true
 
 [node name="spawn" parent="." instance=ExtResource("2_dx6tg")]
-enemy_scene = SubResource("PackedScene_8tvqk")
+enemy_scene = SubResource("PackedScene_ppsy6")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2(705, 294)

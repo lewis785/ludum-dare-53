@@ -1,7 +1,7 @@
-extends Node2D
-
+class_name Projectile extends Area2D
 
 @export var projectile_speed: int = 100
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,18 +18,8 @@ func destroy():
 	queue_free()
 
 
-
-func _on_area_shape_entered(area_rid, area, area_shape_index, local_shape_index):
-	destroy()
-	pass # Replace with function body.
-
-
 func _on_body_entered(body):
-	destroy()
-	pass # Replace with function body.
-
-
-func _on_area_entered(area):
+	SignalBus.emit_signal("do_damage", body)
 	destroy()
 	pass # Replace with function body.
 
