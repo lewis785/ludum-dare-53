@@ -110,7 +110,7 @@ radius = 13.0
 height = 34.0
 
 [node name="enemy" type="RigidBody2D"]
-position = Vector2(64, 70)
+position = Vector2(66, 75)
 gravity_scale = 0.0
 script = ExtResource("1_gyipw")
 metadata/_edit_group_ = true
@@ -120,7 +120,7 @@ texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jw21e")
 animation = &"walk"
-frame_progress = 0.831746
+frame_progress = 0.463372
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 light_mask = 0
@@ -128,6 +128,5 @@ shape = SubResource("CapsuleShape2D_krpay")
 debug_color = Color(0, 0.6, 0.701961, 0.054902)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

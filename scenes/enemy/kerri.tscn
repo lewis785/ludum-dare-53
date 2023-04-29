@@ -1,20 +1,150 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlqnysqwtx28v"]
+[gd_scene load_steps=21 format=3 uid="uid://dlqnysqwtx28v"]
 
 [ext_resource type="PackedScene" uid="uid://bwfdgsyl37x5t" path="res://scenes/enemy/target.tscn" id="1_p6oom"]
+[ext_resource type="PackedScene" uid="uid://c42uutkvkk8cc" path="res://scenes/enemy/obstacle.tscn" id="1_xhqd8"]
 [ext_resource type="PackedScene" uid="uid://c5aqawlwxtlhk" path="res://scenes/enemy/spawn.tscn" id="2_3l6eg"]
+[ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="3_wengk"]
+[ext_resource type="Texture2D" uid="uid://lyxpenrl2w3i" path="res://assets/enemy/GrizzledTreantIdle.png" id="4_gx27o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf0mn"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc77u"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0r4ki"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gp538"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e2dqs"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k80d"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wikc4"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bd11a"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qxh1b"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kuh60"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pk43k"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvaj8"]
+atlas = ExtResource("4_gx27o")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jw21e"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf0mn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oc77u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0r4ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gp538")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e2dqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1k80d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wikc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bd11a")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qxh1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kuh60")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pk43k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvaj8")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krpay"]
+radius = 13.0
+height = 34.0
+
+[sub_resource type="PackedScene" id="PackedScene_kyrn3"]
+resource_local_to_scene = true
+_bundled = {
+"conn_count": 1,
+"conns": PackedInt32Array(3, 0, 19, 18, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("enemy", "position", "gravity_scale", "script", "metadata/_edit_group_", "RigidBody2D", "AnimatedSprite2D", "texture_filter", "scale", "sprite_frames", "animation", "frame_progress", "CollisionShape2D", "light_mask", "shape", "debug_color", "VisibleOnScreenNotifier2D", "visible", "_on_visible_on_screen_notifier_2d_screen_exited", "screen_exited"),
+"node_count": 4,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 5, 0, -1, 4, 1, 0, 2, 1, 3, 2, 4, 3, 0, 0, 0, 6, 6, -1, 5, 7, 4, 8, 5, 9, 6, 10, 7, 11, 8, 0, 0, 0, 12, 12, -1, 3, 13, 9, 14, 10, 15, 11, 0, 0, 0, 16, 16, -1, 1, 17, 12, 0),
+"variants": [Vector2(64, 70), 0.0, ExtResource("3_wengk"), true, 1, Vector2(2, 2), SubResource("SpriteFrames_jw21e"), &"walk", 0.855964, 0, SubResource("CapsuleShape2D_krpay"), Color(0, 0.6, 0.701961, 0.054902), false],
+"version": 3
+}
 
 [node name="kerri" type="Node2D"]
 
+[node name="Obstacle5" parent="." instance=ExtResource("1_xhqd8")]
+position = Vector2(404, 509)
+
+[node name="Obstacle4" parent="." instance=ExtResource("1_xhqd8")]
+position = Vector2(210, 246)
+
 [node name="target" parent="." instance=ExtResource("1_p6oom")]
-position = Vector2(841, 416)
-
-[node name="target2" parent="." instance=ExtResource("1_p6oom")]
-position = Vector2(189, 156)
-
-[node name="target3" parent="." instance=ExtResource("1_p6oom")]
-position = Vector2(673, 65)
-
-[node name="target4" parent="." instance=ExtResource("1_p6oom")]
-position = Vector2(203, 540)
+position = Vector2(682, 372)
 
 [node name="spawn" parent="." instance=ExtResource("2_3l6eg")]
+enemy_scene = SubResource("PackedScene_kyrn3")
+
+[node name="Obstacle2" parent="." instance=ExtResource("1_xhqd8")]
+position = Vector2(466, 160)
+
+[node name="Obstacle" parent="." instance=ExtResource("1_xhqd8")]
+position = Vector2(903, 446)
+
+[node name="Obstacle3" parent="." instance=ExtResource("1_xhqd8")]
+position = Vector2(879, 161)

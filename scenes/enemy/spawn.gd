@@ -29,6 +29,7 @@ func _on_enemy_timer_timeout() -> void:
 
 	# Set the enemy's position to a random location.
 	enemy.position = enemy_spawn_location.position
+	#enemy.position = Vector2(0,0)
 
 	# Add some randomness to the direction.
 	direction += randf_range(-PI / 4, PI / 4)
@@ -40,7 +41,7 @@ func _on_enemy_timer_timeout() -> void:
 	
 	# Set enemy health and damage scaled by time
 	self.level += 1
-	enemy.set_level(self.level)
+	enemy.set_level(self.level/20+1)
 
 	# Spawn the enemy by adding it to the Main scene.
 	add_child(enemy)
