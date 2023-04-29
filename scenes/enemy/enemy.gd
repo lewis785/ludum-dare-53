@@ -1,5 +1,8 @@
 extends RigidBody2D
 
+@export var health : int
+@export var damage : int
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
