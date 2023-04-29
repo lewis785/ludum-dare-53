@@ -71,33 +71,29 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="town" type="Node2D"]
+[node name="structure" type="Node2D"]
 script = ExtResource("1_lu5co")
-health = null
-owned = null
-supplies = null
-tick_threshold = null
-enemy_name = null
 
-[node name="TownArea2D" type="Area2D" parent="."]
+[node name="StructureArea2D" type="Area2D" parent="."]
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TownArea2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StructureArea2D"]
+light_mask = 0
 shape = SubResource("RectangleShape2D_0drnf")
 debug_color = Color(0, 0.545098, 0.937255, 0.419608)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TownArea2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StructureArea2D"]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame = 4
 frame_progress = 0.245583
 
-[node name="TownHealth" type="Label" parent="."]
+[node name="StructureHealth" type="Label" parent="."]
 offset_left = -41.0
 offset_top = -63.0
 offset_right = -1.0
 offset_bottom = -40.0
 theme_override_fonts/font = ExtResource("3_6g6dh")
 
-[connection signal="body_entered" from="TownArea2D" to="." method="_on_town_area_2d_body_entered"]
-[connection signal="body_exited" from="TownArea2D" to="." method="_on_town_area_2d_body_exited"]
+[connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
+[connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
