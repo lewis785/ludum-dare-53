@@ -11,10 +11,5 @@ const MP = preload("res://scenes/map/map_populate.gd")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var terrain_gen = TG.new(tilemap, width, height, noise_gate)
-	#var map_populate = MP.new(width, height, map_sectors)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	TG.new(tilemap, width, height, noise_gate)
+	MP.new(tilemap, get_tree(), width, height, map_sectors)
