@@ -112,7 +112,7 @@ animations = [{
 radius = 13.0
 height = 34.0
 
-[sub_resource type="PackedScene" id="PackedScene_kyrn3"]
+[sub_resource type="PackedScene" id="PackedScene_2yo1f"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -138,7 +138,7 @@ position = Vector2(210, 246)
 position = Vector2(682, 372)
 
 [node name="spawn" parent="." instance=ExtResource("2_3l6eg")]
-enemy_scene = SubResource("PackedScene_kyrn3")
+enemy_scene = SubResource("PackedScene_2yo1f")
 
 [node name="Obstacle2" parent="." instance=ExtResource("1_xhqd8")]
 position = Vector2(466, 160)
