@@ -1,6 +1,7 @@
 extends Node2D
 
-@export var enemy_scene: PackedScene
+@export var level : int = 1
+@export var enemy_scene : PackedScene
 var score
 
 # Called when the node enters the scene tree for the first time.
@@ -16,7 +17,7 @@ func new_game():
 	score = 0
 	$start_timer.start()
 
-func _on_enemy_timer_timeout() -> void:
+func _on_enemy_timer_timeout() -> void:	
 	var enemy = enemy_scene.instantiate()
 
 	# Choose a random location on Path2D.
@@ -36,6 +37,10 @@ func _on_enemy_timer_timeout() -> void:
 	# Choose the velocity for the enemy.
 	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
 	enemy.linear_velocity = velocity.rotated(direction)
+	
+	# Set enemy health and damage scaled by time
+	self.level += 1
+	enemy.set_level(self.level)
 
 	# Spawn the enemy by adding it to the Main scene.
 	add_child(enemy)

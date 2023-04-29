@@ -1,5 +1,6 @@
 extends RigidBody2D
 
+@export var level : int = 1
 @export var health : int
 @export var damage : int
 
@@ -7,10 +8,24 @@ extends RigidBody2D
 func _ready():
 	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
 	$AnimatedSprite2D.play(mob_types[randi() % mob_types.size()])
+	
+	health = level
+	damage = level
 
+
+func set_level(level) -> void:
+	self.level = level
+	self.health = level
+	self.damage = level
+	
+	print(self.level)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if health <= 0:
+		queue_free()
+		return
+	
 	var targets : Array[Marker2D] = find_targets()
 	if len(targets) == 0 :
 		return
