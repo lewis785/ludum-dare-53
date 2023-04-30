@@ -10,16 +10,11 @@ var depot_supplies
 func structures(nodes : Array[Node]) -> Array[Structure]:
 	var structures : Array[Structure] = []
 	for node in nodes:
-		print(node.get_class())
 		if node.is_class("Node2D"):
 			var marker : Structure = node
 			structures.append(marker)
 		
 	return structures
-
-func send_to_structure(structure: Structure):
-	print(structure)
-	send_truck(structure.position)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,19 +23,17 @@ func _ready():
 	var signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect('send_supply_to_structure', send_to_structure)
 
-func send_truck(location: Vector2):
+func send_to_structure(structure: Structure):
+	send_truck(structure)
+
+func send_truck(structure: Structure):
 	if (depot_supplies && !depot_supplies.has_required_supplies(20)):
 		return
 	
 	depot_supplies.remove_supply(20)
 	var truck: SupplyTruck = truck_scene.instantiate()
-	truck.target_structure = location
+	truck.target_structure = structure
 	add_child(truck)
-	
-	
-#func _input(event):
-#	if(event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
-#		send_truck(self.get_local_mouse_position() + self.global_position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

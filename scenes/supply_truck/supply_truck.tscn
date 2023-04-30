@@ -134,6 +134,8 @@ size = Vector2(24, 13)
 
 [node name="supply_truck" type="Node2D"]
 script = ExtResource("1_ifetn")
+speed = null
+target_structure = null
 
 [node name="truck" type="CharacterBody2D" parent="."]
 
