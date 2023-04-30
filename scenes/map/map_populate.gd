@@ -28,7 +28,7 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_secto
 	
 	sector_width = width / 3
 	sector_height = height / 3
-	town_turret_range = sector_width/10
+	town_turret_range = sector_width/4
 	
 	populate_map()
 
@@ -50,7 +50,7 @@ func fill_sector(sector_number):
 	
 	for n in randi_range(1,3):
 		#Spawn turret within range of town
-		var offset = randi_range(town_turret_range/10, town_turret_range)
+		var offset = randi_range(town_turret_range/3, town_turret_range)
 		var turret_x
 		var turret_y
 		if randf() > 0.5:

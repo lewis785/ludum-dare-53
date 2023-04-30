@@ -13,7 +13,7 @@ func _init(local_tilemap, local_width, local_height, local_noise_gate):
 	
 	generate_noise_map()
 	generate_map()
-	fill_map()
+	#fill_map()
 	#recalculate_map()
 	print("Map Generated")
 
@@ -28,13 +28,14 @@ func generate_noise_map():
 			noise_map[x][y] = noise(x, y)
 
 func noise(nx, ny):
-	return randf()
+	#return randf() * (1 / abs(sin(nx) * sin(ny)))
+	return abs(cos(nx) - sin(ny))
 
 func generate_map():
 	for x in width:
 		for y in height:
-			tilemap.set_cell(0, Vector2i(x,y),0)
-			#tilemap.set_cell(0, Vector2i(x,y),1, Vector2i(4,7))
+			#tilemap.set_cell(0, Vector2i(x,y),0)
+			tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(7,6))
 
 func fill_map():
 	var terrain_count = tilemap.tile_set.get_terrain_sets_count()
@@ -58,9 +59,12 @@ func fill_map():
 				tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(4,7))
 
 func cell_terrain(x,y):
-	#if randf_range(0,4) > cell_noise(x,y):
-	var noise = cell_noise(x,y)
-	#print(noise)
+	#if randf_range(0,1) > cell_noise(x,y):
+	#	return 1
+	#return 0
+	#var noise = cell_noise(x,y)
+	var noise = randf() * cell_noise(x,y)
+	print(noise)
 	if noise > noise_gate:
 		return 1
 	return 0
@@ -76,5 +80,12 @@ func cell_noise(x,y):
 		noise += noise_map[x][y-1]
 	if y < height-1:
 		noise += noise_map[x][y+1]
-	noise = noise/4
+	noise = noise/5
 	return noise
+
+func recalculate_map():
+	for n in (width*height):
+		var randx = randi_range(0, width-1)
+		var randy = randi_range(0, height-1)
+		var terrain = cell_terrain(randx,randy)
+		tilemap.set_cells_terrain_connect(0, [Vector2i(randx, randy)], 1, terrain, true)
