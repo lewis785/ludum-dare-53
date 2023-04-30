@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dws8yrkuha0xn"]
+[gd_scene load_steps=6 format=3 uid="uid://dws8yrkuha0xn"]
 
 [ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="1_if7jo"]
+[ext_resource type="Script" path="res://scenes/status_bar/status_bar.gd" id="1_wufho"]
 
 [sub_resource type="Theme" id="Theme_adewy"]
 default_font = ExtResource("1_if7jo")
@@ -14,8 +15,11 @@ default_font = ExtResource("1_if7jo")
 default_font_size = 10
 
 [node name="status_bar" type="Control"]
+z_as_relative = false
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_wufho")
+colour = Color(0, 0, 0.862745, 1)
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 0
