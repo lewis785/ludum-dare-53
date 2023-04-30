@@ -46,7 +46,7 @@ func _ready():
 		_animated_sprite.frame = structure_state.tower_good
 	
 	label = $StructureHealth
-	var range_shape: CollisionShape2D = $StructureArea2D/RangeArea2D/RangeCollisionShape2D
+	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
 	label.set_text(str(health))
 	supply_store_instance = supply_store.new()
 	enemy_store = enemy_store_res.new()
