@@ -242,7 +242,6 @@ func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
-		print("HEALING")
 		update_ownership(true)
 		
 	var body_parent_name : String = body.get_parent().name
