@@ -24,18 +24,18 @@ func draw_road(start, end):
 	
 	line.material = roadShader
 	line.points = [start.position, end.position]
-	line.width = 10
+	line.width = 1
 	# Add the Line2D node as a child of the scene
 	add_child(line)
 	
 func update_roads():
-	print("Updating roads")
 	var root = self.get_tree().current_scene
-	var depot = root.find_child('supply_depot')
+	var depot = get_tree().get_nodes_in_group('depots')[0]
 	var structs = get_tree().get_nodes_in_group('structures')
 	
 	for struct in structs:
-		if (struct.owned):
+		if struct.owned:
+			print(struct.owned)
 			draw_road(depot, struct)
 	
 

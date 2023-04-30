@@ -27,10 +27,12 @@ offset_bottom = 43.0
 theme = SubResource("Theme_adewy")
 theme_override_styles/background = SubResource("StyleBoxFlat_48n52")
 value = 45.0
+show_percentage = false
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_top = 7.0
+offset_right = 73.0
+offset_bottom = 30.0
 theme = SubResource("Theme_bp1q4")
 text = "Status Bar"

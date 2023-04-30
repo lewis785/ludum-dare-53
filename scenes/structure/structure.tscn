@@ -140,12 +140,13 @@ debug_color = Color(0, 0.545098, 0.937255, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StructureArea2D"]
 texture_filter = 1
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame_progress = 0.245583
 
 [node name="Borders" type="AnimatedSprite2D" parent="StructureArea2D"]
-position = Vector2(5, 3.26563)
-scale = Vector2(0.757143, 0.560385)
+position = Vector2(11, 6.5)
+scale = Vector2(1.5, 1.10526)
 sprite_frames = SubResource("SpriteFrames_ukjnt")
 
 [node name="RangeArea2D" type="Area2D" parent="."]
@@ -165,18 +166,18 @@ scale = Vector2(0.5, 0.5)
 
 [node name="health" parent="." instance=ExtResource("10_srmwv")]
 offset_left = 3.0
-offset_top = -69.0
+offset_top = -91.0
 offset_right = 3.0
-offset_bottom = -69.0
+offset_bottom = -91.0
 label = "Health"
 percentage = 100
 colour = Color(1, 0, 0, 1)
 
 [node name="supply" parent="." instance=ExtResource("10_srmwv")]
 offset_left = -76.0
-offset_top = -69.0
+offset_top = -91.0
 offset_right = -76.0
-offset_bottom = -69.0
+offset_bottom = -91.0
 label = "Supply"
 colour = Color(1, 0.803922, 0, 1)
 
