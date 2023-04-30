@@ -103,5 +103,5 @@ func spawn_structure(x,y, is_tower=false, first_structure=false):
 		if is_tower:
 			instanced_structure.set_tower()
 		if first_structure:
-			instanced_structure.owned = true
-			instanced_structure.health = 100
+			instanced_structure.update_ownership(true)
+			instanced_structure.heal(100)
