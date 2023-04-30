@@ -1,8 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://euned6naim70"]
+[gd_scene load_steps=8 format=3 uid="uid://euned6naim70"]
 
 [ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_sm4jw"]
 [ext_resource type="PackedScene" uid="uid://du2mrpacolk4i" path="res://scenes/score/score_display.tscn" id="2_gqeni"]
+[ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="3_73n7m"]
 [ext_resource type="PackedScene" uid="uid://b6nm85tfqs3lg" path="res://scenes/supply_truck/truck_indicator.tscn" id="3_iqm5e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2qd1q"]
+font = ExtResource("3_73n7m")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ucgmr"]
+font = ExtResource("3_73n7m")
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_2ooo7"]
+font = ExtResource("3_73n7m")
 
 [node name="menu" type="Node2D"]
 process_mode = 3
@@ -12,7 +23,6 @@ script = ExtResource("1_sm4jw")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="start" type="Node2D" parent="CanvasLayer"]
-visible = false
 position = Vector2(600, 300)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/start"]
@@ -31,6 +41,7 @@ offset_bottom = -217.0
 grow_horizontal = 2
 scale = Vector2(10, 10)
 text = "Supply Game!"
+label_settings = SubResource("LabelSettings_2qd1q")
 
 [node name="start_button" type="Button" parent="CanvasLayer/start"]
 anchors_preset = 8
@@ -95,14 +106,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 89.0
-offset_top = 82.0
-offset_right = 181.0
-offset_bottom = 108.0
+offset_left = 54.0
+offset_top = 158.0
+offset_right = 187.0
+offset_bottom = 192.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(10, 10)
 text = "Game Over!"
+label_settings = SubResource("LabelSettings_ucgmr")
 
 [node name="restart_button" type="Button" parent="CanvasLayer/end"]
 offset_left = 750.0
@@ -120,6 +132,7 @@ offset_right = 300.0
 offset_bottom = 409.0
 scale = Vector2(5, 5)
 text = "Score: 9000"
+label_settings = SubResource("LabelSettings_2ooo7")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/end"]
 use_parent_material = true

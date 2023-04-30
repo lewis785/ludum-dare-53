@@ -6,6 +6,8 @@ var obstacles : Array[Obstacle] = []
 var target 
 var target_check_limit: float = 2
 var time_since_target_check : float = target_check_limit
+var attack_speed : float = 0.5
+var time_since_attack : float = attack_speed
 var base_speed : float = 100
 var scale_factor: int = 1
 var attacking : bool
@@ -48,6 +50,7 @@ func set_level(level) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	time_since_target_check += _delta
+	time_since_attack += _delta
 	
 	if !$entity.alive:
 		queue_free()
@@ -71,7 +74,8 @@ func process_attack_state() -> void:
 	if !previously_attacking and attacking:
 		play_animation(randi() % 2)
 		
-	if attacking:
+	if attacking and time_since_attack > attack_speed:
+		time_since_attack = 0
 		$entity.attack(target)
 
 func in_target_range() -> bool:
