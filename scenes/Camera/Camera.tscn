@@ -6,6 +6,6 @@
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-4, 0)
-zoom = Vector2(0.224, 0.224)
+zoom = Vector2(0.811, 0.811)
 script = ExtResource("1_67m5s")
 camera_speed = 200

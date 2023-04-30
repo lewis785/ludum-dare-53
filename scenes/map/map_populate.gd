@@ -40,26 +40,36 @@ func populate_map():
 	#spawn_structure(2, 2)
 
 func fill_sector(sector_number):
-	var x = (sector_number % 3) * sector_width
-	var y = floor(sector_number / 3) * sector_height
+	var sector_x = (sector_number % 3) * sector_width
+	var sector_y = floor(sector_number / 3) * sector_height
 	
-	var town_x = randi_range(x + town_turret_range, (x+sector_width) - town_turret_range)
-	var town_y = randi_range(y + town_turret_range, (y+sector_height) - town_turret_range)
+	var town_x = randi_range(sector_x + town_turret_range, (sector_x+sector_width) - town_turret_range)
+	var town_y = randi_range(sector_y + town_turret_range, (sector_y+sector_height) - town_turret_range)
 	spawn_structure(town_x, town_y)
 	
 	for n in randi_range(1,3):
 		#Spawn turret within range of town
+		var offset = randi_range(town_turret_range/10, town_turret_range)
+		var turret_x
+		var turret_y
+		if randf() > 0.5:
+			turret_x = town_x + offset
+		else:
+			turret_x = town_x - offset
+		if randf() > 0.5:
+			turret_y = town_y + offset
+		else:
+			turret_y = town_y - offset
+		spawn_structure(turret_x,turret_y,true)
 		#print("Spawn turret")
-		pass
 	
 func fill_spawn_sector():
 	pass
 
-func spawn_structure(x,y):
+func spawn_structure(x,y, is_tower=false):
 	if structure:
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_structure = structure.instantiate()
 		tree.current_scene.add_child.call_deferred(instanced_structure)
+		instanced_structure.is_tower = true
 		instanced_structure.global_position = tilemap.to_global(local_position)
-		print("Town Grid Coord at X:", x, "  Y:", y)
-		print("Spawned Town at X:", instanced_structure.global_position.x, "  Y:", instanced_structure.global_position.y)
