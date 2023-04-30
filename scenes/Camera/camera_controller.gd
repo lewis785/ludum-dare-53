@@ -25,9 +25,10 @@ func get_input(delta):
 		movement.y -= camera_speed
 	if Input.is_action_pressed("camera_down"):
 		movement.y += camera_speed
-	if Input.is_action_pressed("camera_zoom_in"):
+	if Input.is_action_pressed("camera_zoom_in") or Input.is_action_just_released("camera_zoom_in"):
+		print(123)
 		set_zoom(get_zoom() + ((camera_zoom_speed * get_zoom())/10))
-	if Input.is_action_pressed("camera_zoom_out"):
+	if Input.is_action_pressed("camera_zoom_out") or Input.is_action_just_released("camera_zoom_out"):
 		set_zoom(get_zoom() - ((camera_zoom_speed * get_zoom())/10))
 	
 	camera_speed = max_camera_speed / ((get_zoom().x+1) / 2)
