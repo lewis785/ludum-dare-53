@@ -214,7 +214,7 @@ func heal(heal):
 func popup_vis(delta, add=0):
 	if owned and !is_tower:
 		var tmp_colour = $Score.get_modulate()
-		tmp_colour.a -= delta/5
+		tmp_colour.a -= delta
 		if tmp_colour.a <= 0:
 			tmp_colour.a = 0
 			
