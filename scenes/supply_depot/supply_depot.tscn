@@ -102,4 +102,5 @@ shape = SubResource("RectangleShape2D_t2igs")
 
 [node name="RefillTimer" type="Timer" parent="."]
 
+[connection signal="body_shape_entered" from="." to="truck_coordinator" method="_on_supply_depot_body_shape_entered"]
 [connection signal="timeout" from="RefillTimer" to="." method="_on_refill_timer_timeout"]
