@@ -29,7 +29,7 @@ func _process(delta):
 
 func get_input(delta):
 	var movement = position
-	var zoom_change = false
+	
 	if Input.is_action_pressed("camera_right"):
 		movement.x += camera_speed
 	if Input.is_action_pressed("camera_left"):
@@ -39,11 +39,9 @@ func get_input(delta):
 	if Input.is_action_pressed("camera_down"):
 		movement.y += camera_speed
 	if Input.is_action_pressed("camera_zoom_in"):
-		zoom_change = true
 		set_zoom(get_zoom() + ((camera_zoom_speed * get_zoom())/10))
 	if Input.is_action_pressed("camera_zoom_out"):
-		zoom_change = true
 		set_zoom(get_zoom() - ((camera_zoom_speed * get_zoom())/10))
-	if zoom_change:
-		camera_speed = max_camera_speed / ((get_zoom().x+1) / 2)
+	
+	camera_speed = max_camera_speed / ((get_zoom().x+1) / 2)
 	position = movement

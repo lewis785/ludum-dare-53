@@ -83,7 +83,6 @@ func create_depot():
 		depot_y = height/2 + offset
 	else:
 		depot_y = height/2 - offset
-	print("Depot X: ", depot_x, " Y: ", depot_y)
 	spawn_depot(depot_x,depot_y)
 	spawn_structure(depot_x+10,depot_y+10, false, true)
 	
