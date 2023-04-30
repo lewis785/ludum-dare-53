@@ -37,7 +37,7 @@ animations = [{
 radius = 3.0
 height = 8.0
 
-[sub_resource type="PackedScene" id="PackedScene_82hde"]
+[sub_resource type="PackedScene" id="PackedScene_djuix"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -58,5 +58,5 @@ unique_name_in_owner = true
 map_rows = 4
 
 [node name="spawn" parent="." instance=ExtResource("2_uua7f")]
-enemy_scene = SubResource("PackedScene_82hde")
+enemy_scene = SubResource("PackedScene_djuix")
 scale_factor = 16

@@ -39,6 +39,7 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_rows,
 func populate_map():
 	for sector_num in map_sectors:
 		fill_sector(sector_num)
+	create_depot()
 
 func fill_sector(sector_number):
 	var sector_x = (sector_number % map_columns) * sector_width
@@ -62,20 +63,22 @@ func fill_sector(sector_number):
 		else:
 			turret_y = town_y - offset
 		spawn_structure(turret_x,turret_y,true)
-		#print("Spawn turret")
-	if sector_number == ceil(map_sectors / 2):
-		var offset = randi_range(town_turret_range/10, town_turret_range)
-		var depot_x
-		var depot_y
-		if randf() > 0.5:
-			depot_x = town_x + offset
-		else:
-			depot_x = town_x - offset
-		if randf() > 0.5:
-			depot_y = town_y + offset
-		else:
-			depot_y = town_y - offset
-		spawn_depot(depot_x,depot_y)
+
+func create_depot():
+	var depot_range = sector_width/2
+	var offset = randi_range(depot_range/10, depot_range)
+	var depot_x
+	var depot_y
+	if randf() > 0.5:
+		depot_x = width/2 + offset
+	else:
+		depot_x = width/2 - offset
+	if randf() > 0.5:
+		depot_y = height/2 + offset
+	else:
+		depot_y = height/2 - offset
+	print("Depot X: ", depot_x, " Y: ", depot_y)
+	spawn_depot(depot_x,depot_y)
 	
 func spawn_depot(x,y):
 	if depot:
