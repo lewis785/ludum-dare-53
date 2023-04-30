@@ -1,7 +1,6 @@
-extends Node2D
+extends CanvasLayer
 
 @export var truck_limit = 5
-@export var texture: Sprite2D
 
 var truck_status = {}
 var truck_texture = load("res://assets/truck.png")
@@ -21,6 +20,12 @@ func set_truck_status(truck_id, status):
 	truck_status[truck_id] = status
 	display_sprites()
 
+func next_free_truck():
+	for key in truck_status.keys():
+		if truck_status[key] == "":
+			return key
+	return null
+
 func add_truck():
 	truck_status[truck_limit] = ''
 	truck_limit += 1
@@ -34,7 +39,7 @@ func remove_truck():
 func display_sprites():
 	clear_sprites();
 	for i in truck_limit:
-		var x_pos = 50 * i
+		var x_pos = 32 * i
 		create_truck(Vector2(x_pos, 0))
 		create_status(Vector2((x_pos) + 5 , 25), truck_status[i])
 
@@ -47,7 +52,7 @@ func create_truck(position: Vector2):
 	region.region = rect
 	sprite.texture = region
 	sprites.append(sprite)
-	add_child(sprite)
+	$IconPosition.add_child(sprite)
 
 func create_status(position: Vector2, type: String):
 	var sprite = Sprite2D.new()
@@ -64,7 +69,7 @@ func create_status(position: Vector2, type: String):
 	region.region = rect
 	sprite.texture = region
 	sprites.append(sprite)
-	add_child(sprite)
+	$IconPosition.add_child(sprite)
 
 func clear_sprites():
 	for sprite in sprites:

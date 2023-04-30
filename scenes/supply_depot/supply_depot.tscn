@@ -97,6 +97,7 @@ sprite_frames = SubResource("SpriteFrames_u2thd")
 animation = &"depot-healthy"
 
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
+available_trucks = 5
 
 [node name="SupplyStore" parent="truck_coordinator" instance=ExtResource("4_3321a")]
 position = Vector2(1, 12)

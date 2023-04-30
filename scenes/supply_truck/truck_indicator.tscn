@@ -2,5 +2,9 @@
 
 [ext_resource type="Script" path="res://scenes/supply_truck/truck_indicator.gd" id="1_qsdl4"]
 
-[node name="TruckIndicator" type="Node2D"]
+[node name="TruckIndicator" type="CanvasLayer" groups=["TruckIndicator"]]
 script = ExtResource("1_qsdl4")
+
+[node name="IconPosition" type="Node2D" parent="."]
+position = Vector2(158, 38)
+scale = Vector2(2, 2)

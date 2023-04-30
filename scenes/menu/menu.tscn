@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://euned6naim70"]
+[gd_scene load_steps=4 format=3 uid="uid://euned6naim70"]
 
 [ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_sm4jw"]
 [ext_resource type="PackedScene" uid="uid://du2mrpacolk4i" path="res://scenes/score/score_display.tscn" id="2_gqeni"]
+[ext_resource type="PackedScene" uid="uid://b6nm85tfqs3lg" path="res://scenes/supply_truck/truck_indicator.tscn" id="3_iqm5e"]
 
 [node name="menu" type="Node2D"]
 process_mode = 3
@@ -125,6 +126,8 @@ use_parent_material = true
 color = Color(0.894118, 0.470588, 0.388235, 1)
 
 [node name="process_continue_timer" type="Timer" parent="CanvasLayer/end"]
+
+[node name="TruckIndicator" parent="." instance=ExtResource("3_iqm5e")]
 
 [connection signal="button_down" from="CanvasLayer/start/start_button" to="." method="_on_start_button_button_down"]
 [connection signal="button_down" from="CanvasLayer/controls/pause_button" to="." method="_on_pause_button_button_down"]
