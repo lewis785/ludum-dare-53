@@ -3,10 +3,13 @@
 [ext_resource type="Script" path="res://scenes/Camera/camera_controller.gd" id="1_67m5s"]
 [ext_resource type="PackedScene" uid="uid://euned6naim70" path="res://scenes/menu/menu.tscn" id="2_8kdlw"]
 
-[node name="Camera" type="Camera2D"]
+[node name="Camera" type="Camera2D" groups=["camera"]]
 limit_left = 0
 limit_top = 0
 script = ExtResource("1_67m5s")
+camera_speed = null
+camera_zoom_speed = null
+limit_camera = null
 
 [node name="menu" parent="." instance=ExtResource("2_8kdlw")]
 position = Vector2(-4, 0)
