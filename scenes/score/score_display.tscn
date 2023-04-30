@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" path="res://scenes/score/score.gd" id="1_5wncp"]
 
-[node name="ScoreDisplay" type="Node2D"]
+[node name="ScoreDisplay" type="Node2D" node_paths=PackedStringArray("score_label")]
 script = ExtResource("1_5wncp")
+score_label = NodePath("CanvasLayer/ScoreLabel")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
