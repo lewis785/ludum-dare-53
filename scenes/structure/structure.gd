@@ -177,9 +177,8 @@ func _on_range_area_2d_body_exited(body):
 
 
 func _on_structure_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx):
-	if event.is_action_pressed("click"):
-		print(viewport)
-		signal_bus.emit_signal("send_supply_to_structure")
+	if event.is_action_pressed("active"):
+		signal_bus.emit_signal("send_supply_to_structure", self)
 	pass # Replace with function body.
 
 
