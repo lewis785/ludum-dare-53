@@ -2,6 +2,7 @@ extends Node
 
 const TG = preload("res://scenes/map/terrain_gen.gd")
 const MP = preload("res://scenes/map/map_populate.gd")
+const CL = preload("res://scenes/Camera/camera_link.gd")
 
 @onready var tilemap := $TileMap
 @export var width := 900
@@ -14,3 +15,7 @@ const MP = preload("res://scenes/map/map_populate.gd")
 func _ready():
 	TG.new(tilemap, width, height, noise_gate)
 	MP.new(tilemap, get_tree(), width, height, map_rows, map_columns)
+	var cl = CL.new()
+	cl.link_camera(get_tree())
+	cl.set_limits(0,0,width*16,height*16)
+	
