@@ -164,7 +164,6 @@ func subtract_damage_from_enemies(body):
 	if !enemy.alive:
 		enemy_store.add_enemy_to_remove(enemy)
 
-
 func consume_supplies(amount):
 	$SupplyStore.remove_supply(amount)
 	$supply.set_percentage($SupplyStore.supplies)
