@@ -1,6 +1,9 @@
 extends Node2D
 
 const Structure = preload("res://scenes/structure/structure.gd")
+var roadShader: ShaderMaterial = load("res://shaders/roads.tres")
+var goodRoadTexture = load("res://assets/terrain/road_good.png")
+var badRoadTexture = load("res://assets/terrain/road_bad.png")
 
 
 func structures(nodes : Array[Node]) -> Array[Structure]:
@@ -16,10 +19,12 @@ func structures(nodes : Array[Node]) -> Array[Structure]:
 func draw_road(start, end):
 
 	var line = Line2D.new()
-	# Set the points property to draw a line from (0, 0) to (100, 100)
+	
+	roadShader.set_shader_parameter("texture", badRoadTexture)
+	
+	line.material = roadShader
 	line.points = [start.position, end.position]
-	line.width = 1
-	line.default_color = Color(0.43921, 0.3647, 0.3372, 0.8)
+	line.width = 10
 	# Add the Line2D node as a child of the scene
 	add_child(line)
 	

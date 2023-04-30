@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c8felms4qj5q7"]
+
+[ext_resource type="Shader" path="res://shaders/roads.gdshader" id="1_exb1h"]
+[ext_resource type="Texture2D" uid="uid://lygag6mquj7f" path="res://assets/terrain/road_good.png" id="2_ttqvw"]
+
+[resource]
+shader = ExtResource("1_exb1h")
+shader_parameter/texture = ExtResource("2_ttqvw")
