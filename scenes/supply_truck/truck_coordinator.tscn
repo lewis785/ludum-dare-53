@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpmoir6bxfdp7"]
+[gd_scene load_steps=3 format=3 uid="uid://dpmoir6bxfdp7"]
 
 [ext_resource type="Script" path="res://scenes/supply_truck/truck_coordinator.gd" id="1_6cbqd"]
+[ext_resource type="PackedScene" uid="uid://dhvhfbd88ttoo" path="res://scenes/supply_truck/supply_truck.tscn" id="2_q6i8e"]
 
 [node name="truck_coordinator" type="Node2D"]
 script = ExtResource("1_6cbqd")
+truck_scene = ExtResource("2_q6i8e")

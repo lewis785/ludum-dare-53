@@ -42,7 +42,10 @@ func _ready():
 	
 	
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
+	var _target = $target
+	_target.weight = 1
 	if is_tower and _animated_sprite:
+		_target.weight = 10
 		_animated_sprite.frame = structure_state.tower_good
 	
 	label = $StructureHealth

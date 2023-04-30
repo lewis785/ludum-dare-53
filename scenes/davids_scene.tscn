@@ -7,6 +7,7 @@
 
 [node name="town" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(861, 230)
+owned = false
 
 [node name="turret" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(378, 402)

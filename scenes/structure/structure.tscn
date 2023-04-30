@@ -58,6 +58,7 @@ position = Vector2(1, 1)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StructureArea2D"]
+visible = false
 light_mask = 0
 shape = SubResource("RectangleShape2D_0drnf")
 debug_color = Color(0, 0.545098, 0.937255, 0.419608)
@@ -75,6 +76,7 @@ offset_bottom = -40.0
 theme_override_fonts/font = ExtResource("3_6g6dh")
 
 [node name="RangeArea2D" type="Area2D" parent="."]
+visible = false
 
 [node name="RangeCollisionShape2D" type="CollisionShape2D" parent="RangeArea2D"]
 position = Vector2(1, 1)

@@ -3,7 +3,7 @@ class_name SupplyTruck extends Node2D
 var Structure = preload("res://scenes/structure/structure.gd")
 
 @export var speed = 1000.0
-@export var target_structure: Structure
+@export var target_structure: Vector2
 
 var start_position: Vector2
 var reached_target = false
@@ -17,10 +17,8 @@ func move_towards(delta: float, target: Vector2):
 		return
 	
 	var direction = (target - $truck.global_position).normalized()
-	print(direction)
 	var angle = rad_to_deg(direction.angle())
 
-	print(angle)
 	$truck/TruckSprite.flip_v = angle > 90 || angle < -90
 	$truck/TruckSprite.rotation = direction.angle()
 	$truck.velocity = direction * speed * delta
@@ -37,7 +35,7 @@ func move(delta):
 	if (reached_target):	
 		move_towards(delta, start_position)
 	else:
-		move_towards(delta, target_structure.position)
+		move_towards(delta, target_structure)
 
 func _ready():
 	start_position = self.global_position
