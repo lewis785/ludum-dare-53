@@ -25,6 +25,17 @@ func _ready():
 	var start_location = self.position
 	var signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect('send_supply_to_structure', send_to_structure)
+	signal_bus.connect('update_ownership', ownership_update)
+
+func ownership_update(is_tower, claimed):
+	print("Is tower: ", is_tower)
+	print("Claimed: ", claimed)
+	if is_tower:
+		return
+	if claimed:
+		create_truck()
+	else:
+		destroy_truck()
 	
 func create_truck():
 	available_trucks += 1

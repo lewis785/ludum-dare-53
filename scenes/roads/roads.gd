@@ -28,7 +28,7 @@ func draw_road(start, end):
 	# Add the Line2D node as a child of the scene
 	add_child(line)
 	
-func update_roads():
+func update_roads(a, b):
 	var root = self.get_tree().current_scene
 	var depot = get_tree().get_nodes_in_group('depots')[0]
 	var structs = get_tree().get_nodes_in_group('structures')
@@ -43,7 +43,7 @@ func update_roads():
 func _ready():
 	var signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect('update_ownership', update_roads)
-	update_roads()
+	update_roads("", "")
 	
 	pass # Replace with function body.
 

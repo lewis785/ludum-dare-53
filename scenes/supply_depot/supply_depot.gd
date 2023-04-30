@@ -11,7 +11,6 @@ func _ready():
 	$truck_coordinator/SupplyStore.add_supply(supply)
 	$RefillTimer.start()
 	$DepotSprite.play('depot-healthy')
-	
 	$entity.update_position(self.position)
 
 func refill():
