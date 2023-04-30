@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=26 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="Texture2D" uid="uid://d2drtgly02a7l" path="res://assets/village/good_town.png" id="2_ymwu0"]
@@ -6,10 +6,11 @@
 [ext_resource type="Texture2D" uid="uid://7hpnbnpn8wyx" path="res://assets/village/bad_town.png" id="3_jh6o1"]
 [ext_resource type="Texture2D" uid="uid://cqt6l860xjcg4" path="res://assets/village/bunker_good.png" id="4_45q1i"]
 [ext_resource type="Texture2D" uid="uid://dhsem2ddr6582" path="res://assets/village/bunker_bad.png" id="5_y2ael"]
+[ext_resource type="Texture2D" uid="uid://dsl06clss4god" path="res://assets/village/ui_borders.png" id="6_6ghwf"]
 [ext_resource type="PackedScene" uid="uid://diu6ls3spsxlf" path="res://scenes/enemy/target.tscn" id="6_tyybt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
-size = Vector2(83, 79)
+size = Vector2(90, 88)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tk5bq"]
 atlas = ExtResource("2_ymwu0")
@@ -47,6 +48,77 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_v52ei"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(0, 0, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7qg1"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(280, 0, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ckmf"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(140, 0, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng1b8"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(140, 133, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nli1e"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(0, 133, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayyww"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(0, 266, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmtv8"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(140, 266, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnda5"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(280, 266, 140, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypc51"]
+atlas = ExtResource("6_6ghwf")
+region = Rect2(280, 133, 140, 133)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ukjnt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v52ei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f7qg1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ckmf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ng1b8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nli1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayyww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmtv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fnda5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypc51")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_l3nck"]
 radius = 200.0
 
@@ -55,10 +127,10 @@ script = ExtResource("1_lu5co")
 
 [node name="StructureArea2D" type="Area2D" parent="."]
 position = Vector2(1, 1)
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StructureArea2D"]
 light_mask = 0
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_0drnf")
 debug_color = Color(0, 0.545098, 0.937255, 0.419608)
 
@@ -66,6 +138,10 @@ debug_color = Color(0, 0.545098, 0.937255, 0.419608)
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame_progress = 0.245583
+
+[node name="Borders" type="AnimatedSprite2D" parent="StructureArea2D"]
+position = Vector2(6, 2)
+sprite_frames = SubResource("SpriteFrames_ukjnt")
 
 [node name="StructureHealth" type="Label" parent="."]
 offset_left = -41.0
@@ -86,5 +162,8 @@ position = Vector2(1, 1)
 
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
+[connection signal="input_event" from="StructureArea2D" to="." method="_on_structure_area_2d_input_event"]
+[connection signal="mouse_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_mouse_exited"]
 [connection signal="body_entered" from="RangeArea2D" to="." method="_on_range_area_2d_body_entered"]
 [connection signal="body_exited" from="RangeArea2D" to="." method="_on_range_area_2d_body_exited"]
