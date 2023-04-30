@@ -3,4 +3,5 @@
 [ext_resource type="Script" path="res://scenes/roads/roads.gd" id="1_sxwdl"]
 
 [node name="roads" type="Node2D"]
+z_index = -1
 script = ExtResource("1_sxwdl")

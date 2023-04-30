@@ -12,6 +12,7 @@ var tilemap
 var tree
 var structure: PackedScene = preload("res://scenes/structure/structure.tscn")
 var depot: PackedScene = preload("res://scenes/supply_depot/supply_depot.tscn")
+var roads: PackedScene = preload("res://scenes/roads/roads.tscn")
 
 # Centre sector is spawn
 # Each Sector has a town
@@ -35,10 +36,16 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_rows,
 	town_turret_range = sector_width/4
 	
 	populate_map()
+	create_roads()
 
 func populate_map():
 	for sector_num in map_sectors:
 		fill_sector(sector_num)
+	create_depot()
+	
+func create_roads():
+	var instanced_roads = roads.instantiate()
+	tree.current_scene.add_child.call_deferred(instanced_roads)
 
 func fill_sector(sector_number):
 	var sector_x = (sector_number % map_columns) * sector_width
@@ -62,20 +69,23 @@ func fill_sector(sector_number):
 		else:
 			turret_y = town_y - offset
 		spawn_structure(turret_x,turret_y,true)
-		#print("Spawn turret")
-	if sector_number == ceil(map_sectors / 2):
-		var offset = randi_range(town_turret_range/10, town_turret_range)
-		var depot_x
-		var depot_y
-		if randf() > 0.5:
-			depot_x = town_x + offset
-		else:
-			depot_x = town_x - offset
-		if randf() > 0.5:
-			depot_y = town_y + offset
-		else:
-			depot_y = town_y - offset
-		spawn_depot(depot_x,depot_y)
+
+func create_depot():
+	var depot_range = sector_width/2
+	var offset = randi_range(depot_range/10, depot_range)
+	var depot_x
+	var depot_y
+	if randf() > 0.5:
+		depot_x = width/2 + offset
+	else:
+		depot_x = width/2 - offset
+	if randf() > 0.5:
+		depot_y = height/2 + offset
+	else:
+		depot_y = height/2 - offset
+	print("Depot X: ", depot_x, " Y: ", depot_y)
+	spawn_depot(depot_x,depot_y)
+	spawn_structure(depot_x+10,depot_y+10, false, true)
 	
 func spawn_depot(x,y):
 	if depot:
@@ -84,11 +94,16 @@ func spawn_depot(x,y):
 		tree.current_scene.add_child.call_deferred(instanced_depot)
 		instanced_depot.global_position = tilemap.to_global(local_position)
 
-func spawn_structure(x,y, is_tower=false):
+func spawn_structure(x,y, is_tower=false, first_structure=false):
 	if structure:
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_structure = structure.instantiate()
 		tree.current_scene.add_child.call_deferred(instanced_structure)
 		instanced_structure.global_position = tilemap.to_global(local_position)
+		instanced_structure.owned = false
+		instanced_structure.health = 0
 		if is_tower:
 			instanced_structure.set_tower()
+		if first_structure:
+			instanced_structure.owned = true
+			instanced_structure.health = 100

@@ -88,7 +88,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2igs"]
 size = Vector2(23.1077, 12.918)
 
-[node name="supply_depot" type="Area2D"]
+[node name="supply_depot" type="Area2D" groups=["depots"]]
 script = ExtResource("1_8fqxo")
 
 [node name="entity" parent="." instance=ExtResource("2_fx2ib")]
@@ -96,7 +96,8 @@ health = 100
 max_health = 100
 
 [node name="DepotSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -9.01217)
+position = Vector2(-2, 17)
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_u2thd")
 animation = &"depot-healthy"
 
@@ -109,6 +110,7 @@ scale = Vector2(0.5, 0.5)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 position = Vector2(0.539028, -0.465317)
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_t2igs")
 
 [node name="RefillTimer" type="Timer" parent="."]

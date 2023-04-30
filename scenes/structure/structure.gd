@@ -1,8 +1,8 @@
 class_name Structure extends Node2D
 
 enum structure_state{
-	town_bad,
 	town_good,
+	town_bad,
 	tower_good,
 	tower_bad
 	}
@@ -15,8 +15,9 @@ enum structure_state{
 @export var structure_damage: int = 10
 @export var supplies_consumption: int = 1
 @export var range: float = 100
-@export var rate_of_fire: float = 1
+@export var rate_of_fire: float = 0.1
 @export var parent_name : String = 'spawn'
+@export var heal_amount: int = 20
 
 var local_name:	String
 
@@ -86,12 +87,7 @@ func _process(delta):
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
-	label_manager()
 	enemy_store.remove_all_enemies()
-	pass
-
-
-func label_manager():
 	pass
 
 func can_take_damage():
@@ -102,6 +98,11 @@ func can_attack(enemy):
 
 func subtract_damage_from_health(damage):
 	health -= damage
+	if health <= 0:
+		owned = false
+		print("ded lol")
+		manage_ownership()
+		
 
 func update_health_label(new_health):
 	_health_bar.set_percentage(new_health)
@@ -116,14 +117,13 @@ func reset_fire():
 
 
 func manage_ownership():
-	owned = false
 	signal_bus.emit_signal('update_ownership')
 
 
 func state_manager():
+	handle_death()
 	if health <= 0:
 		update_health_label(0)
-		manage_ownership()
 		return
 	if tick:
 		if can_take_damage():
@@ -134,14 +134,32 @@ func state_manager():
 	for enemy in enemy_store.enemies_in_range:
 		if can_attack(enemy):
 			process_attacks(enemy)
-			reset_fire()
-
+			reset_fire()	
 
 func process_all_enemies_damage():
 	for enemy in enemy_store.enemies:
 		if enemy_store.enemy_exists(enemy):
 			var damage = enemy.damage
 			subtract_damage_from_health(damage)
+
+func handle_death():
+	if is_tower and health <= 0:
+		_animated_sprite.frame = structure_state.tower_bad
+		owned = false
+	if !is_tower and health <= 0:
+		_animated_sprite.frame = structure_state.town_bad
+		owned = false
+	if !is_tower and health >= 1:
+		_animated_sprite.frame = structure_state.town_good
+		owned = true
+	if is_tower and health >= 1:
+		_animated_sprite.frame = structure_state.tower_good
+		owned = true
+	if owned:
+		$Alert.hide()
+	if !owned:
+		$Alert.show()
+		
 
 func subtract_damage_from_enemies(enemy):
 	var current_enemy_name = enemy.name
@@ -150,6 +168,7 @@ func subtract_damage_from_enemies(enemy):
 	enemy.health -= structure_damage
 	if enemy.health <= 0:
 		enemy_store.add_enemy_to_remove(enemy)
+
 
 func consume_supplies(amount):
 	$SupplyStore.remove_supply(amount)
@@ -172,7 +191,7 @@ func process_attacks(enemy):
 
 func handle_fire_rate(delta):
 	time_til_fire += delta
-	if time_til_fire >= rate_of_fire:
+	if time_til_fire >= rate_of_fire and _supply_store.supplies >= 0:
 		can_fire = true
 	pass
 
@@ -183,7 +202,6 @@ func tick_manager(delta):
 	pass
 
 func unload_truck(truck: SupplyTruck):
-	print("Supply unloaded")
 	if(truck.target_structure != self):
 		return
 		
@@ -192,9 +210,22 @@ func unload_truck(truck: SupplyTruck):
 	_supply_bar.set_percentage($SupplyStore.supplies)
 	_asp.play()
 
+func heal(heal):
+	var temp_health = health
+	temp_health += heal
+	if temp_health >= 100:
+		health = 100
+		return
+	health = temp_health
+	
+
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
+		heal(heal_amount)
+		owned = true
+		manage_ownership()
+		signal_bus.emit_signal('update_ownership')
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies.append(body)
@@ -231,6 +262,6 @@ func _on_structure_area_2d_mouse_exited():
 	pass # Replace with function body.
 
 func _on_score_timer_timeout():
-	if !is_tower && $SupplyStore.has_required_supplies(5):
-		consume_supplies(5)
-		signal_bus.emit_signal("score_update", 100)
+	if !is_tower && $SupplyStore.has_required_supplies(supplies_consumption):
+		consume_supplies(supplies_consumption)
+		signal_bus.emit_signal("score_update", 20)

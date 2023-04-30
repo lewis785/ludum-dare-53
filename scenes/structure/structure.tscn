@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="9_ktk31"]
 [ext_resource type="AudioStream" uid="uid://b7hltg4hncbck" path="res://sounds/effects/Ting.wav" id="10_27gmi"]
 [ext_resource type="PackedScene" uid="uid://dws8yrkuha0xn" path="res://scenes/status_bar/status_bar.tscn" id="10_srmwv"]
+[ext_resource type="Texture2D" uid="uid://d06f6hwb5nlx5" path="res://assets/exclamation.png" id="11_il31b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
 size = Vector2(90, 88)
@@ -146,12 +147,13 @@ debug_color = Color(0, 0.545098, 0.937255, 0.419608)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StructureArea2D"]
 texture_filter = 1
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame_progress = 0.245583
 
 [node name="Borders" type="AnimatedSprite2D" parent="StructureArea2D"]
-position = Vector2(5, 3.26563)
-scale = Vector2(0.757143, 0.560385)
+position = Vector2(11, 6.5)
+scale = Vector2(1.5, 1.10526)
 sprite_frames = SubResource("SpriteFrames_ukjnt")
 
 [node name="RangeArea2D" type="Area2D" parent="."]
@@ -170,19 +172,19 @@ position = Vector2(0, 24)
 scale = Vector2(0.5, 0.5)
 
 [node name="health" parent="." instance=ExtResource("10_srmwv")]
-offset_left = 2.0
-offset_top = -47.0
-offset_right = 2.0
-offset_bottom = -47.0
+offset_left = 3.0
+offset_top = -91.0
+offset_right = 3.0
+offset_bottom = -91.0
 label = "Health"
 percentage = 100
 colour = Color(1, 0, 0, 1)
 
 [node name="supply" parent="." instance=ExtResource("10_srmwv")]
-offset_left = -52.0
-offset_top = -47.0
-offset_right = -52.0
-offset_bottom = -47.0
+offset_left = -76.0
+offset_top = -91.0
+offset_right = -76.0
+offset_bottom = -91.0
 label = "Supply"
 colour = Color(1, 0.803922, 0, 1)
 
@@ -191,6 +193,11 @@ wait_time = 5.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_27gmi")
+
+[node name="Alert" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -103)
+texture = ExtResource("11_il31b")
 
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
