@@ -2,7 +2,7 @@ class_name SupplyTruck extends Node2D
 
 var Structure = preload("res://scenes/structure/structure.gd")
 
-@export var speed = 1000.0
+@export var speed = 10000.0
 @export var target_structure: Vector2
 
 var start_position: Vector2

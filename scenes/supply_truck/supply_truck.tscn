@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dhvhfbd88ttoo"]
+[gd_scene load_steps=22 format=3 uid="uid://dhvhfbd88ttoo"]
 
 [ext_resource type="Script" path="res://scenes/supply_truck/truck_controller.gd" id="1_ifetn"]
 [ext_resource type="Texture2D" uid="uid://ba67jfpsfp75y" path="res://assets/truck-empty.png" id="2_ans3y"]
@@ -129,6 +129,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjapd"]
+size = Vector2(24, 13)
+
 [node name="supply_truck" type="Node2D"]
 script = ExtResource("1_ifetn")
 
@@ -138,3 +141,7 @@ script = ExtResource("1_ifetn")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_pqpcf")
 animation = &"truck-empty-moving"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="truck"]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_kjapd")
