@@ -27,6 +27,7 @@ const enemy_store_res = preload("res://scripts/enemy_store.gd")
 var _supply_store: SupplyStore
 
 var tick = false
+var sub_tick = false # le hack
 var can_fire = false
 var time_til_fire: float = 0
 var time_til_tick: float = 0
@@ -85,12 +86,7 @@ func _process(delta):
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
-	label_manager()
 	enemy_store.remove_all_enemies()
-	pass
-
-
-func label_manager():
 	pass
 
 func can_take_damage():
@@ -128,6 +124,8 @@ func state_manager():
 		if can_take_damage():
 			process_all_enemies_damage()
 			update_health_label(health)
+			if !is_tower:
+				process_supply_useage()
 		reset_tick()
 		
 	for enemy in enemy_store.enemies_in_range:
@@ -135,6 +133,13 @@ func state_manager():
 			process_attacks(enemy)
 			reset_fire()
 
+
+func process_supply_useage():
+	sub_tick = !sub_tick
+	if sub_tick:
+		_supply_bar.set_percentage($SupplyStore.supplies)
+		$SupplyStore.remove_supply(supplies_consumption)
+	
 
 func process_all_enemies_damage():
 	for enemy in enemy_store.enemies:
@@ -151,6 +156,7 @@ func subtract_damage_from_enemies(enemy):
 		enemy_store.add_enemy_to_remove(enemy)
 
 func consume_supplies():
+	_supply_bar.set_percentage($SupplyStore.supplies)
 	$SupplyStore.remove_supply(supplies_consumption)
 
 func fire_turret(enemy):
