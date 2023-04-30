@@ -9,6 +9,7 @@ var town_turret_range
 var tilemap
 var tree
 var structure: PackedScene = preload("res://scenes/structure/structure.tscn")
+var depot: PackedScene = preload("res://scenes/supply_depot/supply_depot.tscn")
 
 # Centre sector is spawn
 # Each Sector has a town
@@ -62,14 +63,32 @@ func fill_sector(sector_number):
 			turret_y = town_y - offset
 		spawn_structure(turret_x,turret_y,true)
 		#print("Spawn turret")
+	if sector_number == ceil(map_sectors / 2):
+		var offset = randi_range(town_turret_range/10, town_turret_range)
+		var depot_x
+		var depot_y
+		if randf() > 0.5:
+			depot_x = town_x + offset
+		else:
+			depot_x = town_x - offset
+		if randf() > 0.5:
+			depot_y = town_y + offset
+		else:
+			depot_y = town_y - offset
+		spawn_depot(depot_x,depot_y)
 	
-func fill_spawn_sector():
-	pass
+func spawn_depot(x,y):
+	if depot:
+		var local_position =  tilemap.map_to_local(Vector2i(x,y))
+		var instanced_depot = depot.instantiate()
+		tree.current_scene.add_child.call_deferred(instanced_depot)
+		instanced_depot.global_position = tilemap.to_global(local_position)
 
 func spawn_structure(x,y, is_tower=false):
 	if structure:
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_structure = structure.instantiate()
 		tree.current_scene.add_child.call_deferred(instanced_structure)
-		instanced_structure.is_tower = true
+		if is_tower:
+			instanced_structure.set_tower()
 		instanced_structure.global_position = tilemap.to_global(local_position)
