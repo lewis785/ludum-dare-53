@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=30 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="PackedScene" uid="uid://cs533if32c81i" path="res://scenes/combat/entity.tscn" id="2_f0kq4"]
@@ -199,6 +199,7 @@ visible = false
 position = Vector2(0, -103)
 texture = ExtResource("11_il31b")
 
+[connection signal="health_update" from="entity" to="health" method="_on_entity_health_update"]
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
 [connection signal="input_event" from="StructureArea2D" to="." method="_on_structure_area_2d_input_event"]

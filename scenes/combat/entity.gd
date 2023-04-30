@@ -1,4 +1,4 @@
-extends Node2D
+class_name Entity extends Node2D
 
 @export var friendly : bool = true
 @export var alive : bool = true
@@ -8,12 +8,17 @@ extends Node2D
 @export var damage : int = 0
 @export var priority_weight : int = 1
 
+signal health_update
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if friendly:
 		add_to_group("ally")
 	else:
 		add_to_group("enemy")
+		
+	if active:
+		notify_health(health)
 
 
 func update_position(pos) -> void:
@@ -24,19 +29,26 @@ func _process(delta: float) -> void:
 	pass
 
 func activate() -> void:
+	notify_health(health)
 	active = true
 	
 func deactivate() -> void:
+	notify_health(0)
 	active = false
 
 func take_damage(attack : int) -> void:
-	health = max(0, health - attack)
+	set_health(max(0, health - attack))
+	
 	if health == 0:
 		alive = false
 		deactivate()
 		
 func get_targets() -> Array[Node2D]:
-	var entities = get_tree().get_nodes_in_group("entity")
+	var target_group = "enemy"
+	if !friendly:
+		target_group = "ally"
+	
+	var entities = get_tree().get_nodes_in_group(target_group)
 	var targets : Array[Node2D] = []
 	
 	for entity in entities:
@@ -46,10 +58,17 @@ func get_targets() -> Array[Node2D]:
 	return targets
 	
 func is_target(entity) -> bool:
-	return entity.friendly != friendly and entity.alive
+	return entity.friendly != friendly and entity.alive and entity.active
 	
 func attack(entity) -> void:
 	entity.take_damage(damage)
 	
 func heal(healing : int) -> void:
-	health = max(max_health, health + healing)
+	set_health(max(max_health, health + healing))
+	
+	
+func set_health(value : int) -> void:
+	health = value
+	
+func notify_health(value) -> void:
+	health_update.emit((value*100)/max_health)

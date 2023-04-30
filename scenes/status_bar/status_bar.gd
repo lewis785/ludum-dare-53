@@ -30,3 +30,7 @@ func _ready():
 	update_label()
 	update_process_bar()
 
+
+
+func _on_entity_health_update(health) -> void:
+	set_percentage(health)

@@ -99,7 +99,7 @@ func can_attack(enemy):
 func subtract_damage_from_health(damage):
 	health -= damage
 	if health <= 0:
-		owned = false
+		update_ownership(false)
 		print("ded lol")
 		manage_ownership()
 		
@@ -145,16 +145,16 @@ func process_all_enemies_damage():
 func handle_death():
 	if is_tower and health <= 0:
 		_animated_sprite.frame = structure_state.tower_bad
-		owned = false
+		update_ownership(false)
 	if !is_tower and health <= 0:
 		_animated_sprite.frame = structure_state.town_bad
-		owned = false
+		update_ownership(false)
 	if !is_tower and health >= 1:
 		_animated_sprite.frame = structure_state.town_good
-		owned = true
+		update_ownership(true)
 	if is_tower and health >= 1:
 		_animated_sprite.frame = structure_state.tower_good
-		owned = true
+		update_ownership(true)
 	if owned:
 		$Alert.hide()
 	if !owned:
@@ -218,24 +218,29 @@ func heal(heal):
 		return
 	health = temp_health
 	
+func update_ownership(value : bool) -> void:
+	owned = value
+	$entity.active = value
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
-		owned = true
+		update_ownership(true)
 		manage_ownership()
 		signal_bus.emit_signal('update_ownership')
-	var body_parent_name = body.get_parent().name
-	if str(body_parent_name).begins_with(parent_name):
-		enemy_store.enemies.append(body)
+	var body_parent_name : String = body.get_parent().name
+	if body_parent_name.begins_with(parent_name):
+		var enemy = body.find_child("entity")
+		enemy_store.enemies.append(enemy)
 
 func _on_range_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		return
 	var body_parent_name : String = body.get_parent().name
 	if body_parent_name.begins_with(parent_name):
-		enemy_store.enemies_in_range.append(body)
+		var enemy = body.find_child("entity")
+		enemy_store.enemies_in_range.append(enemy)
 
 func _on_structure_area_2d_body_exited(body):
 	# enemy_store.add_enemy_to_remove(body)

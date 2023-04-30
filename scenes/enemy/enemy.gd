@@ -1,8 +1,6 @@
 class_name Enemy extends RigidBody2D
 
 @export var level : int = 1
-@export var health : int = 1
-@export var damage : int = 1
 
 var obstacles : Array[Obstacle] = []
 var target 
@@ -24,8 +22,7 @@ func _ready():
 	
 	self.lock_rotation = true
 	
-	health = level
-	damage = level
+	set_level(level)
 	
 func play_animation(frames : int) -> void:
 	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
@@ -39,13 +36,12 @@ func set_scale_factor(sf : int) -> void:
 
 func set_level(level) -> void:
 	self.level = level
-	self.health = level
-	self.damage = level
+	$entity.health = level
+	$entity.damage = level
 	
-	var scaled = Vector2(1,1)*max(1, log(level*level))
+	var scaled = Vector2(1,1)*max(1, log(level))
 	
 	$AnimatedSprite2D.transform = $AnimatedSprite2D.transform.scaled(scaled)
-
 	$CollisionShape2D.transform = $CollisionShape2D.transform.scaled(scaled)
 
 
@@ -53,11 +49,11 @@ func set_level(level) -> void:
 func _process(_delta):
 	time_since_target_check += _delta
 	
-	if health <= 0:
+	if !$entity.alive:
 		queue_free()
 		return
 	
-	var targets = find_targets()
+	var targets = $entity.get_targets()
 	
 	if len(targets) == 0 :
 		return
