@@ -142,7 +142,6 @@ func handle_death():
 		_animated_sprite.frame = structure_state.tower_bad
 		owned = false
 	if !is_tower and health <= 0:
-		print(123)
 		_animated_sprite.frame = structure_state.town_bad
 		owned = false
 	if !is_tower and health >= 1:
@@ -151,6 +150,11 @@ func handle_death():
 	if is_tower and health >= 1:
 		_animated_sprite.frame = structure_state.tower_good
 		owned = true
+	if owned:
+		$Alert.hide()
+	if !owned:
+		$Alert.show()
+		
 
 func subtract_damage_from_enemies(enemy):
 	var current_enemy_name = enemy.name
