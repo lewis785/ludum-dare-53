@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://du2mrpacolk4i"]
+
+[ext_resource type="Script" path="res://scenes/score/score.gd" id="1_5wncp"]
+
+[node name="ScoreDisplay" type="Node2D"]
+script = ExtResource("1_5wncp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 791.0
+offset_top = 31.0
+offset_right = 874.0
+offset_bottom = 57.0
+scale = Vector2(4, 4)
+text = "0
+"
+horizontal_alignment = 2

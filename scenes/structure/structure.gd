@@ -20,7 +20,6 @@ enum structure_state{
 
 var local_name:	String
 
-
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
 const enemy_store_res = preload("res://scripts/enemy_store.gd")
@@ -42,6 +41,7 @@ var _supply_bar: Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.local_name = self.name
+	$ScoreTimer.start()
 	signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect("do_damage_to_enemy", subtract_damage_from_enemies)
 	
@@ -150,8 +150,9 @@ func subtract_damage_from_enemies(enemy):
 	if enemy.health <= 0:
 		enemy_store.add_enemy_to_remove(enemy)
 
-func consume_supplies():
-	$SupplyStore.remove_supply(supplies_consumption)
+func consume_supplies(amount):
+	$SupplyStore.remove_supply(amount)
+	$supply.set_percentage($SupplyStore.supplies)
 
 func fire_turret(enemy):
 	if projectile:
@@ -165,7 +166,7 @@ func fire_turret(enemy):
 	
 func process_attacks(enemy):
 	if enemy_store.enemy_in_range_exists(enemy):
-		consume_supplies()
+		consume_supplies(1)
 		fire_turret(enemy)
 
 func handle_fire_rate(delta):
@@ -228,7 +229,7 @@ func _on_structure_area_2d_mouse_exited():
 	_border.hide()
 	pass # Replace with function body.
 
-
 func _on_score_timer_timeout():
-	if $SupplyStore.has_required_supply(20):
+	if !is_tower && $SupplyStore.has_required_supplies(5):
+		consume_supplies(5)
 		signal_bus.emit_signal("score_update", 100)
