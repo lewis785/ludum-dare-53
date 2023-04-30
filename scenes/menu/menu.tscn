@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://euned6naim70"]
+
+[ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_sm4jw"]
+
+[node name="menu" type="Node2D"]
+rotation = -0.0144437
+script = ExtResource("1_sm4jw")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="pause_button" type="Button" parent="CanvasLayer"]
+visibility_layer = 524288
+z_index = 1
+anchors_preset = -1
+anchor_right = 0.0303819
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 80.0
+offset_bottom = 56.0
+text = "pause"
+metadata/_edit_use_anchors_ = true
+
+[node name="skip_button" type="Button" parent="CanvasLayer"]
+visibility_layer = 524288
+z_index = 1
+anchors_preset = -1
+anchor_right = 0.0303819
+offset_left = 25.0
+offset_top = 60.0
+offset_right = 80.0
+offset_bottom = 91.0
+text = "skip"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="button_down" from="CanvasLayer/pause_button" to="." method="_on_pause_button_button_down"]
+[connection signal="button_down" from="CanvasLayer/skip_button" to="." method="_on_skip_button_button_down"]

@@ -13,19 +13,24 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_jej22")
-}, {
-"duration": 1.0,
 "texture": ExtResource("7_bys8y")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_wkb1j")
 }, {
 "duration": 1.0,
 "texture": ExtResource("9_j32b6")
 }],
 "loop": true,
-"name": &"walk",
+"name": &"walk-line",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_jej22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wkb1j")
+}],
+"loop": true,
+"name": &"walk-noline",
 "speed": 5.0
 }]
 
@@ -33,7 +38,7 @@ animations = [{
 radius = 3.0
 height = 8.0
 
-[sub_resource type="PackedScene" id="PackedScene_ek8a8"]
+[sub_resource type="PackedScene" id="PackedScene_57wrg"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -50,13 +55,17 @@ _bundled = {
 [node name="main" type="Node2D"]
 
 [node name="Camera" parent="." instance=ExtResource("3_0rkqj")]
+unique_name_in_owner = true
+process_mode = 3
 position = Vector2(576, 327)
 
 [node name="map" parent="." instance=ExtResource("3_eet8l")]
 unique_name_in_owner = true
+process_mode = 3
 
 [node name="spawn" parent="." instance=ExtResource("3_sy17x")]
+process_mode = 1
 position = Vector2(-3, 2)
 level = 10
-enemy_scene = SubResource("PackedScene_ek8a8")
+enemy_scene = SubResource("PackedScene_57wrg")
 scale_factor = 16

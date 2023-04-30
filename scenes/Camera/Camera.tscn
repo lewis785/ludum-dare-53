@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://sgasvpbvlp72"]
+[gd_scene load_steps=3 format=3 uid="uid://sgasvpbvlp72"]
 
 [ext_resource type="Script" path="res://scenes/Camera/camera_controller.gd" id="1_67m5s"]
+[ext_resource type="PackedScene" uid="uid://euned6naim70" path="res://scenes/menu/menu.tscn" id="2_8kdlw"]
 
 [node name="Camera" type="Node2D"]
 script = ExtResource("1_67m5s")
@@ -8,3 +9,5 @@ script = ExtResource("1_67m5s")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-4, 0)
 zoom = Vector2(0.1, 0.1)
+
+[node name="menu" parent="Camera2D" instance=ExtResource("2_8kdlw")]
