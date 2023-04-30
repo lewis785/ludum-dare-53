@@ -222,6 +222,13 @@ func update_ownership(value : bool) -> void:
 	owned = value
 	$entity.active = value
 
+	
+func popup_score(score_value):
+	$Score.text = "+"+str(score_value)
+	$Score.show()
+	await get_tree().create_timer(2.0).timeout
+	$Score.hide()
+
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
@@ -268,5 +275,6 @@ func _on_structure_area_2d_mouse_exited():
 
 func _on_score_timer_timeout():
 	if !is_tower && $SupplyStore.has_required_supplies(supplies_consumption):
+		popup_score(20)
 		consume_supplies(supplies_consumption)
 		signal_bus.emit_signal("score_update", 20)
