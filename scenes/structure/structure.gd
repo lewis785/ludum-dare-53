@@ -59,6 +59,7 @@ func _ready():
 	
 	_border.hide()
 	_target.weight = 1
+	
 	if is_tower and _animated_sprite:
 		_target.weight = 10
 		_animated_sprite.frame = structure_state.tower_good
