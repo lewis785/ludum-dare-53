@@ -15,8 +15,13 @@ const CL = preload("res://scenes/Camera/camera_link.gd")
 func _ready():
 	TG.new(tilemap, width, height, noise_gate)
 	MP.new(tilemap, get_tree(), width, height, map_rows, map_columns)
+	set_camera_limit()
+
+func set_camera_limit():
+	var map_size = tilemap.get_used_rect().size
+	var tile_size = tilemap.cell_quadrant_size
+	var world_size = map_size * tile_size
+	
 	var cl = CL.new()
 	cl.link_camera(get_tree())
-	cl.set_limits(0,0,width*16,height*16)
-	print("Crashed yet?")
-	
+	cl.set_limits(0,0,world_size.x,world_size.y)

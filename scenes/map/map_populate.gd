@@ -36,7 +36,6 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_rows,
 	town_turret_range = sector_width/4
 	
 	populate_map()
-	create_roads()
 
 func populate_map():
 	for sector_num in map_sectors:
@@ -83,7 +82,6 @@ func create_depot():
 		depot_y = height/2 + offset
 	else:
 		depot_y = height/2 - offset
-	print("Depot X: ", depot_x, " Y: ", depot_y)
 	spawn_depot(depot_x,depot_y)
 	spawn_structure(depot_x+10,depot_y+10, false, true)
 	

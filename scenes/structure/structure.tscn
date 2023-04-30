@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=31 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="PackedScene" uid="uid://cs533if32c81i" path="res://scenes/combat/entity.tscn" id="2_f0kq4"]
@@ -9,8 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://dsl06clss4god" path="res://assets/village/ui_borders.png" id="6_6ghwf"]
 [ext_resource type="PackedScene" uid="uid://diu6ls3spsxlf" path="res://scenes/enemy/target.tscn" id="6_tyybt"]
 [ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="9_ktk31"]
+[ext_resource type="Texture2D" uid="uid://crg5lh8xmoylf" path="res://assets/heart.png" id="10_8x0iy"]
 [ext_resource type="AudioStream" uid="uid://b7hltg4hncbck" path="res://sounds/effects/Ting.wav" id="10_27gmi"]
 [ext_resource type="PackedScene" uid="uid://dws8yrkuha0xn" path="res://scenes/status_bar/status_bar.tscn" id="10_srmwv"]
+[ext_resource type="Texture2D" uid="uid://c88nwnkcbc10f" path="res://assets/projectile/single_bullet.png" id="11_flws3"]
 [ext_resource type="Texture2D" uid="uid://d06f6hwb5nlx5" path="res://assets/exclamation.png" id="11_il31b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
@@ -172,21 +174,23 @@ position = Vector2(0, 24)
 scale = Vector2(0.5, 0.5)
 
 [node name="health" parent="." instance=ExtResource("10_srmwv")]
-offset_left = 3.0
-offset_top = -91.0
-offset_right = 3.0
-offset_bottom = -91.0
+offset_left = -67.0
+offset_top = -104.0
+offset_right = -67.0
+offset_bottom = -104.0
 label = "Health"
 percentage = 100
 colour = Color(1, 0, 0, 1)
+texture = ExtResource("10_8x0iy")
 
 [node name="supply" parent="." instance=ExtResource("10_srmwv")]
-offset_left = -76.0
-offset_top = -91.0
-offset_right = -76.0
-offset_bottom = -91.0
+offset_left = -67.0
+offset_top = -90.0
+offset_right = -67.0
+offset_bottom = -90.0
 label = "Supply"
 colour = Color(1, 0.803922, 0, 1)
+texture = ExtResource("11_flws3")
 
 [node name="ScoreTimer" type="Timer" parent="."]
 wait_time = 5.0

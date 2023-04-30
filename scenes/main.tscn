@@ -9,7 +9,6 @@
 unique_name_in_owner = true
 process_mode = 3
 position = Vector2(576, 327)
-camera_speed = 30
 camera_zoom_speed = 1.0
 
 [node name="game" parent="." instance=ExtResource("2_od1pn")]
