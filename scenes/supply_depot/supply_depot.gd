@@ -6,8 +6,6 @@ extends Node2D
 @export var supply = 0
 var acc = 0
 
-const status_bar_manager = preload("res://scripts/status_bar_manager.gd")
-
 func _ready():
 	$truck_coordinator/SupplyStore.set_supply_capacity(max_supply)
 	$truck_coordinator/SupplyStore.add_supply(supply)
