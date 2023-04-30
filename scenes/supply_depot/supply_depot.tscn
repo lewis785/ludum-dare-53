@@ -96,5 +96,10 @@ animation = &"depot-healthy"
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0.539028, -0.465317)
 shape = SubResource("RectangleShape2D_t2igs")
+
+[node name="RefillTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="RefillTimer" to="." method="_on_refill_timer_timeout"]
