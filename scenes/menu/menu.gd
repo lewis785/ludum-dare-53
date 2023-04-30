@@ -42,10 +42,10 @@ func _process(delta: float) -> void:
 
 
 func is_game_over() -> bool:
-	var nodes = get_tree().get_nodes_in_group("structures")
+	var entities = get_tree().get_nodes_in_group("entity")
 	
-	for node in nodes:
-		if node.owned:
+	for entity in entities:
+		if entity.friendly and entity.alive and entity.active:
 			return false
 
 	return true

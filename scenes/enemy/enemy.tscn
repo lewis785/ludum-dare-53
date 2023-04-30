@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://bn1ar05oul7hp"]
+[gd_scene load_steps=30 format=3 uid="uid://bn1ar05oul7hp"]
 
 [ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_gyipw"]
 [ext_resource type="Texture2D" uid="uid://b20wpihdnw2fi" path="res://assets/enemy/Enemy5-Attack1.png" id="2_fcb7n"]
+[ext_resource type="PackedScene" uid="uid://cs533if32c81i" path="res://scenes/combat/entity.tscn" id="2_tti21"]
 [ext_resource type="Texture2D" uid="uid://chfckc0vobg7k" path="res://assets/enemy/Enemy5-Attack2.png" id="3_p58el"]
 [ext_resource type="Texture2D" uid="uid://chmvbs2es1ur8" path="res://assets/enemy/Enemy5-Walk1.png" id="4_75nwu"]
 
@@ -185,8 +186,12 @@ height = 8.0
 position = Vector2(64, 70)
 gravity_scale = 0.0
 script = ExtResource("1_gyipw")
-health = 20
 metadata/_edit_group_ = true
+
+[node name="entity" parent="." instance=ExtResource("2_tti21")]
+friendly = false
+max_health = 1
+damage = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

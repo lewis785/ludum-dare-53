@@ -60,6 +60,7 @@ func _ready():
 	
 	_border.hide()
 	_target.weight = 1
+	
 	if is_tower and _animated_sprite:
 		_target.weight = 10
 		_animated_sprite.frame = structure_state.tower_good
@@ -83,6 +84,7 @@ func set_tower():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	popup_vis(delta)
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
@@ -98,7 +100,7 @@ func can_attack(enemy):
 func subtract_damage_from_health(damage):
 	health -= damage
 	if health <= 0:
-		owned = false
+		update_ownership(false)
 		print("ded lol")
 		manage_ownership()
 		
@@ -144,16 +146,16 @@ func process_all_enemies_damage():
 func handle_death():
 	if is_tower and health <= 0:
 		_animated_sprite.frame = structure_state.tower_bad
-		owned = false
+		update_ownership(false)
 	if !is_tower and health <= 0:
 		_animated_sprite.frame = structure_state.town_bad
-		owned = false
+		update_ownership(false)
 	if !is_tower and health >= 1:
 		_animated_sprite.frame = structure_state.town_good
-		owned = true
+		update_ownership(true)
 	if is_tower and health >= 1:
 		_animated_sprite.frame = structure_state.tower_good
-		owned = true
+		update_ownership(true)
 	if owned:
 		$Alert.hide()
 	if !owned:
@@ -217,24 +219,46 @@ func heal(heal):
 		return
 	health = temp_health
 	
+func popup_vis(delta, add=0):
+	if owned and !is_tower:
+		var tmp_colour = $Score.get_modulate()
+		tmp_colour.a -= delta/5
+		if tmp_colour.a <= 0:
+			tmp_colour.a = 0
+			
+		tmp_colour.a += add
+		print(tmp_colour.a)
+		$Score.set_modulate(tmp_colour)
+
+func update_ownership(value : bool):
+	owned = value
+	$entity.active = value
+
+	
+func popup_score(score_value):
+	$Score.text = "+"+str(score_value)
+	$Score.show()
+	popup_vis(0, 1)
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
-		owned = true
+		update_ownership(true)
 		manage_ownership()
 		signal_bus.emit_signal('update_ownership')
-	var body_parent_name = body.get_parent().name
-	if str(body_parent_name).begins_with(parent_name):
-		enemy_store.enemies.append(body)
+	var body_parent_name : String = body.get_parent().name
+	if body_parent_name.begins_with(parent_name):
+		var enemy = body.find_child("entity")
+		enemy_store.enemies.append(enemy)
 
 func _on_range_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		return
 	var body_parent_name : String = body.get_parent().name
 	if body_parent_name.begins_with(parent_name):
-		enemy_store.enemies_in_range.append(body)
+		var enemy = body.find_child("entity")
+		enemy_store.enemies_in_range.append(enemy)
 
 func _on_structure_area_2d_body_exited(body):
 	# enemy_store.add_enemy_to_remove(body)
@@ -262,5 +286,6 @@ func _on_structure_area_2d_mouse_exited():
 
 func _on_score_timer_timeout():
 	if !is_tower && $SupplyStore.has_required_supplies(supplies_consumption):
+		popup_score(20)
 		consume_supplies(supplies_consumption)
 		signal_bus.emit_signal("score_update", 20)

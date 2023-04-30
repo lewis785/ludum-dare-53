@@ -21,15 +21,24 @@ func structures(nodes : Array[Node]) -> Array[Structure]:
 func _ready():
 	var root = self.get_tree().current_scene
 	truck_indicator = get_tree().get_first_node_in_group('TruckIndicator')
+	truck_indicator.set_truck_limit(available_trucks)
 	var start_location = self.position
 	var signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect('send_supply_to_structure', send_to_structure)
+	
+func create_truck():
+	available_trucks += 1
+	truck_indicator.add_truck()
+
+func destroy_truck():
+	available_trucks -= 1
+	truck_indicator.remove_truck()
 
 func send_to_structure(structure: Structure):
 	send_truck(structure)
 
 func send_truck(structure: Structure):
-	if (!$SupplyStore.has_required_supplies(20) || available_trucks == 0):
+	if (!$SupplyStore.has_required_supplies(20) || available_trucks <= 0):
 		return
 	available_trucks -= 1
 	$SupplyStore.remove_supply(20)
@@ -41,13 +50,6 @@ func send_truck(structure: Structure):
 	truck.trucwk_id = truck_indicator.next_free_truck()
 	
 	add_child(truck)
-	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	if ($SupplyStore == null):
-#		$SupplyStore = self.get_parent().supply_store_instance
-#		return
 
 func _on_supply_depot_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	if !body.name.contains('SupplyTruck'):
