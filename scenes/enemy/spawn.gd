@@ -2,6 +2,8 @@ extends Node2D
 
 @export var level : int = 1
 @export var enemy_scene : PackedScene
+@export var scale_factor : int = 1
+
 var score : int
 var base_wait_time : float
 var enemy_level: float = 1
@@ -17,15 +19,53 @@ func _process(_delta: float) -> void:
 
 func new_game():
 	score = 0
-	base_wait_time = $enemy_timer.wait_time
+	
+	var window : Window = get_tree().get_root()
+	
+	var pos : Vector2i = Vector2i(0, 0)
+	var size : Vector2i = window.get_size_with_decorations()
+	
+	var child =  self.get_parent().find_child("*map*")
+	
+	if child:
+		var map = %map
+		
+		var width = map.width
+		var height = map.height
+	
+		size = Vector2i(width*scale_factor, height*scale_factor)
+		
+	
+	var c = Curve2D.new()
+		
+	c.add_point(pos)
+	c.add_point(pos+Vector2i(size.x, 0))
+	c.add_point(pos+size)
+	c.add_point(pos+Vector2i(0, size.y))
+	c.add_point(pos)
+	
+	print(size)
+
+	$enemy_path.curve = c
+	$enemy_path.queue_redraw()	
+	
+	
+	$enemy_timer.wait_time = $enemy_timer.wait_time/log(scale_factor)
 	$start_timer.start()
 
 func _on_enemy_timer_timeout() -> void:	
 	
 	self.level += 1
+	var previous_level : int = enemy_level
 	enemy_level = log(self.level)/log(10)+1
 	
-	for i in range(enemy_level):
+	var burst : int
+	
+	if int(enemy_level) > previous_level:
+		burst = enemy_level*enemy_level*scale_factor
+	
+	
+	for i in range(enemy_level+burst):
 		spawn_enemy()
 	
 func spawn_enemy() -> void:
@@ -47,13 +87,17 @@ func spawn_enemy() -> void:
 	
 
 	# Choose the velocity for the enemy.
-	var max_speed = max(1000, 100*enemy_level)
-	var velocity = Vector2(randf_range(100.0, max_speed), 0.0)
+	# var min_speed = 100.0
+	# var max_speed = max(1000, 100*enemy_level)
+	var min_speed = 10
+	var max_speed = 100
+	var velocity = Vector2(randf_range(min_speed, max_speed), 0.0)
 	enemy.linear_velocity = velocity.rotated(direction)
 	
 	# Set enemy health and damage scaled by time
 	enemy.set_level(enemy_level)
 	enemy.set_speed(velocity.length())
+	enemy.set_scale_factor(scale_factor)
 
 	# Spawn the enemy by adding it to the Main scene.
 	add_child(enemy)

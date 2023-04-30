@@ -9,6 +9,7 @@ var target : Target
 var target_check_limit: float = 1
 var time_since_target_check : float = 1
 var base_speed : float = 100
+var scale_factor: int = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,6 +21,10 @@ func _ready():
 
 func set_speed(speed : float) -> void:
 	self.base_speed = speed
+	
+	
+func set_scale_factor(sf : int) -> void:
+	self.scale_factor = sf
 
 func set_level(level) -> void:
 	self.level = level
@@ -63,14 +68,14 @@ func move_to_target(targets : Array[Target]) -> void:
 	
 func determine_speed() -> float:
 	var current_speed = self.linear_velocity.length()
-	var distance = distance(self.position, target)
+	var distance = distance(self.position, target) * scale_factor
 	var adjusted = distance*distance/4
 	
 	var target_speed = min(distance, self.base_speed)
 	var speed = min(target_speed, current_speed+100)
 	
 	if target.get_parent().health <= 0:
-		speed = 1000
+		speed = min(current_speed*2, self.base_speed)
 	
 	return speed
 	
