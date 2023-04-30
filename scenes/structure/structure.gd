@@ -7,8 +7,8 @@ enum structure_state{
 	tower_bad
 	}
 
-@export var health: int = 0
-@export var owned: bool = false
+@export var health: int = 100
+@export var owned: bool = true
 @export var tick_threshold: float = 1
 @export var label: Label
 @export var is_tower: bool

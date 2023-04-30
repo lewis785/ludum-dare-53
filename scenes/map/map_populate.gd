@@ -79,6 +79,7 @@ func create_depot():
 		depot_y = height/2 - offset
 	print("Depot X: ", depot_x, " Y: ", depot_y)
 	spawn_depot(depot_x,depot_y)
+	spawn_structure(depot_x+10,depot_y+10, false, true)
 	
 func spawn_depot(x,y):
 	if depot:
@@ -87,11 +88,16 @@ func spawn_depot(x,y):
 		tree.current_scene.add_child.call_deferred(instanced_depot)
 		instanced_depot.global_position = tilemap.to_global(local_position)
 
-func spawn_structure(x,y, is_tower=false):
+func spawn_structure(x,y, is_tower=false, first_structure=false):
 	if structure:
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_structure = structure.instantiate()
 		tree.current_scene.add_child.call_deferred(instanced_structure)
 		instanced_structure.global_position = tilemap.to_global(local_position)
+		instanced_structure.owned = false
+		instanced_structure.health = 0
 		if is_tower:
 			instanced_structure.set_tower()
+		if first_structure:
+			instanced_structure.owned = true
+			instanced_structure.health = 100
