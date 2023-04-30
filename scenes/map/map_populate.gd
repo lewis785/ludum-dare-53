@@ -36,7 +36,6 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_rows,
 	town_turret_range = sector_width/4
 	
 	populate_map()
-	create_roads()
 
 func populate_map():
 	for sector_num in map_sectors:
