@@ -10,16 +10,26 @@ var target_check_limit: float = 2
 var time_since_target_check : float = target_check_limit
 var base_speed : float = 100
 var scale_factor: int = 1
+var attacking : bool
+
+enum animations {
+	attack1,
+	attack2,
+	walk
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
-	$AnimatedSprite2D.play(mob_types[randi() % mob_types.size()])
+	play_animation(animations.walk)
 	
 	self.lock_rotation = true
 	
 	health = level
 	damage = level
+	
+func play_animation(frames : int) -> void:
+	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
+	$AnimatedSprite2D.play(mob_types[frames])
 
 func set_speed(speed : float) -> void:
 	self.base_speed = speed
@@ -54,7 +64,19 @@ func _process(_delta):
 		
 	move_to_target(targets)
 	
+	update_animation()
+	
+func update_animation() -> void:
+	var previously_attacking = attacking
+	attacking = in_target_range()
+	
+	if previously_attacking and !attacking:
+		play_animation(animations.walk)
+	if !previously_attacking and attacking:
+		play_animation(randi() % 2)
 
+func in_target_range() -> bool:
+	return (self.position - target.position).length() < 10*scale_factor
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
