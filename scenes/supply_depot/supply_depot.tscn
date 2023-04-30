@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dhf8loxej1fdg"]
+[gd_scene load_steps=17 format=3 uid="uid://dhf8loxej1fdg"]
 
 [ext_resource type="Script" path="res://scenes/supply_depot/supply_depot.gd" id="1_8fqxo"]
 [ext_resource type="Texture2D" uid="uid://o6r78b3qslt7" path="res://assets/depot-light.png" id="1_pfjkr"]
 [ext_resource type="PackedScene" uid="uid://dpmoir6bxfdp7" path="res://scenes/supply_truck/truck_coordinator.tscn" id="2_gcobm"]
+[ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="4_3321a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uovtp"]
 atlas = ExtResource("1_pfjkr")
@@ -94,6 +95,10 @@ sprite_frames = SubResource("SpriteFrames_u2thd")
 animation = &"depot-healthy"
 
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
+
+[node name="SupplyStore" parent="truck_coordinator" instance=ExtResource("4_3321a")]
+position = Vector2(1, 12)
+scale = Vector2(0.5, 0.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

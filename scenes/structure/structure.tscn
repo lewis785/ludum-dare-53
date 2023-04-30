@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=27 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="Texture2D" uid="uid://d2drtgly02a7l" path="res://assets/village/good_town.png" id="2_ymwu0"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dhsem2ddr6582" path="res://assets/village/bunker_bad.png" id="5_y2ael"]
 [ext_resource type="Texture2D" uid="uid://dsl06clss4god" path="res://assets/village/ui_borders.png" id="6_6ghwf"]
 [ext_resource type="PackedScene" uid="uid://diu6ls3spsxlf" path="res://scenes/enemy/target.tscn" id="6_tyybt"]
+[ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="9_ktk31"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
 size = Vector2(90, 88)
@@ -160,6 +161,10 @@ debug_color = Color(0.505882, 0.580392, 0, 0.419608)
 
 [node name="target" parent="." groups=["targets"] instance=ExtResource("6_tyybt")]
 position = Vector2(1, 1)
+
+[node name="SupplyStore" parent="." instance=ExtResource("9_ktk31")]
+position = Vector2(0, 24)
+scale = Vector2(0.5, 0.5)
 
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]

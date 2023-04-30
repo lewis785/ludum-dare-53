@@ -22,14 +22,12 @@ var local_name:	String
 
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
-const supply_store = preload("res://scripts/supply_store.gd")
 const enemy_store_res = preload("res://scripts/enemy_store.gd")
 
 var tick = false
 var can_fire = false
 var time_til_fire: float = 0
 var time_til_tick: float = 0
-var supply_store_instance
 var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
@@ -54,7 +52,6 @@ func _ready():
 	label = $StructureHealth
 	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
 	label.set_text(str(health))
-	supply_store_instance = supply_store.new()
 	enemy_store = enemy_store_res.new()
 	pass # Replace with function body.
 
@@ -128,7 +125,7 @@ func subtract_damage_from_enemies(enemy):
 		enemy_store.add_enemy_to_remove(enemy)
 
 func consume_supplies():
-	supply_store_instance.remove_supply(supplies_consumption)
+	$SupplyStore.remove_supply(supplies_consumption)
 
 func fire_turret(enemy):
 	if projectile:
@@ -157,7 +154,6 @@ func tick_manager(delta):
 	pass
 
 func _on_structure_area_2d_body_entered(body):
-	print(body)
 	if body.name == 'truck':
 		print(body)
 	var body_parent_name = body.get_parent().name
