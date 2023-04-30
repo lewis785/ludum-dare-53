@@ -18,7 +18,7 @@ func draw_road(start, end):
 	var line = Line2D.new()
 	# Set the points property to draw a line from (0, 0) to (100, 100)
 	line.points = [start.position, end.position]
-	line.width = 2
+	line.width = 1
 	line.default_color = Color(0.43921, 0.3647, 0.3372, 0.8)
 	# Add the Line2D node as a child of the scene
 	add_child(line)
@@ -27,7 +27,7 @@ func update_roads():
 	print("Updating roads")
 	var root = self.get_tree().current_scene
 	var depot = root.find_child('supply_depot')
-	var structs = structures(root.find_children('*structure*'))
+	var structs = get_tree().get_nodes_in_group('structures')
 	
 	for struct in structs:
 		if (struct.owned):
