@@ -57,6 +57,7 @@ func send_truck(structure: Structure):
 	truck.truck_id = truck_id
 	
 	add_child(truck)
+	truck.play_audio()
 
 func _on_supply_depot_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	if !body.name.contains('SupplyTruck'):

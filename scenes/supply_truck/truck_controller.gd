@@ -10,6 +10,8 @@ var truck_id: int
 var start_position: Vector2
 var reached_target = false
 
+var asp : AudioStreamPlayer2D
+
 func move_towards(delta: float, target: Vector2):
 	velocity = Vector2(0, 0)
 	
@@ -49,5 +51,7 @@ func _physics_process(delta):
 	animate()
 	move(delta)
 	
-	
+func play_audio():
+	asp = $AudioStreamPlayer2D
+	asp.play()
 	

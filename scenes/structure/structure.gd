@@ -34,7 +34,6 @@ var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
 var _border
-var _target
 var _asp : AudioStreamPlayer2D
 var _health_bar: Control
 var _supply_bar: Control
@@ -53,16 +52,16 @@ func _ready():
 	_health_bar = $health/ProgressBar
 	_supply_bar = $supply/ProgressBar
 	
-	_target = $target
 	_asp = $AudioStreamPlayer2D
 	
 	init_progress_bars()
 	
 	_border.hide()
-	_target.weight = 1
+	$entity.priority_weight = 2
+	$entity.set
 	
 	if is_tower and _animated_sprite:
-		_target.weight = 10
+		$entity.priority_weight = 2
 		_animated_sprite.frame = structure_state.tower_good
 	
 	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
@@ -78,7 +77,7 @@ func init_progress_bars():
 
 func set_tower():
 	is_tower = true
-	$target.weight = 10
+	$entity.priority_weight = 2
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_animated_sprite.frame = structure_state.tower_good
 
