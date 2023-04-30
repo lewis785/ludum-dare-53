@@ -58,7 +58,7 @@ func send_truck(structure: Structure):
 	var truck: SupplyTruck = truck_scene.instantiate()
 	truck.target_structure = structure
 	truck.truck_indicator = truck_indicator
-	truck.trucwk_id = truck_indicator.next_free_truck()
+	truck.truck_id = truck_indicator.next_free_truck()
 	
 	add_child(truck)
 
