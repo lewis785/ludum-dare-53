@@ -38,7 +38,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func find_targets() -> Array[Target]:
 	var targets : Array[Node] = get_tree().get_nodes_in_group("targets")
-	print("targets...", targets)
+	#print("targets...", targets)
 	
 	return markers(targets)
 	
