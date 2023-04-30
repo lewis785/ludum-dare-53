@@ -16,4 +16,5 @@ is_tower = true
 [node name="roads" parent="." instance=ExtResource("4_av4wr")]
 
 [node name="supply_depot" parent="." instance=ExtResource("3_bkg0a")]
-position = Vector2(287, 109)
+position = Vector2(311, 171)
+supply = 1

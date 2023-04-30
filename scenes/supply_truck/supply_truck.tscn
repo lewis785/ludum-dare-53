@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://dhvhfbd88ttoo"]
+[gd_scene load_steps=23 format=3 uid="uid://dhvhfbd88ttoo"]
 
 [ext_resource type="Script" path="res://scenes/supply_truck/truck_controller.gd" id="1_ifetn"]
 [ext_resource type="Texture2D" uid="uid://ba67jfpsfp75y" path="res://assets/truck-empty.png" id="2_ans3y"]
 [ext_resource type="Texture2D" uid="uid://cenw8v3ing0xr" path="res://assets/truck.png" id="2_d0fgp"]
+[ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="4_p6a1g"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gxdkt"]
 atlas = ExtResource("2_ans3y")
@@ -132,17 +133,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kjapd"]
 size = Vector2(24, 13)
 
-[node name="supply_truck" type="Node2D"]
+[node name="SupplyTruck" type="CharacterBody2D"]
 script = ExtResource("1_ifetn")
 
-[node name="truck" type="CharacterBody2D" parent="."]
+[node name="SupplyStore" parent="." instance=ExtResource("4_p6a1g")]
+position = Vector2(0, -10)
+supply_capacity = 20
+supplies = 20
 
-[node name="TruckSprite" type="AnimatedSprite2D" parent="truck"]
+[node name="TruckSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_pqpcf")
 animation = &"truck-empty-moving"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="truck"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_kjapd")
 one_way_collision = true

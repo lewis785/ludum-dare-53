@@ -10,32 +10,35 @@ enum structure_state{
 @export var health: int = 100
 @export var owned: bool = true
 @export var tick_threshold: float = 1
-@export var parent_name = 'spawn'
 @export var label: Label
 @export var is_tower: bool
 @export var structure_damage: int = 10
 @export var supplies_consumption: int = 1
 @export var range: float = 100
 @export var rate_of_fire: float = 1
+@export var parent_name : String = 'spawn'
+
 var local_name:	String
 
 
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
-const supply_store = preload("res://scripts/supply_store.gd")
 const enemy_store_res = preload("res://scripts/enemy_store.gd")
+const status_bar_manager = preload("res://scripts/status_bar_manager.gd")
+var _supply_store: SupplyStore
 
 var tick = false
 var can_fire = false
 var time_til_fire: float = 0
 var time_til_tick: float = 0
-var supply_store_instance
 var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
 var _border
 var _target
 var _asp : AudioStreamPlayer2D
+var _health_bar: Control
+var _supply_bar: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,6 +49,13 @@ func _ready():
 	
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_border = $StructureArea2D/Borders
+	_supply_store = $SupplyStore
+	
+	_health_bar = $health/ProgressBar
+	_supply_bar = $supply/ProgressBar
+	
+	init_progress_bars()
+	
 	_border.hide()
 	_target = $target
 	_target.weight = 1
@@ -53,16 +63,17 @@ func _ready():
 		_target.weight = 10
 		_animated_sprite.frame = structure_state.tower_good
 	
-	label = $StructureHealth
 	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
-	label.set_text(str(health))
-	supply_store_instance = supply_store.new()
 	enemy_store = enemy_store_res.new()
 	
 	for child in get_children():
 		if child is AudioStreamPlayer2D:
 			_asp = child
 	pass # Replace with function body.
+
+func init_progress_bars():
+	_health_bar = $health	
+	_supply_bar = $supply
 
 func set_tower():
 	is_tower = true
@@ -75,9 +86,13 @@ func _process(delta):
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
+	label_manager()
 	enemy_store.remove_all_enemies()
 	pass
 
+
+func label_manager():
+	pass
 
 func can_take_damage():
 	return owned
@@ -89,7 +104,7 @@ func subtract_damage_from_health(damage):
 	health -= damage
 
 func update_health_label(new_health):
-	label.set_text(str(new_health))
+	_health_bar.set_percentage(new_health)
 
 func reset_tick():
 	time_til_tick = 0
@@ -135,7 +150,7 @@ func subtract_damage_from_enemies(enemy):
 		enemy_store.add_enemy_to_remove(enemy)
 
 func consume_supplies():
-	supply_store_instance.remove_supply(supplies_consumption)
+	$SupplyStore.remove_supply(supplies_consumption)
 
 func fire_turret(enemy):
 	if projectile:
@@ -164,17 +179,27 @@ func tick_manager(delta):
 		tick = true
 	pass
 
+func unload_truck(truck: SupplyTruck):
+	print("Supply unloaded")
+	if(truck.target_structure != self):
+		return
+		
+	var truck_supply = truck.get_node('SupplyStore')
+	$SupplyStore.add_supply(truck_supply.remove_supply(truck_supply.supplies))
+	_supply_bar.set_percentage($SupplyStore.supplies)
+
 func _on_structure_area_2d_body_entered(body):
-	print(body)
-	if body.name == 'truck':
-		print(body)
+	if body.name.contains('SupplyTruck'):
+		unload_truck(body)
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies.append(body)
 
 func _on_range_area_2d_body_entered(body):
-	var body_parent_name = body.get_parent().name
-	if str(body_parent_name).begins_with(parent_name):
+	if body.name.contains('SupplyTruck'):
+		return
+	var body_parent_name : String = body.get_parent().name
+	if body_parent_name.begins_with(parent_name):
 		enemy_store.enemies_in_range.append(body)
 
 func _on_structure_area_2d_body_exited(body):
@@ -200,3 +225,8 @@ func _on_structure_area_2d_mouse_entered():
 func _on_structure_area_2d_mouse_exited():
 	_border.hide()
 	pass # Replace with function body.
+
+
+func _on_score_timer_timeout():
+	if $SupplyStore.has_required_supply(20):
+		signal_bus.emit_signal("score_update", 100)

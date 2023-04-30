@@ -7,12 +7,16 @@
 [node name="main" type="Node2D"]
 
 [node name="Camera" parent="." instance=ExtResource("3_0rkqj")]
+unique_name_in_owner = true
+process_mode = 3
 position = Vector2(576, 327)
 
 [node name="map" parent="." instance=ExtResource("3_eet8l")]
 unique_name_in_owner = true
+process_mode = 3
 
 [node name="spawn" parent="." instance=ExtResource("3_sy17x")]
+process_mode = 1
 position = Vector2(-3, 2)
 level = 10
 scale_factor = 16

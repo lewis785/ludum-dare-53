@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bedx7ybi8m0ef"]
+
+[ext_resource type="Script" path="res://scenes/supply_store/supply_store.gd" id="1_0wktc"]
+
+[node name="supply_store" type="Node2D"]
+script = ExtResource("1_0wktc")

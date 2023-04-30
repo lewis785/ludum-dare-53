@@ -6,7 +6,6 @@ const truck = preload("res://scenes/supply_truck/supply_truck.tscn")
 @export var truck_scene : PackedScene
 @export var available_trucks = 5;
 var start_location: Vector2
-var depot_supplies
 
 func structures(nodes : Array[Node]) -> Array[Structure]:
 	var structures : Array[Structure] = []
@@ -20,7 +19,6 @@ func structures(nodes : Array[Node]) -> Array[Structure]:
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var start_location = self.position
-	var depot_supplies = self.get_parent().supply_store_instance
 	var signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect('send_supply_to_structure', send_to_structure)
 
@@ -28,28 +26,27 @@ func send_to_structure(structure: Structure):
 	send_truck(structure)
 
 func send_truck(structure: Structure):
-	if (depot_supplies && !depot_supplies.has_required_supplies(20) || available_trucks == 0):
+	if (!$SupplyStore.has_required_supplies(20) || available_trucks == 0):
 		return
 	available_trucks -= 1
-	depot_supplies.remove_supply(20)
+	$SupplyStore.remove_supply(20)
 	var truck: SupplyTruck = truck_scene.instantiate()
 	truck.target_structure = structure
 	add_child(truck)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if (depot_supplies == null):
-		depot_supplies = self.get_parent().supply_store_instance
-		return
+#func _process(delta):
+#	if ($SupplyStore == null):
+#		$SupplyStore = self.get_parent().supply_store_instance
+#		return
 
 func _on_supply_depot_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	if body.name != 'truck':
+	if !body.name.contains('SupplyTruck'):
 		return
 	
-	var truck = body.get_parent()
-	if truck.reached_target:
+	if body.reached_target:
 		available_trucks += 1
-		truck.queue_free()
+		body.queue_free()
 		
 
