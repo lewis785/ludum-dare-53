@@ -37,7 +37,7 @@ animations = [{
 radius = 3.0
 height = 8.0
 
-[sub_resource type="PackedScene" id="PackedScene_f1vt3"]
+[sub_resource type="PackedScene" id="PackedScene_vyk65"]
 resource_local_to_scene = true
 _bundled = {
 "conn_count": 1,
@@ -57,5 +57,5 @@ _bundled = {
 unique_name_in_owner = true
 
 [node name="spawn" parent="." instance=ExtResource("2_uua7f")]
-enemy_scene = SubResource("PackedScene_f1vt3")
+enemy_scene = SubResource("PackedScene_vyk65")
 scale_factor = 16
