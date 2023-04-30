@@ -4,6 +4,7 @@ extends Node2D
 @export var enemy_scene : PackedScene
 var score : int
 var base_wait_time : float
+var enemy_level: float = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +22,13 @@ func new_game():
 
 func _on_enemy_timer_timeout() -> void:	
 	
+	self.level += 1
+	enemy_level = log(self.level)/log(10)+1
+	
+	for i in range(enemy_level):
+		spawn_enemy()
+	
+func spawn_enemy() -> void:
 	var enemy = enemy_scene.instantiate()
 
 	# Choose a random location on Path2D.
@@ -32,26 +40,20 @@ func _on_enemy_timer_timeout() -> void:
 
 	# Set the enemy's position to a random location.
 	enemy.position = enemy_spawn_location.position
-	#enemy.position = Vector2(0,0)
 
 	# Add some randomness to the direction.
 	direction += randf_range(-PI / 4, PI / 4)
 	enemy.rotation = direction
 	
-	self.level += 1
-	var enemy_level : float = log(self.level)+1
-	
-	
-	var wait = max(0.001, base_wait_time - 0.005*(enemy_level-1))
-	$enemy_timer.start(wait)
-	
 
 	# Choose the velocity for the enemy.
-	var velocity = Vector2(randf_range(100.0, enemy_level*200.0), 0.0)
+	var max_speed = max(1000, 100*enemy_level)
+	var velocity = Vector2(randf_range(100.0, max_speed), 0.0)
 	enemy.linear_velocity = velocity.rotated(direction)
 	
 	# Set enemy health and damage scaled by time
 	enemy.set_level(enemy_level)
+	enemy.set_speed(velocity.length())
 
 	# Spawn the enemy by adding it to the Main scene.
 	add_child(enemy)

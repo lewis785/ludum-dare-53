@@ -5,6 +5,10 @@ class_name Enemy extends RigidBody2D
 @export var damage : int
 
 var obstacles : Array[Obstacle] = []
+var target : Target 
+var target_check_limit: float = 1
+var time_since_target_check : float = 1
+var base_speed : float = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,6 +18,8 @@ func _ready():
 	health = level
 	damage = level
 
+func set_speed(speed : float) -> void:
+	self.base_speed = speed
 
 func set_level(level) -> void:
 	self.level = level
@@ -22,13 +28,17 @@ func set_level(level) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	time_since_target_check += _delta
+	
 	if health <= 0:
 		queue_free()
 		return
 	
 	var targets : Array[Target] = find_targets()
+	
 	if len(targets) == 0 :
 		return
+		
 	move_to_target(targets)
 	
 
@@ -38,9 +48,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 
 func find_targets() -> Array[Target]:
 	var targets : Array[Node] = get_tree().get_nodes_in_group("targets")
-	print("targets...", targets)
 	
-	return markers(targets)
+	return convert_targets(targets)
 	
 func move_to_target(targets : Array[Target]) -> void:
 	var target = closest_target(targets)
@@ -49,9 +58,29 @@ func move_to_target(targets : Array[Target]) -> void:
 	if obstacles.size() > 0:
 		vector = adjust_for_obstacles(target, vector)
 	
-	self.linear_velocity = vector*linear_velocity.length()
+	self.linear_velocity = vector * determine_speed()
+
+	
+func determine_speed() -> float:
+	var current_speed = self.linear_velocity.length()
+	var distance = distance(self.position, target)
+	var adjusted = distance*distance/4
+	
+	var target_speed = min(distance, self.base_speed)
+	var speed = min(target_speed, current_speed+100)
+	
+	if target.get_parent().health <= 0:
+		speed = 1000
+	
+	return speed
+	
 	
 func closest_target(targets : Array[Target]) -> Target:
+	if time_since_target_check < target_check_limit:
+		return target
+		
+	time_since_target_check = 0
+	
 	var closest : Target = targets[0]
 	var closestDistance = distance(self.position, closest)
 	
@@ -60,17 +89,28 @@ func closest_target(targets : Array[Target]) -> Target:
 		if distance < closestDistance:
 			closestDistance = distance
 			closest = target
+	
+	target = closest
+	
 	return closest
 	
 func distance(position : Vector2, target : Target) -> float:
 	return (target.position - position).length()/target.weight
 	
-func markers(nodes : Array[Node]) -> Array[Target]:
+func convert_targets(nodes : Array[Node]) -> Array[Target]:
 	var markers : Array[Target] = []
-	for node in nodes:
-		if node.is_class("Marker2D"):
-			var marker : Target = node
-			markers.append(marker)
+	for node in nodes:	
+		var parent = node.get_parent()
+		if !parent.is_in_group("structures"):
+			continue
+			
+		var structure : Structure = parent
+		if !structure.owned:
+			continue
+				
+		
+		var marker : Target = node
+		markers.append(marker)
 		
 	return markers
 

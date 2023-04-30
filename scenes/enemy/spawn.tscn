@@ -14,7 +14,6 @@ script = ExtResource("1_gnsf0")
 enemy_scene = ExtResource("2_c6en4")
 
 [node name="enemy_timer" type="Timer" parent="."]
-wait_time = 0.5
 
 [node name="score_timer" type="Timer" parent="."]
 
