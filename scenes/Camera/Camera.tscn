@@ -3,11 +3,10 @@
 [ext_resource type="Script" path="res://scenes/Camera/camera_controller.gd" id="1_67m5s"]
 [ext_resource type="PackedScene" uid="uid://euned6naim70" path="res://scenes/menu/menu.tscn" id="2_8kdlw"]
 
-[node name="Camera" type="Node2D"]
+[node name="Camera" type="Camera2D"]
+limit_left = 0
+limit_top = 0
 script = ExtResource("1_67m5s")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="menu" parent="." instance=ExtResource("2_8kdlw")]
 position = Vector2(-4, 0)
-zoom = Vector2(0.1, 0.1)
-
-[node name="menu" parent="Camera2D" instance=ExtResource("2_8kdlw")]
