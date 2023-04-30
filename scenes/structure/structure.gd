@@ -1,25 +1,25 @@
 class_name Structure extends Node2D
 
 enum structure_state{
-	town_bad,
 	town_good,
+	town_bad,
 	tower_good,
 	tower_bad
 	}
 
-@export var health: int = 100
-@export var owned: bool = true
+@export var health: int = 0
+@export var owned: bool = false
 @export var tick_threshold: float = 1
 @export var label: Label
 @export var is_tower: bool
 @export var structure_damage: int = 10
 @export var supplies_consumption: int = 1
 @export var range: float = 100
-@export var rate_of_fire: float = 1
+@export var rate_of_fire: float = 0.1
 @export var parent_name : String = 'spawn'
+@export var heal_amount: int = 20
 
 var local_name:	String
-
 
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
@@ -27,7 +27,6 @@ const enemy_store_res = preload("res://scripts/enemy_store.gd")
 var _supply_store: SupplyStore
 
 var tick = false
-var sub_tick = false # le hack
 var can_fire = false
 var time_til_fire: float = 0
 var time_til_tick: float = 0
@@ -43,6 +42,7 @@ var _supply_bar: Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.local_name = self.name
+	$ScoreTimer.start()
 	signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect("do_damage_to_enemy", subtract_damage_from_enemies)
 	
@@ -111,11 +111,11 @@ func reset_fire():
 
 
 func manage_ownership():
-	owned = false
 	signal_bus.emit_signal('update_ownership')
 
 
 func state_manager():
+	handle_death()
 	if health <= 0:
 		update_health_label(0)
 		manage_ownership()
@@ -124,28 +124,33 @@ func state_manager():
 		if can_take_damage():
 			process_all_enemies_damage()
 			update_health_label(health)
-			if !is_tower:
-				process_supply_useage()
 		reset_tick()
 		
 	for enemy in enemy_store.enemies_in_range:
 		if can_attack(enemy):
 			process_attacks(enemy)
-			reset_fire()
-
-
-func process_supply_useage():
-	sub_tick = !sub_tick
-	if sub_tick:
-		_supply_bar.set_percentage($SupplyStore.supplies)
-		$SupplyStore.remove_supply(supplies_consumption)
-	
+			reset_fire()	
 
 func process_all_enemies_damage():
 	for enemy in enemy_store.enemies:
 		if enemy_store.enemy_exists(enemy):
 			var damage = enemy.damage
 			subtract_damage_from_health(damage)
+
+func handle_death():
+	if is_tower and health <= 0:
+		_animated_sprite.frame = structure_state.tower_bad
+		owned = false
+	if !is_tower and health <= 0:
+		print(123)
+		_animated_sprite.frame = structure_state.town_bad
+		owned = false
+	if !is_tower and health >= 1:
+		_animated_sprite.frame = structure_state.town_good
+		owned = true
+	if is_tower and health >= 1:
+		_animated_sprite.frame = structure_state.tower_good
+		owned = true
 
 func subtract_damage_from_enemies(enemy):
 	var current_enemy_name = enemy.name
@@ -155,9 +160,10 @@ func subtract_damage_from_enemies(enemy):
 	if enemy.health <= 0:
 		enemy_store.add_enemy_to_remove(enemy)
 
-func consume_supplies():
-	_supply_bar.set_percentage($SupplyStore.supplies)
-	$SupplyStore.remove_supply(supplies_consumption)
+
+func consume_supplies(amount):
+	$SupplyStore.remove_supply(amount)
+	$supply.set_percentage($SupplyStore.supplies)
 
 func fire_turret(enemy):
 	if projectile:
@@ -171,7 +177,7 @@ func fire_turret(enemy):
 	
 func process_attacks(enemy):
 	if enemy_store.enemy_in_range_exists(enemy):
-		consume_supplies()
+		consume_supplies(1)
 		fire_turret(enemy)
 
 func handle_fire_rate(delta):
@@ -187,7 +193,6 @@ func tick_manager(delta):
 	pass
 
 func unload_truck(truck: SupplyTruck):
-	print("Supply unloaded")
 	if(truck.target_structure != self):
 		return
 		
@@ -196,9 +201,21 @@ func unload_truck(truck: SupplyTruck):
 	_supply_bar.set_percentage($SupplyStore.supplies)
 	_asp.play()
 
+func heal(heal):
+	var temp_health = health
+	temp_health += heal
+	if temp_health >= 100:
+		health = 100
+		return
+	health = temp_health
+	
+
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
+		heal(heal_amount)
+		self.owned = true
+		signal_bus.emit_signal('update_ownership')
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies.append(body)
@@ -234,7 +251,7 @@ func _on_structure_area_2d_mouse_exited():
 	_border.hide()
 	pass # Replace with function body.
 
-
 func _on_score_timer_timeout():
-	if $SupplyStore.has_required_supply(20):
-		signal_bus.emit_signal("score_update", 100)
+	if !is_tower && $SupplyStore.has_required_supplies(supplies_consumption):
+		consume_supplies(supplies_consumption)
+		signal_bus.emit_signal("score_update", 20)

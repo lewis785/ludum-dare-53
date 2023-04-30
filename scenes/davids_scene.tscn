@@ -7,9 +7,6 @@
 
 [node name="davids_scene" type="Node2D"]
 
-[node name="town" parent="." instance=ExtResource("4_ri4hn")]
-position = Vector2(861, 230)
-
 [node name="turret" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(378, 402)
 is_tower = true
@@ -21,3 +18,8 @@ position = Vector2(311, 171)
 supply = 1
 
 [node name="spawn" parent="." instance=ExtResource("4_2hjir")]
+
+[node name="town2" parent="." instance=ExtResource("4_ri4hn")]
+position = Vector2(596, 294)
+
+[node name="town" parent="." instance=ExtResource("4_ri4hn")]
