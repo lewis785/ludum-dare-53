@@ -9,7 +9,13 @@ var max_camera_speed = camera_speed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if camera_speed <= 0:
+		camera_speed = 30
 	max_camera_speed = camera_speed
+
+	if camera_zoom_speed <= 0:
+		camera_zoom_speed = 1
+
 
 func set_limits(upper_x, upper_y, lower_x, lower_y):
 	self.set_limit(0,upper_x)

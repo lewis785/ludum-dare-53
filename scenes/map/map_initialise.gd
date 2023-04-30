@@ -18,5 +18,4 @@ func _ready():
 	var cl = CL.new()
 	cl.link_camera(get_tree())
 	cl.set_limits(0,0,width*16,height*16)
-	print("Crashed yet?")
 	

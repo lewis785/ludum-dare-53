@@ -8,4 +8,5 @@ func link_camera(tree):
 	#camera = tree.current_scene.get_node("$Camera")
 	
 func set_limits(upper_x, upper_y, lower_x, lower_y):
-	camera.set_limits(upper_x, upper_y, lower_x, lower_y)
+	if camera.limit_camera:
+		camera.set_limits(upper_x, upper_y, lower_x, lower_y)
