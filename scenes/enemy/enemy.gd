@@ -33,16 +33,10 @@ func set_level(level) -> void:
 	self.damage = level
 	
 	var scaled = Vector2(1,1)*max(1, log(level*level))
-	print("scale: ", scaled)
 	
-	print("sprite before: ", $AnimatedSprite2D.transform)
 	$AnimatedSprite2D.transform = $AnimatedSprite2D.transform.scaled(scaled)
-	print("sprite: ", $AnimatedSprite2D.transform)
-	
-	
-	print("collision before: ", $CollisionShape2D.transform)
+
 	$CollisionShape2D.transform = $CollisionShape2D.transform.scaled(scaled)
-	print("collision: ", $CollisionShape2D.transform)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
