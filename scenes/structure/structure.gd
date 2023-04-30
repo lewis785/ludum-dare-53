@@ -144,6 +144,8 @@ func process_all_enemies_damage():
 
 func subtract_damage_from_enemies(enemy):
 	var current_enemy_name = enemy.name
+	if current_enemy_name.contains('SupplyTruck'):
+		return
 	enemy.health -= structure_damage
 	if enemy.health <= 0:
 		enemy_store.add_enemy_to_remove(enemy)
