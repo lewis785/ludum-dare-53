@@ -5,9 +5,6 @@
 
 [node name="Camera" type="Camera2D" groups=["camera"]]
 script = ExtResource("1_67m5s")
-camera_speed = null
-camera_zoom_speed = null
-limit_camera = null
 
 [node name="menu" parent="." instance=ExtResource("2_8kdlw")]
 position = Vector2(-4, 0)
