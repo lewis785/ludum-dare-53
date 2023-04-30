@@ -1,8 +1,10 @@
 class_name EnemyStore extends Node
 
-var enemies: Array[RigidBody2D] = []
-var enemies_in_range: Array[RigidBody2D] = []
-var enemies_to_remove: Array[RigidBody2D] = []
+const entity_res = preload("res://scenes/combat/entity.gd")
+
+var enemies: Array[Entity] = []
+var enemies_in_range: Array[Entity] = []
+var enemies_to_remove: Array[Entity] = []
 
 func add_enemy_to_remove(enemy):
 	enemies_to_remove.append(enemy)

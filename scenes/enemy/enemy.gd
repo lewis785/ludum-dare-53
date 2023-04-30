@@ -1,11 +1,9 @@
 class_name Enemy extends RigidBody2D
 
 @export var level : int = 1
-@export var health : int = 1
-@export var damage : int = 1
 
 var obstacles : Array[Obstacle] = []
-var target : Target 
+var target 
 var target_check_limit: float = 2
 var time_since_target_check : float = target_check_limit
 var base_speed : float = 100
@@ -24,8 +22,7 @@ func _ready():
 	
 	self.lock_rotation = true
 	
-	health = level
-	damage = level
+	set_level(level)
 	
 func play_animation(frames : int) -> void:
 	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
@@ -39,13 +36,12 @@ func set_scale_factor(sf : int) -> void:
 
 func set_level(level) -> void:
 	self.level = level
-	self.health = level
-	self.damage = level
+	$entity.health = level
+	$entity.damage = level
 	
-	var scaled = Vector2(1,1)*max(1, log(level*level))
+	var scaled = Vector2(1,1)*max(1, log(level))
 	
 	$AnimatedSprite2D.transform = $AnimatedSprite2D.transform.scaled(scaled)
-
 	$CollisionShape2D.transform = $CollisionShape2D.transform.scaled(scaled)
 
 
@@ -53,20 +49,20 @@ func set_level(level) -> void:
 func _process(_delta):
 	time_since_target_check += _delta
 	
-	if health <= 0:
+	if !$entity.alive:
 		queue_free()
 		return
 	
-	var targets : Array[Target] = find_targets()
+	var targets = $entity.get_targets()
 	
 	if len(targets) == 0 :
 		return
 		
 	move_to_target(targets)
 	
-	update_animation()
+	process_attack_state()
 	
-func update_animation() -> void:
+func process_attack_state() -> void:
 	var previously_attacking = attacking
 	attacking = in_target_range()
 	
@@ -74,6 +70,9 @@ func update_animation() -> void:
 		play_animation(animations.walk)
 	if !previously_attacking and attacking:
 		play_animation(randi() % 2)
+		
+	if attacking:
+		$entity.attack(target)
 
 func in_target_range() -> bool:
 	return (self.position - target.position).length() < 10*scale_factor
@@ -81,12 +80,10 @@ func in_target_range() -> bool:
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	queue_free()
 
-func find_targets() -> Array[Target]:
-	var targets : Array[Node] = get_tree().get_nodes_in_group("targets")
+func find_targets():	
+	return $entity.get_targets()
 	
-	return convert_targets(targets)
-	
-func move_to_target(targets : Array[Target]) -> void:
+func move_to_target(targets) -> void:
 	var target = closest_target(targets)
 		
 	var vector : Vector2 = (target.position - self.position).normalized()
@@ -110,13 +107,13 @@ func determine_speed() -> float:
 	return speed
 	
 	
-func closest_target(targets : Array[Target]) -> Target:
+func closest_target(targets):
 	if time_since_target_check < target_check_limit:
 		return target
 		
 	time_since_target_check = 0
 	
-	var closest : Target = targets[0]
+	var closest = targets[0]
 	var closestDistance = distance(self.position, closest)
 	
 	for target in targets:
@@ -129,27 +126,11 @@ func closest_target(targets : Array[Target]) -> Target:
 	
 	return closest
 	
-func distance(position : Vector2, target : Target) -> float:
-	return (target.position - position).length()/target.weight
+func distance(position : Vector2, target ) -> float:
+	return (target.position - position).length()/target.priority_weight
 	
-func convert_targets(nodes : Array[Node]) -> Array[Target]:
-	var markers : Array[Target] = []
-	for node in nodes:	
-		var parent = node.get_parent()
-		if !parent.is_in_group("structures"):
-			continue
-			
-		var structure : Structure = parent
-		if !structure.owned:
-			continue
-				
-		
-		var marker : Target = node
-		markers.append(marker)
-		
-	return markers
 
-func adjust_for_obstacles(target : Target, velocity : Vector2) -> Vector2:
+func adjust_for_obstacles(target, velocity : Vector2) -> Vector2:
 	var adjusted : Vector2 = Vector2(0,0)
 	
 	var min_distance = 9223372036854775807

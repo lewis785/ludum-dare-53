@@ -57,7 +57,7 @@ func _on_enemy_timer_timeout() -> void:
 	var burst : int
 	
 	if int(enemy_level-0.5) > previous_level:
-		burst = enemy_level*enemy_level*scale_factor
+		burst = enemy_level*scale_factor
 	
 	
 	for i in range(enemy_level+burst):

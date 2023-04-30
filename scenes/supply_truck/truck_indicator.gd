@@ -26,6 +26,11 @@ func next_free_truck():
 			return key
 	return null
 
+func set_truck_limit(limit):
+	truck_limit = limit
+	init_truck_dictionary()
+	display_sprites()
+
 func add_truck():
 	truck_status[truck_limit] = ''
 	truck_limit += 1
@@ -75,10 +80,3 @@ func clear_sprites():
 	for sprite in sprites:
 		sprite.queue_free()
 	sprites = []
-	
-	
-	# Alternatively, you can use the AnimatedSprite node:
-	#var animated_sprite = AnimatedSprite.new()
-	#animated_sprite.frames = [region]
-	#animated_sprite.set_frame(0)
-
