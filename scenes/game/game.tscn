@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cv73migkgn2y"]
+[gd_scene load_steps=4 format=3 uid="uid://cv73migkgn2y"]
 
 [ext_resource type="PackedScene" uid="uid://dtidvayd0rwdd" path="res://scenes/map/map.tscn" id="1_61p7q"]
 [ext_resource type="PackedScene" uid="uid://cef7nfykxy18e" path="res://scenes/enemy/spawn.tscn" id="2_uua7f"]
+[ext_resource type="PackedScene" uid="uid://rebr3pbduye8" path="res://scenes/audio/audio.tscn" id="3_w8h46"]
 
 [node name="game" type="Node2D" groups=["game"]]
 
@@ -11,3 +12,5 @@ map_rows = 4
 
 [node name="spawn" parent="." instance=ExtResource("2_uua7f")]
 scale_factor = 16
+
+[node name="audio" parent="." instance=ExtResource("3_w8h46")]
