@@ -5,6 +5,7 @@ const truck = preload("res://scenes/supply_truck/supply_truck.tscn")
 
 @export var truck_scene : PackedScene
 var start_location: Vector2
+var depot_supplies
 
 func structures(nodes : Array[Node]) -> Array[Structure]:
 	var structures : Array[Structure] = []
@@ -16,28 +17,33 @@ func structures(nodes : Array[Node]) -> Array[Structure]:
 		
 	return structures
 
+func send_to_structure(structure: Structure):
+	print(structure)
+	send_truck(structure.position)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var start_location = self.position
-	#var truck: SupplyTruck = truck_scene.instantiate()
-	#var root = self.get_tree().current_scene
-	#var structs = structures(root.find_children('*structure*'))
-	
-	#truck.target_structure = structs[1]
-	#add_child(truck)
-	pass
+	var depot_supplies = self.get_parent().supply_store_instance
+	var signal_bus = get_node("/root/SignalBus")
+	signal_bus.connect('send_supply_to_structure', send_to_structure)
 
 func send_truck(location: Vector2):
+	if (depot_supplies && !depot_supplies.has_required_supplies(20)):
+		return
+	
+	depot_supplies.remove_supply(20)
 	var truck: SupplyTruck = truck_scene.instantiate()
 	truck.target_structure = location
 	add_child(truck)
 	
 	
-func _input(event):
-	if(event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
-		send_truck(self.get_local_mouse_position() + self.global_position)
+#func _input(event):
+#	if(event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+#		send_truck(self.get_local_mouse_position() + self.global_position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
-	pass
+	if (depot_supplies == null):
+		depot_supplies = self.get_parent().supply_store_instance
+		return

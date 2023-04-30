@@ -1,13 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bv1oo5bv5o5rs"]
+[gd_scene load_steps=5 format=3 uid="uid://bv1oo5bv5o5rs"]
 
 [ext_resource type="PackedScene" uid="uid://cef7nfykxy18e" path="res://scenes/enemy/spawn.tscn" id="2_dx6tg"]
+[ext_resource type="PackedScene" uid="uid://dhf8loxej1fdg" path="res://scenes/supply_depot/supply_depot.tscn" id="3_bkg0a"]
+[ext_resource type="PackedScene" uid="uid://df82d8dxjayvh" path="res://scenes/roads/roads.tscn" id="4_av4wr"]
 [ext_resource type="PackedScene" uid="uid://sd50xggadb4x" path="res://scenes/structure/structure.tscn" id="4_ri4hn"]
 
 [node name="davids_scene" type="Node2D"]
 
 [node name="town" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(861, 230)
-owned = false
 
 [node name="turret" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(378, 402)
@@ -15,3 +16,8 @@ is_tower = true
 
 [node name="spawn" parent="." instance=ExtResource("2_dx6tg")]
 position = Vector2(-1, 1)
+
+[node name="roads" parent="." instance=ExtResource("4_av4wr")]
+
+[node name="supply_depot" parent="." instance=ExtResource("3_bkg0a")]
+position = Vector2(287, 109)

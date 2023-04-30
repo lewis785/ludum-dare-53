@@ -33,6 +33,7 @@ var supply_store_instance
 var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
+var _border
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,6 +43,8 @@ func _ready():
 	
 	
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
+	_border = $StructureArea2D/Borders
+	_border.hide()
 	var _target = $target
 	_target.weight = 1
 	if is_tower and _animated_sprite:
@@ -170,3 +173,19 @@ func _on_structure_area_2d_body_exited(body):
 func _on_range_area_2d_body_exited(body):
 	# enemy_store.add_enemy_to_remove(body)
 	pass
+
+
+func _on_structure_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx):
+	if event.is_action_pressed("active"):
+		signal_bus.emit_signal("send_supply_to_structure", self)
+	pass # Replace with function body.
+
+
+func _on_structure_area_2d_mouse_entered():
+	_border.show()
+	pass # Replace with function body.
+
+
+func _on_structure_area_2d_mouse_exited():
+	_border.hide()
+	pass # Replace with function body.
