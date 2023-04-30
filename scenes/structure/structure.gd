@@ -188,6 +188,7 @@ func unload_truck(truck: SupplyTruck):
 	var truck_supply = truck.get_node('SupplyStore')
 	$SupplyStore.add_supply(truck_supply.remove_supply(truck_supply.supplies))
 	_supply_bar.set_percentage($SupplyStore.supplies)
+	_asp.play()
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
