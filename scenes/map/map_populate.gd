@@ -1,13 +1,12 @@
-var width = 900;
-var height = 900;
-var map_rows;
-var map_columns;
-var map_sectors;
+var width = 900
+var height = 900
+var map_rows
+var map_columns
+var map_sectors
 
 var sector_width
 var sector_height
 var town_turret_range
-var sector_row_amount = 3
 
 var tilemap
 var tree
@@ -21,32 +20,29 @@ var depot: PackedScene = preload("res://scenes/supply_depot/supply_depot.tscn")
 
 
 
-func _init(local_tilemap, local_tree, local_width, local_height, local_map_sectors):
+func _init(local_tilemap, local_tree, local_width, local_height, local_map_rows, local_map_columns):
 	tilemap = local_tilemap
 	tree = local_tree
 
 	width = local_width
 	height = local_height
-	map_sectors = local_map_sectors
-	sector_row_amount = int(sqrt(map_sectors))
+	map_rows = local_map_rows
+	map_columns = local_map_columns
+	map_sectors = map_rows * map_columns
 	
-	sector_width = width / sector_row_amount
-	sector_height = height / sector_row_amount
+	sector_width = width / map_columns
+	sector_height = height / map_rows
 	town_turret_range = sector_width/4
 	
 	populate_map()
 
 func populate_map():
-	#print("TileMap Pos X:", tilemap.position.x, " Y:", tilemap.position.y)
-	#spawn_structure(5, 5)
 	for sector_num in map_sectors:
 		fill_sector(sector_num)
-	
-	#spawn_structure(2, 2)
 
 func fill_sector(sector_number):
-	var sector_x = (sector_number % sector_row_amount) * sector_width
-	var sector_y = floor(sector_number / sector_row_amount) * sector_height
+	var sector_x = (sector_number % map_columns) * sector_width
+	var sector_y = floor(sector_number / map_columns) * sector_height
 	
 	var town_x = randi_range(sector_x + town_turret_range, (sector_x+sector_width) - town_turret_range)
 	var town_y = randi_range(sector_y + town_turret_range, (sector_y+sector_height) - town_turret_range)
