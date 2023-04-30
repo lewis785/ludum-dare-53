@@ -140,7 +140,8 @@ sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame_progress = 0.245583
 
 [node name="Borders" type="AnimatedSprite2D" parent="StructureArea2D"]
-position = Vector2(6, 2)
+position = Vector2(5, 3.26563)
+scale = Vector2(0.757143, 0.560385)
 sprite_frames = SubResource("SpriteFrames_ukjnt")
 
 [node name="StructureHealth" type="Label" parent="."]
@@ -151,6 +152,7 @@ offset_bottom = -40.0
 theme_override_fonts/font = ExtResource("3_6g6dh")
 
 [node name="RangeArea2D" type="Area2D" parent="."]
+visible = false
 
 [node name="RangeCollisionShape2D" type="CollisionShape2D" parent="RangeArea2D"]
 position = Vector2(1, 1)

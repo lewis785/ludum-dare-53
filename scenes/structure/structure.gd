@@ -162,6 +162,7 @@ func _on_structure_area_2d_body_entered(body):
 		enemy_store.enemies.append(body)
 
 func _on_range_area_2d_body_entered(body):
+	print(1)
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies_in_range.append(body)
@@ -177,6 +178,7 @@ func _on_range_area_2d_body_exited(body):
 
 func _on_structure_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx):
 	if event.is_action_pressed("click"):
+		print(viewport)
 		signal_bus.emit_signal("send_supply_to_structure")
 	pass # Replace with function body.
 
