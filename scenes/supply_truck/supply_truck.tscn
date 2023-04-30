@@ -134,10 +134,9 @@ size = Vector2(24, 13)
 
 [node name="supply_truck" type="Node2D"]
 script = ExtResource("1_ifetn")
-speed = null
-target_structure = null
 
 [node name="truck" type="CharacterBody2D" parent="."]
+collision_mask = 0
 
 [node name="TruckSprite" type="AnimatedSprite2D" parent="truck"]
 texture_filter = 1
@@ -145,5 +144,7 @@ sprite_frames = SubResource("SpriteFrames_pqpcf")
 animation = &"truck-empty-moving"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="truck"]
+visibility_layer = 0
 position = Vector2(0, 3.5)
 shape = SubResource("RectangleShape2D_kjapd")
+one_way_collision = true

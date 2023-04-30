@@ -12,7 +12,7 @@ func move_towards(delta: float, target: Vector2):
 	$truck.velocity = Vector2(0, 0)
 	
 	var distance_to = (target - $truck.global_position).length()
-	if (distance_to <= 1):
+	if (distance_to <= 10):
 		reached_target = true
 		return
 	
