@@ -5,6 +5,9 @@ extends Node2D
 @export var supply = 0
 var acc = 0
 
+func _ready():
+	$DepotSprite.play('depot-healthy')
+
 func refill():
 	if max_supply == supply:
 		return

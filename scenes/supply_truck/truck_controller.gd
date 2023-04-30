@@ -1,19 +1,50 @@
-extends CharacterBody2D
+class_name SupplyTruck extends Node2D
 
-@export var speed = 30.0
+var Structure = preload("res://scenes/structure/structure.gd")
+
+@export var speed = 1000.0
+@export var target_structure: Structure
+
+var start_position: Vector2
+var reached_target = false
+
+func move_towards(delta: float, target: Vector2):
+	$truck.velocity = Vector2(0, 0)
 	
+	var distance_to = (target - $truck.global_position).length()
+	if (distance_to <= 1):
+		reached_target = true
+		return
+	
+	var direction = (target - $truck.global_position).normalized()
+	print(direction)
+	var angle = rad_to_deg(direction.angle())
+
+	print(angle)
+	$truck/TruckSprite.flip_v = angle > 90 || angle < -90
+	$truck/TruckSprite.rotation = direction.angle()
+	$truck.velocity = direction * speed * delta
+	$truck.move_and_slide()
+
+func animate():
+	if (reached_target):
+		$truck/TruckSprite.play('truck-empty-moving')
+	else:	
+		$truck/TruckSprite.play('truck-full-moving')
+		
+
+func move(delta):
+	if (reached_target):	
+		move_towards(delta, start_position)
+	else:
+		move_towards(delta, target_structure.position)
+
+func _ready():
+	start_position = self.global_position
 
 func _physics_process(delta):
-	velocity.x = 0;
-		
-	if Input.is_action_pressed('ui_left'):
-		velocity.x = -speed
-		$TruckSprite.play('truck-moving')
-		$TruckSprite.flip_h = true
+	animate()
+	move(delta)
 	
-	if Input.is_action_pressed('ui_right'):
-		velocity.x = speed
-		$TruckSprite.play('truck-moving')
-		$TruckSprite.flip_h = false
-		
-	move_and_slide()
+	
+	
