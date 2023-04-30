@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=33 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="PackedScene" uid="uid://cs533if32c81i" path="res://scenes/combat/entity.tscn" id="2_f0kq4"]
