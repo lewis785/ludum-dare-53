@@ -14,6 +14,7 @@ var structure: PackedScene = preload("res://scenes/structure/structure.tscn")
 var depot: PackedScene = preload("res://scenes/supply_depot/supply_depot.tscn")
 var roads: PackedScene = preload("res://scenes/roads/roads.tscn")
 
+var depot_position
 # Centre sector is spawn
 # Each Sector has a town
 # Each town has 1-3 turrets close but not adjacent
@@ -90,7 +91,8 @@ func spawn_depot(x,y):
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_depot = depot.instantiate()
 		tree.current_scene.add_child.call_deferred(instanced_depot)
-		instanced_depot.global_position = tilemap.to_global(local_position)
+		depot_position = tilemap.to_global(local_position)
+		instanced_depot.global_position = depot_position
 
 func spawn_structure(x,y, is_tower=false, first_structure=false):
 	if structure:

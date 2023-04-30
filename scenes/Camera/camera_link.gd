@@ -8,3 +8,6 @@ func link_camera(tree):
 func set_limits(upper_x, upper_y, lower_x, lower_y):
 	if camera.limit_camera:
 		camera.set_limits(upper_x, upper_y, lower_x, lower_y)
+
+func set_to_point(pos : Vector2):
+	camera.position = pos

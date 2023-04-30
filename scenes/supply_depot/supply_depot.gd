@@ -7,20 +7,9 @@ extends Node2D
 var acc = 0
 
 func _ready():
-	$truck_coordinator/SupplyStore.set_supply_capacity(max_supply)
-	$truck_coordinator/SupplyStore.add_supply(supply)
-	$RefillTimer.start()
 	$DepotSprite.play('depot-healthy')
 	$entity.update_position(self.position)
 	
 	$entity.max_health = health
 	$entity.set_health(health)
-	$HealthBar.percentage = 100
-
-func refill():
-	$truck_coordinator/SupplyStore.add_supply(refill_rate)
-	$SupplyBar.set_percentage($truck_coordinator/SupplyStore.supplies)
-	
-func _on_refill_timer_timeout():
-	refill()
 

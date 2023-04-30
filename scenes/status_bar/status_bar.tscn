@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dws8yrkuha0xn"]
+[gd_scene load_steps=4 format=3 uid="uid://dws8yrkuha0xn"]
 
 [ext_resource type="Script" path="res://scenes/status_bar/status_bar.gd" id="1_wufho"]
 
@@ -6,10 +6,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48n52"]
 bg_color = Color(0, 0, 0, 0.254902)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6inhe"]
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 2
 
 [node name="status_bar" type="Control"]
 z_as_relative = false
@@ -25,6 +21,5 @@ offset_right = 127.0
 offset_bottom = 32.0
 theme = SubResource("Theme_adewy")
 theme_override_styles/background = SubResource("StyleBoxFlat_48n52")
-theme_override_styles/fill = SubResource("StyleBoxTexture_6inhe")
 value = 45.0
 show_percentage = false
