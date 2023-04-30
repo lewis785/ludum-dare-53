@@ -90,7 +90,7 @@ func spawn_enemy() -> void:
 	# var min_speed = 100.0
 	# var max_speed = max(1000, 100*enemy_level)
 	var min_speed = 10
-	var max_speed = 100
+	var max_speed = 100*enemy_level
 	var velocity = Vector2(randf_range(min_speed, max_speed), 0.0)
 	enemy.linear_velocity = velocity.rotated(direction)
 	
