@@ -1,104 +1,25 @@
-[gd_scene load_steps=17 format=3 uid="uid://bn1ar05oul7hp"]
+[gd_scene load_steps=8 format=3 uid="uid://bn1ar05oul7hp"]
 
 [ext_resource type="Script" path="res://scenes/enemy/enemy.gd" id="1_gyipw"]
-[ext_resource type="Texture2D" uid="uid://lyxpenrl2w3i" path="res://assets/enemy/GrizzledTreantIdle.png" id="1_s0my2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pf0mn"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oc77u"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0r4ki"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gp538"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2dqs"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(48, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1k80d"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wikc4"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bd11a"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qxh1b"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(0, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kuh60"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pk43k"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(32, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xvaj8"]
-atlas = ExtResource("1_s0my2")
-region = Rect2(48, 0, 16, 16)
+[ext_resource type="Texture2D" uid="uid://t8eslldqsd3k" path="res://assets/enemy/Enemy2-noline.png" id="3_4jul0"]
+[ext_resource type="Texture2D" uid="uid://clxm4ypq2c4e2" path="res://assets/enemy/Enemy2.png" id="4_m86jl"]
+[ext_resource type="Texture2D" uid="uid://cy3osihgwcqo6" path="res://assets/enemy/Enemy3-noline.png" id="5_y1foq"]
+[ext_resource type="Texture2D" uid="uid://bs8m73ckoe1s5" path="res://assets/enemy/Enemy3.png" id="6_k53qj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jw21e"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_pf0mn")
+"texture": ExtResource("3_4jul0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_oc77u")
+"texture": ExtResource("4_m86jl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0r4ki")
+"texture": ExtResource("5_y1foq")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gp538")
-}],
-"loop": true,
-"name": &"fly",
-"speed": 20.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_e2dqs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1k80d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wikc4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bd11a")
-}],
-"loop": true,
-"name": &"swim",
-"speed": 2.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qxh1b")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kuh60")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pk43k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xvaj8")
+"texture": ExtResource("6_k53qj")
 }],
 "loop": true,
 "name": &"walk",
@@ -106,21 +27,19 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krpay"]
-radius = 13.0
-height = 34.0
+radius = 3.0
+height = 8.0
 
 [node name="enemy" type="RigidBody2D"]
 position = Vector2(64, 70)
-scale = Vector2(0.5, 0.5)
 gravity_scale = 0.0
 script = ExtResource("1_gyipw")
 health = 20
-damage = 1
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jw21e")
 animation = &"walk"
 frame_progress = 0.35947
