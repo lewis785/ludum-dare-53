@@ -13,6 +13,10 @@ func _ready():
 	$DepotSprite.play('depot-healthy')
 	
 	$entity.update_position(self.position)
+	
+	$entity.max_health = health
+	$entity.set_health(health)
+	$HealthBar.percentage = 100
 
 func refill():
 	$truck_coordinator/SupplyStore.add_supply(refill_rate)

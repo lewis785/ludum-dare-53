@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dhf8loxej1fdg"]
+[gd_scene load_steps=21 format=3 uid="uid://dhf8loxej1fdg"]
 
 [ext_resource type="Script" path="res://scenes/supply_depot/supply_depot.gd" id="1_8fqxo"]
 [ext_resource type="Texture2D" uid="uid://o6r78b3qslt7" path="res://assets/depot-light.png" id="1_pfjkr"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dpmoir6bxfdp7" path="res://scenes/supply_truck/truck_coordinator.tscn" id="2_gcobm"]
 [ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="4_3321a"]
 [ext_resource type="PackedScene" uid="uid://dws8yrkuha0xn" path="res://scenes/status_bar/status_bar.tscn" id="5_qdkt8"]
+[ext_resource type="Texture2D" uid="uid://c88nwnkcbc10f" path="res://assets/projectile/single_bullet.png" id="7_um3hp"]
+[ext_resource type="Texture2D" uid="uid://crg5lh8xmoylf" path="res://assets/heart.png" id="8_m460j"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uovtp"]
 atlas = ExtResource("1_pfjkr")
@@ -88,12 +90,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2igs"]
 size = Vector2(23.1077, 12.918)
 
-[node name="supply_depot" type="Area2D" groups=["depots"]]
+[node name="supply_depot" type="Area2D" groups=["depots", "game"]]
 script = ExtResource("1_8fqxo")
 
 [node name="entity" parent="." instance=ExtResource("2_fx2ib")]
-health = 100
-max_health = 100
+health = 1000
+max_health = 1000
 
 [node name="DepotSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(-2, -42)
@@ -102,7 +104,6 @@ sprite_frames = SubResource("SpriteFrames_u2thd")
 animation = &"depot-healthy"
 
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
-available_trucks = 5
 
 [node name="SupplyStore" parent="truck_coordinator" instance=ExtResource("4_3321a")]
 position = Vector2(1, 12)
@@ -124,6 +125,7 @@ offset_bottom = -121.0
 label = "Supply"
 percentage = 100
 colour = Color(1, 0.803922, 0, 1)
+texture = ExtResource("7_um3hp")
 
 [node name="HealthBar" parent="." instance=ExtResource("5_qdkt8")]
 offset_left = -61.0
@@ -132,6 +134,7 @@ offset_right = -61.0
 offset_bottom = -135.0
 label = "Health"
 colour = Color(1, 0, 0, 1)
+texture = ExtResource("8_m460j")
 
 [connection signal="body_shape_entered" from="." to="truck_coordinator" method="_on_supply_depot_body_shape_entered"]
 [connection signal="health_update" from="entity" to="HealthBar" method="_on_entity_health_update"]

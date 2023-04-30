@@ -2,15 +2,11 @@ extends Node2D
 
 var paused : bool
 var skipping : bool
-var restart : bool
 
 var game_scene = preload("res://scenes/game/game.tscn")
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	if restart:
-		start_game()
-	
+func _ready() -> void:	
 	skipping = false
 	
 	pause()
@@ -33,10 +29,11 @@ func _process(delta: float) -> void:
 
 
 func is_game_over() -> bool:
-	var entities = get_tree().get_nodes_in_group("entity")
+	var entities = get_tree().get_nodes_in_group("ally")
 	
 	for entity in entities:
-		if entity.friendly and entity.alive and entity.active:
+		if entity.alive and entity.active:
+			
 			return false
 
 	return true
@@ -99,8 +96,6 @@ func start_game() -> void:
 
 
 func _on_restart_button_button_up() -> void:
-	restart = true
-
 	var game_nodes = get_tree().get_nodes_in_group("game")
 	
 	for game in game_nodes:		

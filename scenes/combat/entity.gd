@@ -68,7 +68,8 @@ func heal(healing : int) -> void:
 	
 	
 func set_health(value : int) -> void:
-	health = value
+	health = max(0, min(value, max_health))
+	
 	
 func notify_health(value) -> void:
 	health_update.emit((value*100)/max_health)

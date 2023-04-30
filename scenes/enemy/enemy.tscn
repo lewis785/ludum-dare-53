@@ -179,8 +179,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krpay"]
-radius = 3.0
-height = 8.0
+radius = 14.0
+height = 34.0
 
 [node name="enemy" type="RigidBody2D"]
 position = Vector2(64, 70)
@@ -195,7 +195,6 @@ damage = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_jw21e")
 animation = &"attack1"
 
