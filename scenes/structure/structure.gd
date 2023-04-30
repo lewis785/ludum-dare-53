@@ -157,12 +157,14 @@ func tick_manager(delta):
 	pass
 
 func _on_structure_area_2d_body_entered(body):
+	print(body)
+	if body.name == 'truck':
+		print(body)
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies.append(body)
 
 func _on_range_area_2d_body_entered(body):
-	print(1)
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies_in_range.append(body)

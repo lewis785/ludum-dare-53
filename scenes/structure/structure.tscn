@@ -152,7 +152,6 @@ offset_bottom = -40.0
 theme_override_fonts/font = ExtResource("3_6g6dh")
 
 [node name="RangeArea2D" type="Area2D" parent="."]
-visible = false
 
 [node name="RangeCollisionShape2D" type="CollisionShape2D" parent="RangeArea2D"]
 position = Vector2(1, 1)
@@ -164,6 +163,7 @@ position = Vector2(1, 1)
 
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
+[connection signal="body_shape_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_shape_entered"]
 [connection signal="input_event" from="StructureArea2D" to="." method="_on_structure_area_2d_input_event"]
 [connection signal="mouse_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_mouse_exited"]
