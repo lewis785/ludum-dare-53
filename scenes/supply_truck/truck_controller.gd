@@ -4,6 +4,8 @@ var Structure = preload("res://scenes/structure/structure.gd")
 
 @export var speed = 10000.0
 @export var target_structure: Structure
+var truck_indicator
+var truck_id: int
 
 var start_position: Vector2
 var reached_target = false
@@ -13,6 +15,7 @@ func move_towards(delta: float, target: Vector2):
 	
 	var distance_to = (target - global_position).length()
 	if (distance_to <= 10):
+		truck_indicator.set_truck_status(truck_id, "returning")
 		reached_target = true
 		return
 	
@@ -40,6 +43,7 @@ func move(delta):
 
 func _ready():
 	start_position = self.global_position
+	truck_indicator.set_truck_status(truck_id, "delivering")
 
 func _physics_process(delta):
 	animate()
