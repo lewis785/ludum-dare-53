@@ -19,7 +19,6 @@ func refill():
 	if max_supply == supply:
 		return
 	supply_store_instance.add_supply(refill_rate)
-	print(supply_store_instance.supplies)
 	
 func _on_refill_timer_timeout():
 	refill()
