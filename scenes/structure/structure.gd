@@ -23,6 +23,7 @@ var local_name:	String
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
 const enemy_store_res = preload("res://scripts/enemy_store.gd")
+var _supply_store: SupplyStore
 
 var tick = false
 var can_fire = false
@@ -32,6 +33,9 @@ var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
 var _border
+var _health_bar: ProgressBar
+var _supply_bar: ProgressBar
+var _supply_bar_control: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,6 +46,10 @@ func _ready():
 	
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_border = $StructureArea2D/Borders
+	_supply_store = $SupplyStore
+	
+	init_progress_bars()
+	
 	_border.hide()
 	var _target = $target
 	_target.weight = 1
@@ -49,11 +57,31 @@ func _ready():
 		_target.weight = 10
 		_animated_sprite.frame = structure_state.tower_good
 	
-	label = $StructureHealth
 	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
-	label.set_text(str(health))
 	enemy_store = enemy_store_res.new()
 	pass # Replace with function body.
+
+func init_progress_bars():
+	_health_bar = $health/ProgressBar
+	_health_bar.value = health
+	var _health_bar_label = $health/Label
+	_health_bar_label.text = "Health"
+	var health_colour = _health_bar.get_modulate()
+	health_colour.r = 255.0
+	health_colour.g = 0.0
+	health_colour.b = 0.0
+	_health_bar.set_modulate(health_colour)
+	
+	_supply_bar = $supply/ProgressBar
+	_supply_bar.value = _supply_store.supplies
+	var _supply_bar_label = $supply/Label
+	_supply_bar_label.text = "Supply"
+	var supply_colour = _supply_bar.get_modulate()
+	supply_colour.r = 255.0
+	supply_colour.g = 205.0
+	supply_colour.b = 0.1
+	_supply_bar.set_modulate(supply_colour)
+	
 
 func set_tower():
 	is_tower = true
@@ -79,7 +107,7 @@ func subtract_damage_from_health(damage):
 	health -= damage
 
 func update_health_label(new_health):
-	label.set_text(str(new_health))
+	_health_bar.value = new_health
 
 func reset_tick():
 	time_til_tick = 0

@@ -136,6 +136,7 @@ size = Vector2(24, 13)
 script = ExtResource("1_ifetn")
 
 [node name="truck" type="CharacterBody2D" parent="."]
+metadata/_edit_group_ = true
 
 [node name="TruckSprite" type="AnimatedSprite2D" parent="truck"]
 texture_filter = 1

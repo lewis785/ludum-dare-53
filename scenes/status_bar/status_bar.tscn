@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dws8yrkuha0xn"]
+
+[ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="1_if7jo"]
+
+[sub_resource type="Theme" id="Theme_adewy"]
+default_font = ExtResource("1_if7jo")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48n52"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_bp1q4"]
+default_font = ExtResource("1_if7jo")
+
+[node name="status_bar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 0
+offset_top = 22.0
+offset_right = 73.0
+offset_bottom = 43.0
+theme = SubResource("Theme_adewy")
+theme_override_styles/background = SubResource("StyleBoxFlat_48n52")
+value = 45.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = SubResource("Theme_bp1q4")
+text = "Status Bar"
