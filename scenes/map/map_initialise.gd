@@ -14,10 +14,7 @@ const CL = preload("res://scenes/Camera/camera_link.gd")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	TG.new(tilemap, width, height, noise_gate)
-	MP.new(tilemap, get_tree(), width, height, map_rows, map_columns)
-	set_camera_limit()
-
-func set_camera_limit():
+	var mp = MP.new(tilemap, get_tree(), width, height, map_rows, map_columns)
 	var map_size = tilemap.get_used_rect().size
 	var tile_size = tilemap.cell_quadrant_size
 	var world_size = map_size * tile_size
@@ -25,3 +22,5 @@ func set_camera_limit():
 	var cl = CL.new()
 	cl.link_camera(get_tree())
 	cl.set_limits(0,0,world_size.x,world_size.y)
+	cl.set_to_point(mp.depot_position)
+
