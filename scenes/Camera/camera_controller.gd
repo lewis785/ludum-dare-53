@@ -28,19 +28,52 @@ func _process(delta):
 	get_input(delta)
 
 func get_input(delta):
+	var limit_x1 = self.limit_left
+	var limit_x2 = self.limit_right
+	var limit_y1 = self.limit_top
+	var limit_y2 = self.limit_bottom
+
+	var zoom_change = false
+	
 	var movement = position
 	if Input.is_action_pressed("camera_right"):
-		movement.x += camera_speed
+		movement.x = clamp(movement.x + camera_speed,
+			limit_x1,
+			limit_x2
+		)
 	if Input.is_action_pressed("camera_left"):
-		movement.x -= camera_speed
+		movement.x = clamp(movement.x - camera_speed,
+			limit_x1,
+			limit_x2
+		)
 	if Input.is_action_pressed("camera_up"):
-		movement.y -= camera_speed
+		movement.y = clamp(movement.y - camera_speed,
+			limit_y1,
+			limit_y2
+		)
 	if Input.is_action_pressed("camera_down"):
-		movement.y += camera_speed
+		movement.y = clamp(movement.y + camera_speed,
+			limit_y1,
+			limit_y2
+		)
 	if Input.is_action_pressed("camera_zoom_in") or Input.is_action_just_released("camera_zoom_in"):
-		set_zoom(get_zoom() + ((camera_zoom_speed * get_zoom())/10))
+		zoom_change = true
+		set_zoom(
+			clamp(
+				get_zoom() + ((camera_zoom_speed * get_zoom())/10),
+				Vector2(0.5,0.5),
+				Vector2(100,100),
+			)
+		)
 	if Input.is_action_pressed("camera_zoom_out") or Input.is_action_just_released("camera_zoom_out"):
-		set_zoom(get_zoom() - ((camera_zoom_speed * get_zoom())/10))
-	
-	camera_speed = max_camera_speed / ((get_zoom().x+1) / 2)
+		zoom_change = true
+		set_zoom(
+			clamp(
+				get_zoom() - ((camera_zoom_speed * get_zoom())/10),
+				Vector2(0.5,0.5),
+				Vector2(100,100),
+			)
+		)
+	if zoom_change:
+		camera_speed = max_camera_speed / ((get_zoom().x+1) / 2)
 	position = movement
