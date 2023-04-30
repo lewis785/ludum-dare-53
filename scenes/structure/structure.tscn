@@ -127,7 +127,6 @@ script = ExtResource("1_lu5co")
 
 [node name="StructureArea2D" type="Area2D" parent="."]
 position = Vector2(1, 1)
-collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StructureArea2D"]
 light_mask = 0
@@ -153,7 +152,6 @@ offset_bottom = -40.0
 theme_override_fonts/font = ExtResource("3_6g6dh")
 
 [node name="RangeArea2D" type="Area2D" parent="."]
-collision_mask = 0
 
 [node name="RangeCollisionShape2D" type="CollisionShape2D" parent="RangeArea2D"]
 position = Vector2(1, 1)
