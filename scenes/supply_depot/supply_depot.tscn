@@ -108,17 +108,22 @@ shape = SubResource("RectangleShape2D_t2igs")
 
 [node name="RefillTimer" type="Timer" parent="."]
 
-[node name="supply" parent="." instance=ExtResource("5_qdkt8")]
-offset_left = -51.0
-offset_top = -44.0
-offset_right = -51.0
-offset_bottom = -44.0
+[node name="SupplyBar" parent="." instance=ExtResource("5_qdkt8")]
+offset_left = -77.0
+offset_top = -72.0
+offset_right = -77.0
+offset_bottom = -72.0
+label = "Supply"
+percentage = 100
+colour = Color(1, 0.803922, 0, 1)
 
-[node name="health" parent="." instance=ExtResource("5_qdkt8")]
-offset_left = 1.0
-offset_top = -44.0
-offset_right = 1.0
-offset_bottom = -44.0
+[node name="HealthBar" parent="." instance=ExtResource("5_qdkt8")]
+offset_left = 4.0
+offset_top = -72.0
+offset_right = 4.0
+offset_bottom = -72.0
+label = "Health"
+colour = Color(1, 0, 0, 1)
 
 [connection signal="body_shape_entered" from="." to="truck_coordinator" method="_on_supply_depot_body_shape_entered"]
 [connection signal="timeout" from="RefillTimer" to="." method="_on_refill_timer_timeout"]

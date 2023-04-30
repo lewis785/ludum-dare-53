@@ -11,13 +11,10 @@ func _ready():
 	$truck_coordinator/SupplyStore.add_supply(supply)
 	$RefillTimer.start()
 	$DepotSprite.play('depot-healthy')
-	
-	status_bar_manager.init_health_bar($health/ProgressBar, $health/Label, health)
-	status_bar_manager.init_supply_bar($supply/ProgressBar, $supply/Label, supply)
-
 
 func refill():
 	$truck_coordinator/SupplyStore.add_supply(refill_rate)
+	$SupplyBar.set_percentage($truck_coordinator/SupplyStore.supplies)
 	
 func _on_refill_timer_timeout():
 	refill()

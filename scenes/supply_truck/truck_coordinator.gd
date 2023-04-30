@@ -30,6 +30,8 @@ func send_truck(structure: Structure):
 		return
 	available_trucks -= 1
 	$SupplyStore.remove_supply(20)
+	var SupplyBar = get_node("../SupplyBar")
+	SupplyBar.set_percentage($SupplyStore.supplies)
 	var truck: SupplyTruck = truck_scene.instantiate()
 	truck.target_structure = structure
 	add_child(truck)
