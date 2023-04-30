@@ -83,6 +83,7 @@ func set_tower():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	popup_vis(delta)
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
@@ -218,12 +219,21 @@ func heal(heal):
 	health = temp_health
 	
 	
+func popup_vis(delta, add=0):
+	if owned and !is_tower:
+		var tmp_colour = $Score.get_modulate()
+		tmp_colour.a -= delta/5
+		if tmp_colour.a <= 0:
+			tmp_colour.a = 0
+			
+		tmp_colour.a += add
+		print(tmp_colour.a)
+		$Score.set_modulate(tmp_colour)
 	
 func popup_score(score_value):
 	$Score.text = "+"+str(score_value)
 	$Score.show()
-	await get_tree().create_timer(2.0).timeout
-	$Score.hide()
+	popup_vis(0, 1)
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
