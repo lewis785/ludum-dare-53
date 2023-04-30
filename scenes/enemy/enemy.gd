@@ -27,8 +27,8 @@ func _ready():
 	set_level(level)
 	
 func play_animation(frames : int) -> void:
-	var mob_types : PackedStringArray = $AnimatedSprite2D.sprite_frames.get_animation_names()
-	$AnimatedSprite2D.play(mob_types[frames])
+	var mob_types : PackedStringArray = $Area2D/AnimatedSprite2D.sprite_frames.get_animation_names()
+	$Area2D/AnimatedSprite2D.play(mob_types[frames])
 
 func set_speed(speed : float) -> void:
 	self.base_speed = speed
@@ -43,8 +43,8 @@ func set_level(level) -> void:
 	
 	var scaled = Vector2(1,1)*max(1, log(level))
 	
-	$AnimatedSprite2D.transform = $AnimatedSprite2D.transform.scaled(scaled)
-	$CollisionShape2D.transform = $CollisionShape2D.transform.scaled(scaled)
+	$Area2D/AnimatedSprite2D.transform = $Area2D/AnimatedSprite2D.transform.scaled(scaled)
+	$Area2D/CollisionShape2D.transform = $Area2D/CollisionShape2D.transform.scaled(scaled)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -94,7 +94,8 @@ func move_to_target(targets) -> void:
 	if obstacles.size() > 0:
 		vector = adjust_for_obstacles(target, vector)
 	
-	self.linear_velocity = vector * determine_speed()
+	#self.linear_velocity = vector * determine_speed()
+	move_and_collide(vector)
 
 	
 func determine_speed() -> float:
@@ -163,3 +164,13 @@ func remove_obstacle(obstacle: Obstacle):
 				obstacles.remove_at(i)
 				return
 
+func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	print(body.name)
+	pass # Replace with function body.
+
+
+func _on_area_2d_body_entered(body):
+	print("Body entered", body.name)
+	if body.name.contains('SupplyTruck'):
+		queue_free()
+	pass # Replace with function body.
