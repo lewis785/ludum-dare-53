@@ -35,9 +35,8 @@ var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
 var _border
-var _health_bar: ProgressBar
-var _supply_bar: ProgressBar
-var _supply_bar_control: Control
+var _health_bar: Control
+var _supply_bar: Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -67,9 +66,8 @@ func _ready():
 	pass # Replace with function body.
 
 func init_progress_bars():
-	status_bar_manager.init_health_bar(_health_bar, $health/Label, health)
-	status_bar_manager.init_supply_bar(_supply_bar, $supply/Label, _supply_store.supplies)
-	
+	_health_bar = $health	
+	_supply_bar = $supply
 
 func set_tower():
 	is_tower = true
@@ -99,8 +97,7 @@ func subtract_damage_from_health(damage):
 	health -= damage
 
 func update_health_label(new_health):
-	_health_bar.value = new_health
-	status_bar_manager.update_status_bar(_health_bar, new_health)
+	_health_bar.set_percentage(new_health)
 
 func reset_tick():
 	time_til_tick = 0
@@ -175,11 +172,13 @@ func tick_manager(delta):
 	pass
 
 func unload_truck(truck: SupplyTruck):
+	print("Supply unloaded")
 	if(truck.target_structure != self):
 		return
+		
 	var truck_supply = truck.get_node('SupplyStore')
 	$SupplyStore.add_supply(truck_supply.remove_supply(truck_supply.supplies))
-	status_bar_manager.update_status_bar(_supply_bar, $SupplyStore.supplies)
+	_supply_bar.set_percentage($SupplyStore.supplies)
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
@@ -218,3 +217,8 @@ func _on_structure_area_2d_mouse_entered():
 func _on_structure_area_2d_mouse_exited():
 	_border.hide()
 	pass # Replace with function body.
+
+
+func _on_score_timer_timeout():
+	if $SupplyStore.has_required_supply(20):
+		signal_bus.emit_signal("score_update", 100)

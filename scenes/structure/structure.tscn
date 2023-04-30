@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://sd50xggadb4x"]
+[gd_scene load_steps=28 format=3 uid="uid://sd50xggadb4x"]
 
 [ext_resource type="Script" path="res://scenes/structure/structure.gd" id="1_lu5co"]
 [ext_resource type="Texture2D" uid="uid://d2drtgly02a7l" path="res://assets/village/good_town.png" id="2_ymwu0"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://diu6ls3spsxlf" path="res://scenes/enemy/target.tscn" id="6_tyybt"]
 [ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="9_ktk31"]
 [ext_resource type="PackedScene" uid="uid://dws8yrkuha0xn" path="res://scenes/status_bar/status_bar.tscn" id="10_srmwv"]
+[ext_resource type="PackedScene" uid="uid://wd6i3ttiv1st" path="res://scenes/score/score_changer.tscn" id="10_ybgtl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0drnf"]
 size = Vector2(90, 88)
@@ -165,13 +166,22 @@ scale = Vector2(0.5, 0.5)
 offset_left = 2.0
 offset_top = -47.0
 offset_right = 2.0
-offset_bottom = -47.0
+offset_bottom = -70.0
+label = "Health"
+percentage = 100
+colour = Color(1, 0, 0, 1)
 
 [node name="supply" parent="." instance=ExtResource("10_srmwv")]
-offset_left = -52.0
-offset_top = -47.0
-offset_right = -52.0
-offset_bottom = -47.0
+offset_left = -75.0
+offset_top = -70.0
+offset_right = -75.0
+offset_bottom = -70.0
+label = "Supply"
+colour = Color(1, 0.803922, 0, 1)
+
+[node name="ScoreChanger" parent="." instance=ExtResource("10_ybgtl")]
+
+[node name="ScoreTimer" type="Timer" parent="."]
 
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
@@ -180,3 +190,4 @@ offset_bottom = -47.0
 [connection signal="mouse_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_mouse_exited"]
 [connection signal="body_entered" from="RangeArea2D" to="." method="_on_range_area_2d_body_entered"]
 [connection signal="body_exited" from="RangeArea2D" to="." method="_on_range_area_2d_body_exited"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
