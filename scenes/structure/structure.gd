@@ -52,6 +52,10 @@ func _ready():
 	enemy_store = enemy_store_res.new()
 	pass # Replace with function body.
 
+func set_tower():
+	is_tower = true
+	_animated_sprite = $StructureArea2D/AnimatedSprite2D
+	_animated_sprite.frame = structure_state.tower_good
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

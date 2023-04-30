@@ -71,5 +71,6 @@ func spawn_structure(x,y, is_tower=false):
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_structure = structure.instantiate()
 		tree.current_scene.add_child.call_deferred(instanced_structure)
-		instanced_structure.is_tower = true
+		if is_tower:
+			instanced_structure.set_tower()
 		instanced_structure.global_position = tilemap.to_global(local_position)

@@ -15,11 +15,11 @@ func _process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name.contains("enemy"):
-		var enemy : Enemy = body
+		var enemy = body
 		enemy.add_obstacle(self)
 
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.name.contains("enemy"):
-		var enemy : Enemy = body
+		var enemy = body
 		enemy.remove_obstacle(self)
