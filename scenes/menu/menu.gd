@@ -4,12 +4,20 @@ var paused : bool
 var skipping : bool
 
 var game_scene = preload("res://scenes/game/game.tscn")
+var audio = preload("res://scenes/audio/audio.tscn")
+#const audio_manager = preload("res://scenes/audio/audio.gd")
+
+var am : AudioManager
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
 	skipping = false
 	
 	pause()
+	
+	am = audio.instantiate()
+	get_tree().current_scene.add_child.call_deferred(am)
+	am.get_asp()
 	
 	$CanvasLayer/controls.hide()
 	$CanvasLayer/end.hide()
@@ -23,6 +31,7 @@ func _process(delta: float) -> void:
 		return
 		
 	if is_game_over():
+		am.stop_audio()
 		pause()
 		$CanvasLayer/controls.hide()
 		$CanvasLayer/end.show()
@@ -91,6 +100,7 @@ func start_game() -> void:
 	
 	normal_speed()
 	play()
+	am.play_audio()
 	
 	$CanvasLayer/controls.show()
 

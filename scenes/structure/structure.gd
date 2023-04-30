@@ -84,6 +84,7 @@ func set_tower():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	popup_vis(delta)
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
@@ -100,9 +101,6 @@ func subtract_damage_from_health(damage):
 	health -= damage
 	if health <= 0:
 		update_ownership(false)
-		print("ded lol")
-		manage_ownership()
-		
 
 func update_health_label(new_health):
 	_health_bar.set_percentage(new_health)
@@ -114,11 +112,6 @@ func reset_tick():
 func reset_fire():
 	time_til_fire = 0
 	can_fire = false
-
-
-func manage_ownership():
-	signal_bus.emit_signal('update_ownership')
-
 
 func state_manager():
 	handle_death()
@@ -220,16 +213,27 @@ func heal(heal):
 		return
 	health = temp_health
 	
+func popup_vis(delta, add=0):
+	if owned and !is_tower:
+		var tmp_colour = $Score.get_modulate()
+		tmp_colour.a -= delta/5
+		if tmp_colour.a <= 0:
+			tmp_colour.a = 0
+			
+		tmp_colour.a += add
+		$Score.set_modulate(tmp_colour)
+
 func update_ownership(value : bool) -> void:
-	owned = value
-	$entity.active = value
+	if owned != value:
+		owned = value
+		$entity.active = value
+		signal_bus.emit_signal('update_ownership', is_tower, value)
 
 	
 func popup_score(score_value):
 	$Score.text = "+"+str(score_value)
 	$Score.show()
-	await get_tree().create_timer(2.0).timeout
-	$Score.hide()
+	popup_vis(0, 1)
 	
 func get_enemy_entity(body):
 	return body.find_child("entity")
@@ -238,9 +242,9 @@ func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
+		print("HEALING")
 		update_ownership(true)
-		manage_ownership()
-		signal_bus.emit_signal('update_ownership')
+		
 	var body_parent_name : String = body.get_parent().name
 	if body_parent_name.begins_with(parent_name):
 		enemy_store.enemies.append(get_enemy_entity(body))
