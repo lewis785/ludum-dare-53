@@ -85,7 +85,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2igs"]
-size = Vector2(23.1077, 12.918)
+size = Vector2(57.5539, 32.459)
 
 [node name="supply_depot" type="Area2D" groups=["depots"]]
 script = ExtResource("1_8fqxo")
@@ -103,8 +103,7 @@ animation = &"depot-healthy"
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0.539028, -0.465317)
+position = Vector2(0.446152, 0.541)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_t2igs")
 
