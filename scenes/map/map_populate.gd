@@ -5,6 +5,7 @@ var map_sectors;
 var sector_width
 var sector_height
 var town_turret_range
+var sector_row_amount = 3
 
 var tilemap
 var tree
@@ -25,9 +26,10 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_secto
 	width = local_width
 	height = local_height
 	map_sectors = local_map_sectors
+	sector_row_amount = int(sqrt(map_sectors))
 	
-	sector_width = width / 3
-	sector_height = height / 3
+	sector_width = width / sector_row_amount
+	sector_height = height / sector_row_amount
 	town_turret_range = sector_width/4
 	
 	populate_map()
@@ -41,8 +43,8 @@ func populate_map():
 	#spawn_structure(2, 2)
 
 func fill_sector(sector_number):
-	var sector_x = (sector_number % 3) * sector_width
-	var sector_y = floor(sector_number / 3) * sector_height
+	var sector_x = (sector_number % sector_row_amount) * sector_width
+	var sector_y = floor(sector_number / sector_row_amount) * sector_height
 	
 	var town_x = randi_range(sector_x + town_turret_range, (sector_x+sector_width) - town_turret_range)
 	var town_y = randi_range(sector_y + town_turret_range, (sector_y+sector_height) - town_turret_range)
