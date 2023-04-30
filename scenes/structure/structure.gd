@@ -16,14 +16,15 @@ enum structure_state{
 @export var supplies_consumption: int = 1
 @export var range: float = 100
 @export var rate_of_fire: float = 1
-var local_name:	String
+@export var parent_name : String = 'spawn'
 
-const parent_name : String = 'spawn'
+var local_name:	String
 
 
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
 const enemy_store_res = preload("res://scripts/enemy_store.gd")
+const status_bar_manager = preload("res://scripts/status_bar_manager.gd")
 var _supply_store: SupplyStore
 
 var tick = false
@@ -49,6 +50,9 @@ func _ready():
 	_border = $StructureArea2D/Borders
 	_supply_store = $SupplyStore
 	
+	_health_bar = $health/ProgressBar
+	_supply_bar = $supply/ProgressBar
+	
 	init_progress_bars()
 	
 	_border.hide()
@@ -63,25 +67,8 @@ func _ready():
 	pass # Replace with function body.
 
 func init_progress_bars():
-	_health_bar = $health/ProgressBar
-	_health_bar.value = health
-	var _health_bar_label = $health/Label
-	_health_bar_label.text = "Health"
-	var health_colour = _health_bar.get_modulate()
-	health_colour.r = 255.0
-	health_colour.g = 0.0
-	health_colour.b = 0.0
-	_health_bar.set_modulate(health_colour)
-	
-	_supply_bar = $supply/ProgressBar
-	_supply_bar.value = _supply_store.supplies
-	var _supply_bar_label = $supply/Label
-	_supply_bar_label.text = "Supply"
-	var supply_colour = _supply_bar.get_modulate()
-	supply_colour.r = 255.0
-	supply_colour.g = 205.0
-	supply_colour.b = 0.1
-	_supply_bar.set_modulate(supply_colour)
+	status_bar_manager.init_health_bar(_health_bar, $health/Label, health)
+	status_bar_manager.init_supply_bar(_supply_bar, $supply/Label, _supply_store.supplies)
 	
 
 func set_tower():
@@ -94,9 +81,13 @@ func _process(delta):
 	tick_manager(delta)
 	handle_fire_rate(delta)
 	state_manager()
+	label_manager()
 	enemy_store.remove_all_enemies()
 	pass
 
+
+func label_manager():
+	pass
 
 func can_take_damage():
 	return owned
@@ -109,6 +100,7 @@ func subtract_damage_from_health(damage):
 
 func update_health_label(new_health):
 	_health_bar.value = new_health
+	status_bar_manager.update_status_bar(_health_bar, new_health)
 
 func reset_tick():
 	time_til_tick = 0
@@ -187,6 +179,7 @@ func unload_truck(truck: SupplyTruck):
 		return
 	var truck_supply = truck.get_node('SupplyStore')
 	$SupplyStore.add_supply(truck_supply.remove_supply(truck_supply.supplies))
+	status_bar_manager.update_status_bar(_supply_bar, $SupplyStore.supplies)
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):

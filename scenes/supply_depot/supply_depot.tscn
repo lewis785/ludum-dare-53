@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dhf8loxej1fdg"]
+[gd_scene load_steps=18 format=3 uid="uid://dhf8loxej1fdg"]
 
 [ext_resource type="Script" path="res://scenes/supply_depot/supply_depot.gd" id="1_8fqxo"]
 [ext_resource type="Texture2D" uid="uid://o6r78b3qslt7" path="res://assets/depot-light.png" id="1_pfjkr"]
 [ext_resource type="PackedScene" uid="uid://dpmoir6bxfdp7" path="res://scenes/supply_truck/truck_coordinator.tscn" id="2_gcobm"]
 [ext_resource type="PackedScene" uid="uid://bedx7ybi8m0ef" path="res://scenes/supply_store/supply_store.tscn" id="4_3321a"]
+[ext_resource type="PackedScene" uid="uid://dws8yrkuha0xn" path="res://scenes/status_bar/status_bar.tscn" id="5_qdkt8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uovtp"]
 atlas = ExtResource("1_pfjkr")
@@ -106,6 +107,18 @@ position = Vector2(0.539028, -0.465317)
 shape = SubResource("RectangleShape2D_t2igs")
 
 [node name="RefillTimer" type="Timer" parent="."]
+
+[node name="supply" parent="." instance=ExtResource("5_qdkt8")]
+offset_left = -51.0
+offset_top = -44.0
+offset_right = -51.0
+offset_bottom = -44.0
+
+[node name="health" parent="." instance=ExtResource("5_qdkt8")]
+offset_left = 1.0
+offset_top = -44.0
+offset_right = 1.0
+offset_bottom = -44.0
 
 [connection signal="body_shape_entered" from="." to="truck_coordinator" method="_on_supply_depot_body_shape_entered"]
 [connection signal="timeout" from="RefillTimer" to="." method="_on_refill_timer_timeout"]
