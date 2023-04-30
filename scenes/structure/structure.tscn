@@ -198,6 +198,7 @@ position = Vector2(0, -103)
 texture = ExtResource("11_il31b")
 
 [node name="Score" type="Label" parent="."]
+visible = false
 offset_left = -45.0
 offset_top = -66.0
 offset_right = 10.0
