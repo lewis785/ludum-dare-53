@@ -54,14 +54,13 @@ func new_game():
 	$start_timer.start()
 
 func _on_enemy_timer_timeout() -> void:	
-	
 	self.level += 1
 	var previous_level : int = enemy_level
 	enemy_level = log(self.level)/log(10)+1
 	
 	var burst : int
 	
-	if int(enemy_level) > previous_level:
+	if int(enemy_level-0.5) > previous_level:
 		burst = enemy_level*enemy_level*scale_factor
 	
 	
@@ -83,7 +82,7 @@ func spawn_enemy() -> void:
 
 	# Add some randomness to the direction.
 	direction += randf_range(-PI / 4, PI / 4)
-	enemy.rotation = direction
+	#enemy.rotation = direction
 	
 
 	# Choose the velocity for the enemy.

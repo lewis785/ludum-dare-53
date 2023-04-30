@@ -42,12 +42,11 @@ func send_truck(structure: Structure):
 #		return
 
 func _on_supply_depot_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	if body.name != 'truck':
+	if !body.name.contains('SupplyTruck'):
 		return
 	
-	var truck = body.get_parent()
-	if truck.reached_target:
+	if body.reached_target:
 		available_trucks += 1
-		truck.queue_free()
+		body.queue_free()
 		
 

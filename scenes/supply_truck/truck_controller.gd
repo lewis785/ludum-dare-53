@@ -1,4 +1,4 @@
-class_name SupplyTruck extends Node2D
+class_name SupplyTruck extends CharacterBody2D
 
 var Structure = preload("res://scenes/structure/structure.gd")
 
@@ -9,27 +9,26 @@ var start_position: Vector2
 var reached_target = false
 
 func move_towards(delta: float, target: Vector2):
-	$truck.velocity = Vector2(0, 0)
+	velocity = Vector2(0, 0)
 	
-	var distance_to = (target - $truck.global_position).length()
+	var distance_to = (target - global_position).length()
 	if (distance_to <= 10):
 		reached_target = true
 		return
 	
-	var direction = (target - $truck.global_position).normalized()
+	var direction = (target - self.global_position).normalized()
 	var angle = rad_to_deg(direction.angle())
 
-	$truck/TruckSprite.flip_v = angle > 90 || angle < -90
-	$truck/TruckSprite.rotation = direction.angle()
-	$truck/CollisionShape2D.rotation = direction.angle()
-	$truck.velocity = direction * speed * delta
-	$truck.move_and_slide()
+	$TruckSprite.flip_v = angle > 90 || angle < -90
+	$TruckSprite.rotation = direction.angle()
+	velocity = direction * speed * delta
+	move_and_slide()
 
 func animate():
 	if (reached_target):
-		$truck/TruckSprite.play('truck-empty-moving')
+		$TruckSprite.play('truck-empty-moving')
 	else:	
-		$truck/TruckSprite.play('truck-full-moving')
+		$TruckSprite.play('truck-full-moving')
 		
 
 func move(delta):

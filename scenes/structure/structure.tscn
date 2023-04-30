@@ -125,6 +125,16 @@ radius = 200.0
 
 [node name="structure" type="Node2D" groups=["structures"]]
 script = ExtResource("1_lu5co")
+health = null
+owned = null
+tick_threshold = null
+parent_name = null
+is_tower = null
+structure_damage = null
+supplies_consumption = null
+range = null
+rate_of_fire = null
+projectile = null
 
 [node name="StructureArea2D" type="Area2D" parent="."]
 position = Vector2(1, 1)
