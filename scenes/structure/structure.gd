@@ -168,7 +168,7 @@ func process_attacks(enemy):
 
 func handle_fire_rate(delta):
 	time_til_fire += delta
-	if time_til_fire >= rate_of_fire:
+	if time_til_fire >= rate_of_fire and _supply_store.supplies >= 0:
 		can_fire = true
 	pass
 

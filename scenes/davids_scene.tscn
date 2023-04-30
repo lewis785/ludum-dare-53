@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bv1oo5bv5o5rs"]
+[gd_scene load_steps=5 format=3 uid="uid://bv1oo5bv5o5rs"]
 
 [ext_resource type="PackedScene" uid="uid://dhf8loxej1fdg" path="res://scenes/supply_depot/supply_depot.tscn" id="3_bkg0a"]
+[ext_resource type="PackedScene" uid="uid://cef7nfykxy18e" path="res://scenes/enemy/spawn.tscn" id="4_2hjir"]
 [ext_resource type="PackedScene" uid="uid://df82d8dxjayvh" path="res://scenes/roads/roads.tscn" id="4_av4wr"]
 [ext_resource type="PackedScene" uid="uid://sd50xggadb4x" path="res://scenes/structure/structure.tscn" id="4_ri4hn"]
 
@@ -18,3 +19,5 @@ is_tower = true
 [node name="supply_depot" parent="." instance=ExtResource("3_bkg0a")]
 position = Vector2(311, 171)
 supply = 1
+
+[node name="spawn" parent="." instance=ExtResource("4_2hjir")]
