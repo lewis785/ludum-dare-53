@@ -97,6 +97,11 @@ func can_attack(enemy):
 
 func subtract_damage_from_health(damage):
 	health -= damage
+	if health <= 0:
+		owned = false
+		print("ded lol")
+		manage_ownership()
+		
 
 func update_health_label(new_health):
 	_health_bar.set_percentage(new_health)
@@ -118,7 +123,6 @@ func state_manager():
 	handle_death()
 	if health <= 0:
 		update_health_label(0)
-		manage_ownership()
 		return
 	if tick:
 		if can_take_damage():
@@ -218,7 +222,8 @@ func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
-		self.owned = true
+		owned = true
+		manage_ownership()
 		signal_bus.emit_signal('update_ownership')
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):

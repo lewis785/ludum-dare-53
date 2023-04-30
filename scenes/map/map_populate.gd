@@ -12,6 +12,7 @@ var tilemap
 var tree
 var structure: PackedScene = preload("res://scenes/structure/structure.tscn")
 var depot: PackedScene = preload("res://scenes/supply_depot/supply_depot.tscn")
+var roads: PackedScene = preload("res://scenes/roads/roads.tscn")
 
 # Centre sector is spawn
 # Each Sector has a town
@@ -35,11 +36,16 @@ func _init(local_tilemap, local_tree, local_width, local_height, local_map_rows,
 	town_turret_range = sector_width/4
 	
 	populate_map()
+	create_roads()
 
 func populate_map():
 	for sector_num in map_sectors:
 		fill_sector(sector_num)
 	create_depot()
+	
+func create_roads():
+	var instanced_roads = roads.instantiate()
+	tree.current_scene.add_child.call_deferred(instanced_roads)
 
 func fill_sector(sector_number):
 	var sector_x = (sector_number % map_columns) * sector_width
