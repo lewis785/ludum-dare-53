@@ -22,5 +22,5 @@ func generate_map():
 	
 	# Set terrain to random terrain type
 	var terrain_count = tilemap.tile_set.get_terrain_sets_count()
-	var terrain = randi_range(0,terrain_count)
+	var terrain = randi_range(0,terrain_count-1)
 	tilemap.set_cells_terrain_connect(0, tilemap.get_used_cells(0), 0, terrain, true)
