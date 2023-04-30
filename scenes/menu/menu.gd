@@ -2,48 +2,113 @@ extends Node2D
 
 var paused : bool
 var skipping : bool
+var restart : bool
+
+var game_scene = preload("res://scenes/game/game.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	paused = false
+	if restart:
+		start_game()
+	
 	skipping = false
-	get_tree().paused = false
+	
+	pause()
+	
+	$CanvasLayer/controls.hide()
+	$CanvasLayer/end.hide()
+	$CanvasLayer/start.show()
+	
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	#var camera : Camera2D = get_parent()
-	#print(camera.position)
-	#position = camera.position
-	pass
-
-
-
-
-func _on_pause_button_button_down() -> void:
-	paused = !paused
-	get_tree().paused = paused
-	
-	var text = "pause"
 	if paused:
-		text += "d"
-		$CanvasLayer/skip_button.hide()
-	else:
-		$CanvasLayer/skip_button.show()
+		return
 		
+	if is_game_over():
+		pause()
+		$CanvasLayer/controls.hide()
+		$CanvasLayer/end.show()
+
+
+func is_game_over() -> bool:
+	var nodes = get_tree().get_nodes_in_group("structures")
 	
-	$CanvasLayer/pause_button.text = text
+	for node in nodes:
+		if node.owned:
+			return false
+
+	return true
+	
+func _on_pause_button_button_down() -> void:
+	if paused:
+		play()
+	else:
+		pause()
+	
+
+
+func play() -> void:
+	paused = false
+	get_tree().paused = false
+	
+	$CanvasLayer/controls/skip_button.show()
+	$CanvasLayer/controls/pause_button.text = "pause"
+
+func pause() -> void:
+	paused = true
+	get_tree().paused = true
+	
+	$CanvasLayer/controls/pause_button.text = "paused"
 			
 
 
 func _on_skip_button_button_down() -> void:
-	skipping = !skipping
-	
-	var text = "skip"
 	if skipping:
-		text = "slow"
-		Engine.time_scale = 10
+		normal_speed()
 	else:
-		Engine.time_scale = 1
-		
-	$CanvasLayer/skip_button.text = text
+		fast_forward()
+	
+func fast_forward() -> void:
+	skipping = true
+	var text = "slow"
+	Engine.time_scale = 10
+	
+	$CanvasLayer/controls/skip_button.text = text
+	
+func normal_speed() -> void:
+	skipping = false
+	var text = "skip"
+	Engine.time_scale = 1
+	
+	$CanvasLayer/controls/skip_button.text = text
+
+
+func _on_start_button_button_down() -> void:
+	start_game()
+
+func start_game() -> void:
+	$CanvasLayer/start.hide()
+	$CanvasLayer/end.hide()
+	
+	normal_speed()
+	play()
+	
+	$CanvasLayer/controls.show()
+
+
+func _on_restart_button_button_up() -> void:
+	restart = true
+
+	var game_nodes = get_tree().get_nodes_in_group("game")
+	
+	for game in game_nodes:		
+		game.queue_free()
+	
+	var main_scene = get_tree().get_first_node_in_group("main")
+	
+	var new_game = game_scene.instantiate()
+	main_scene.add_child(new_game)
+	
+	start_game()
