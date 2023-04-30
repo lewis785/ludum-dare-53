@@ -21,6 +21,7 @@ func move_towards(delta: float, target: Vector2):
 
 	$TruckSprite.flip_v = angle > 90 || angle < -90
 	$TruckSprite.rotation = direction.angle()
+	$CollisionShape2D.rotation = direction.angle()
 	velocity = direction * speed * delta
 	move_and_slide()
 
