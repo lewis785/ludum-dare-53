@@ -17,11 +17,16 @@ func structures(nodes : Array[Node]) -> Array[Structure]:
 		
 	return structures
 
+func send_to_structure(structure: Structure):
+	print(structure)
+	send_truck(structure.position)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var start_location = self.position
 	var depot_supplies = self.get_parent().supply_store_instance
-	pass
+	var signal_bus = get_node("/root/SignalBus")
+	signal_bus.connect('send_supply_to_structure', send_to_structure)
 
 func send_truck(location: Vector2):
 	if (depot_supplies && !depot_supplies.has_required_supplies(20)):
@@ -33,9 +38,9 @@ func send_truck(location: Vector2):
 	add_child(truck)
 	
 	
-func _input(event):
-	if(event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
-		send_truck(self.get_local_mouse_position() + self.global_position)
+#func _input(event):
+#	if(event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
+#		send_truck(self.get_local_mouse_position() + self.global_position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

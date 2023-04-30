@@ -2,7 +2,7 @@ extends Node
 
 signal update_ownership
 signal do_damage_to_enemy
-signal send_supply_to_structure
+signal send_supply_to_structure(structure: Structure)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
