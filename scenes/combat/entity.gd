@@ -19,7 +19,7 @@ func _ready() -> void:
 		
 	if active:
 		notify_health(health)
-
+	
 
 func update_position(pos) -> void:
 	self.position = pos
@@ -28,12 +28,17 @@ func update_position(pos) -> void:
 func _process(delta: float) -> void:
 	pass
 
+func set_active(value: bool) -> void:
+	if value:
+		activate()
+	else:
+		deactivate()
+
 func activate() -> void:
 	notify_health(health)
 	active = true
 	
 func deactivate() -> void:
-	notify_health(0)
 	active = false
 
 func take_damage(attack : int) -> void:

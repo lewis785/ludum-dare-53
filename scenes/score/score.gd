@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var score_label : Label
+
 var score = 0
 
 func _ready():
@@ -11,5 +13,5 @@ func update_score(value: int):
 	update_label();
 	
 func update_label():
-	$CanvasLayer/ScoreLabel.text = str(score)
+	score_label.text = str(score)
 	

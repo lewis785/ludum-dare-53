@@ -4,7 +4,7 @@ class_name Enemy extends RigidBody2D
 
 var obstacles : Array[Obstacle] = []
 var target 
-var target_check_limit: float = 2
+var target_check_limit: float = 0.2
 var time_since_target_check : float = target_check_limit
 var attack_speed : float = 0.5
 var time_since_attack : float = attack_speed

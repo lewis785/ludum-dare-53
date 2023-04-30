@@ -58,10 +58,10 @@ func _ready():
 	
 	_border.hide()
 	$entity.priority_weight = 2
-	$entity.set
+	$entity.update_position(self.position)
 	
 	if is_tower and _animated_sprite:
-		$entity.priority_weight = 2
+		$entity.priority_weight = 10
 		_animated_sprite.frame = structure_state.tower_good
 	
 	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
@@ -214,7 +214,7 @@ func heal(heal):
 func popup_vis(delta, add=0):
 	if owned and !is_tower:
 		var tmp_colour = $Score.get_modulate()
-		tmp_colour.a -= delta/5
+		tmp_colour.a -= delta
 		if tmp_colour.a <= 0:
 			tmp_colour.a = 0
 			
@@ -225,7 +225,8 @@ func update_ownership(value : bool) -> void:
 	if owned != value:
 		owned = value
 		$entity.active = value
-		signal_bus.emit_signal('update_ownership', is_tower, value)
+		if signal_bus:
+			signal_bus.emit_signal('update_ownership', is_tower, value)
 
 	
 func popup_score(score_value):

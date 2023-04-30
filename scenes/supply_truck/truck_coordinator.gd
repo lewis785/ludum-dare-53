@@ -28,8 +28,6 @@ func _ready():
 	signal_bus.connect('update_ownership', ownership_update)
 
 func ownership_update(is_tower, claimed):
-	print("Is tower: ", is_tower)
-	print("Claimed: ", claimed)
 	if is_tower:
 		return
 	if claimed:
