@@ -19,35 +19,30 @@ func _process(_delta: float) -> void:
 
 func new_game():
 	score = 0
-	
-	var window : Window = get_tree().get_root()
-	
-	var pos : Vector2i = Vector2i(0, 0)
-	var size : Vector2i = window.get_size_with_decorations()
-	
+		
 	var child =  self.get_parent().find_child("*map*")
 	
 	if child:
+		var pos : Vector2i = Vector2i(0, 0)
 		var map = %map
 		
 		var width = map.width
 		var height = map.height
 	
-		size = Vector2i(width*scale_factor, height*scale_factor)
-		
+		var size = Vector2i(width*scale_factor, height*scale_factor)
 	
-	var c = Curve2D.new()
+		var c = Curve2D.new()
+			
+		c.add_point(pos)
+		c.add_point(pos+Vector2i(size.x, 0))
+		c.add_point(pos+size)
+		c.add_point(pos+Vector2i(0, size.y))
+		c.add_point(pos)
 		
-	c.add_point(pos)
-	c.add_point(pos+Vector2i(size.x, 0))
-	c.add_point(pos+size)
-	c.add_point(pos+Vector2i(0, size.y))
-	c.add_point(pos)
-	
-	print(size)
+		print(size)
 
-	$enemy_path.curve = c
-	$enemy_path.queue_redraw()	
+		$enemy_path.curve = c
+		$enemy_path.queue_redraw()	
 	
 	
 	$enemy_timer.wait_time = $enemy_timer.wait_time/log(scale_factor)
