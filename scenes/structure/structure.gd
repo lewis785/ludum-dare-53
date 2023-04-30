@@ -153,14 +153,22 @@ func tick_manager(delta):
 		tick = true
 	pass
 
+func unload_truck(truck: SupplyTruck):
+	if(truck.target_structure != self):
+		return
+	var truck_supply = truck.get_node('SupplyStore')
+	$SupplyStore.add_supply(truck_supply.remove_supply(truck_supply.supplies))
+
 func _on_structure_area_2d_body_entered(body):
-	if body.name == 'truck':
-		print(body)
+	if body.name.contains('SupplyTruck'):
+		unload_truck(body)
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies.append(body)
 
 func _on_range_area_2d_body_entered(body):
+	if body.name.contains('SupplyTruck'):
+		return
 	var body_parent_name = body.get_parent().name
 	if str(body_parent_name).begins_with(parent_name):
 		enemy_store.enemies_in_range.append(body)
