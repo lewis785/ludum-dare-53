@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://cbd2nrreh7t81"]
+[gd_scene load_steps=12 format=3 uid="uid://cbd2nrreh7t81"]
 
 [ext_resource type="Script" path="res://scenes/projectile/projectile.gd" id="1_yb7ur"]
 [ext_resource type="Texture2D" uid="uid://b54vy8jtgfmb2" path="res://assets/projectile/bullet.png" id="2_2x2fk"]
+[ext_resource type="AudioStream" uid="uid://dpvwq36whlgpe" path="res://sounds/effects/Bang.wav" id="3_qfbbp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u0xcv"]
 atlas = ExtResource("2_2x2fk")
@@ -71,6 +72,10 @@ shape = SubResource("RectangleShape2D_nku43")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(-7.15256e-07, 1)
 scale = Vector2(1.4, 0.6)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_qfbbp")
+attenuation = 2.37
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -3,7 +3,7 @@ extends Node
 @export var camera_speed = 30
 @export var camera_zoom_speed = 0.9
 
-var camera
+var camera : Camera2D
 var max_camera_speed
 
 # Called when the node enters the scene tree for the first time.

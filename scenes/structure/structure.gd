@@ -34,6 +34,8 @@ var enemy_store: EnemyStore
 var signal_bus
 var _animated_sprite: AnimatedSprite2D
 var _border
+var _target
+var _asp : AudioStreamPlayer2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,7 +47,7 @@ func _ready():
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_border = $StructureArea2D/Borders
 	_border.hide()
-	var _target = $target
+	_target = $target
 	_target.weight = 1
 	if is_tower and _animated_sprite:
 		_target.weight = 10
@@ -56,10 +58,15 @@ func _ready():
 	label.set_text(str(health))
 	supply_store_instance = supply_store.new()
 	enemy_store = enemy_store_res.new()
+	
+	for child in get_children():
+		if child is AudioStreamPlayer2D:
+			_asp = child
 	pass # Replace with function body.
 
 func set_tower():
 	is_tower = true
+	_target.weight = 10
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_animated_sprite.frame = structure_state.tower_good
 
@@ -137,6 +144,7 @@ func fire_turret(enemy):
 		instnaced_projectile.global_position = self.global_position
 		var instnaced_projectile_rotation = self.global_position.direction_to(enemy.global_position).angle()
 		instnaced_projectile.rotation = instnaced_projectile_rotation
+		instnaced_projectile._asp.play()
 	
 	
 func process_attacks(enemy):
