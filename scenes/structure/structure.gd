@@ -10,7 +10,6 @@ enum structure_state{
 @export var health: int = 100
 @export var owned: bool = true
 @export var tick_threshold: float = 1
-@export var parent_name = 'spawn'
 @export var label: Label
 @export var is_tower: bool
 @export var structure_damage: int = 10
@@ -18,6 +17,8 @@ enum structure_state{
 @export var range: float = 100
 @export var rate_of_fire: float = 1
 var local_name:	String
+
+const parent_name : String = 'spawn'
 
 
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
@@ -197,8 +198,8 @@ func _on_structure_area_2d_body_entered(body):
 func _on_range_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		return
-	var body_parent_name = body.get_parent().name
-	if str(body_parent_name).begins_with(parent_name):
+	var body_parent_name : String = body.get_parent().name
+	if body_parent_name.begins_with(parent_name):
 		enemy_store.enemies_in_range.append(body)
 
 func _on_structure_area_2d_body_exited(body):
