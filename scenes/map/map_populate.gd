@@ -1,5 +1,7 @@
 var width = 900;
 var height = 900;
+var map_rows;
+var map_columns;
 var map_sectors;
 
 var sector_width
@@ -19,7 +21,7 @@ var depot: PackedScene = preload("res://scenes/supply_depot/supply_depot.tscn")
 
 
 
-func _init(local_tilemap, local_tree, local_width, local_height, local_map_sectors=9):
+func _init(local_tilemap, local_tree, local_width, local_height, local_map_sectors):
 	tilemap = local_tilemap
 	tree = local_tree
 
