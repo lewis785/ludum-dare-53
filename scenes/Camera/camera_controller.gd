@@ -29,7 +29,6 @@ func _process(delta):
 
 func get_input(delta):
 	var movement = position
-	
 	if Input.is_action_pressed("camera_right"):
 		movement.x += camera_speed
 	if Input.is_action_pressed("camera_left"):
