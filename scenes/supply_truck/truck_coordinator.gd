@@ -32,7 +32,7 @@ func send_truck(structure: Structure):
 	
 	depot_supplies.remove_supply(20)
 	var truck: SupplyTruck = truck_scene.instantiate()
-	truck.target_structure = structure.position
+	truck.target_structure = structure
 	add_child(truck)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
