@@ -24,7 +24,6 @@ var local_name:	String
 @export var projectile: PackedScene = preload("res://scenes/projectile/projectile.tscn")
 
 const enemy_store_res = preload("res://scripts/enemy_store.gd")
-const status_bar_manager = preload("res://scripts/status_bar_manager.gd")
 var _supply_store: SupplyStore
 
 var tick = false
