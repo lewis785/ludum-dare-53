@@ -44,8 +44,9 @@ func new_game():
 		$enemy_path.curve = c
 		$enemy_path.queue_redraw()	
 	
+	var wait_scale = max(log(scale_factor), 1)
 	
-	$enemy_timer.wait_time = $enemy_timer.wait_time/log(scale_factor)
+	$enemy_timer.wait_time = $enemy_timer.wait_time/wait_scale
 	$start_timer.start()
 
 func _on_enemy_timer_timeout() -> void:	
