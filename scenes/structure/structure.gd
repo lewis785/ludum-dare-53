@@ -45,7 +45,6 @@ func _ready():
 	signal_bus = get_node("/root/SignalBus")
 	signal_bus.connect("do_damage_to_enemy", subtract_damage_from_enemies)
 	
-	
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_border = $StructureArea2D/Borders
 	_supply_store = $SupplyStore
@@ -53,10 +52,12 @@ func _ready():
 	_health_bar = $health/ProgressBar
 	_supply_bar = $supply/ProgressBar
 	
+	_target = $target
+	_asp = $AudioStreamPlayer2D
+	
 	init_progress_bars()
 	
 	_border.hide()
-	_target = $target
 	_target.weight = 1
 	if is_tower and _animated_sprite:
 		_target.weight = 10
@@ -64,19 +65,18 @@ func _ready():
 	
 	var range_shape: CollisionShape2D = $RangeArea2D/RangeCollisionShape2D
 	enemy_store = enemy_store_res.new()
-	
-	for child in get_children():
-		if child is AudioStreamPlayer2D:
-			_asp = child
 	pass # Replace with function body.
 
+func _init():
+	pass
+	
 func init_progress_bars():
 	_health_bar = $health	
 	_supply_bar = $supply
 
 func set_tower():
 	is_tower = true
-	_target.weight = 10
+	$target.weight = 10
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_animated_sprite.frame = structure_state.tower_good
 
