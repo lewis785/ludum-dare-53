@@ -18,7 +18,7 @@ func generate_map():
 	# Fill map with default cells
 	for x in width:
 		for y in height:
-			tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(7,6))
+			tilemap.set_cell(0, Vector2i(x,y),0, Vector2i(1,1))
 	
 	# Set terrain to random terrain type
 	var terrain_count = tilemap.tile_set.get_terrain_sets_count()
