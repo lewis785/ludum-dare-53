@@ -44,23 +44,14 @@ func new_game():
 		$enemy_path.curve = c
 		$enemy_path.queue_redraw()	
 	
-	var wait_scale = max(log(scale_factor), 1)
-	
-	$enemy_timer.wait_time = $enemy_timer.wait_time/wait_scale
+	$enemy_timer.wait_time = $enemy_timer.wait_time
 	$start_timer.start()
 
 func _on_enemy_timer_timeout() -> void:	
 	self.level += 1
-	var previous_level : int = enemy_level
 	enemy_level = log(self.level)/log(10)+1
 	
-	var burst : int
-	
-	if int(enemy_level-0.5) > previous_level:
-		burst = enemy_level*scale_factor
-	
-	
-	for i in range(enemy_level+burst):
+	for i in range(enemy_level):
 		spawn_enemy()
 	
 func spawn_enemy() -> void:

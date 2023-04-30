@@ -129,7 +129,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_l3nck"]
 radius = 200.0
 
-[node name="structure" type="Node2D" groups=["structures"]]
+[node name="structure" type="Node2D" groups=["game", "structures"]]
 script = ExtResource("1_lu5co")
 
 [node name="entity" parent="." instance=ExtResource("2_f0kq4")]
@@ -204,7 +204,7 @@ visible = false
 position = Vector2(0, -103)
 texture = ExtResource("11_il31b")
 
-[node name="Score" type="Label" parent="."]
+[node name="Score" type="Label" parent="." groups=["game"]]
 visible = false
 offset_left = -45.0
 offset_top = -66.0

@@ -154,14 +154,15 @@ func handle_death():
 		$Alert.show()
 		
 
-func subtract_damage_from_enemies(enemy):
-	var current_enemy_name = enemy.name
+func subtract_damage_from_enemies(body):	
+	var current_enemy_name = body.name
 	if current_enemy_name.contains('SupplyTruck'):
 		return
-	enemy.health -= structure_damage
-	if enemy.health <= 0:
+		
+	var enemy = get_enemy_entity(body)
+	enemy.take_damage(structure_damage)
+	if !enemy.alive:
 		enemy_store.add_enemy_to_remove(enemy)
-
 
 func consume_supplies(amount):
 	$SupplyStore.remove_supply(amount)
@@ -232,26 +233,26 @@ func popup_score(score_value):
 	$Score.text = "+"+str(score_value)
 	$Score.show()
 	popup_vis(0, 1)
+	
+func get_enemy_entity(body):
+	return body.find_child("entity")
 
 func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
-		print("HEALING")
 		update_ownership(true)
 		
 	var body_parent_name : String = body.get_parent().name
 	if body_parent_name.begins_with(parent_name):
-		var enemy = body.find_child("entity")
-		enemy_store.enemies.append(enemy)
+		enemy_store.enemies.append(get_enemy_entity(body))
 
 func _on_range_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		return
 	var body_parent_name : String = body.get_parent().name
 	if body_parent_name.begins_with(parent_name):
-		var enemy = body.find_child("entity")
-		enemy_store.enemies_in_range.append(enemy)
+		enemy_store.enemies_in_range.append(get_enemy_entity(body))
 
 func _on_structure_area_2d_body_exited(body):
 	# enemy_store.add_enemy_to_remove(body)

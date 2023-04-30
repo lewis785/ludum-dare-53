@@ -17,8 +17,9 @@ func init_truck_dictionary():
 		truck_status[i] = ""
 
 func set_truck_status(truck_id, status):
-	truck_status[truck_id] = status
-	display_sprites()
+	if truck_id < truck_limit:
+		truck_status[truck_id] = status
+		display_sprites()
 
 func next_free_truck():
 	for key in truck_status.keys():
