@@ -21,13 +21,16 @@ func _ready() -> void:
 	am.get_asp()
 	
 	$CanvasLayer/controls.hide()
+	$CanvasLayer/controls/ScoreDisplay/CanvasLayer.hide()
 	$CanvasLayer/end.hide()
+	$CanvasLayer/end/ScoreDisplay/CanvasLayer.hide()
 	$CanvasLayer/start.show()
 	
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	update_menu_pos()
 	if paused:
 		return
 		
@@ -35,7 +38,9 @@ func _process(delta: float) -> void:
 		am.stop_audio()
 		Engine.time_scale = 0.5
 		$CanvasLayer/controls.hide()
+		$CanvasLayer/controls/ScoreDisplay/CanvasLayer.hide()
 		$CanvasLayer/end.show()
+		$CanvasLayer/end/ScoreDisplay/CanvasLayer.show()
 
 func is_game_over() -> bool:
 	var entities = get_tree().get_nodes_in_group("ally")
@@ -103,6 +108,7 @@ func start_game() -> void:
 	am.play_audio()
 	
 	$CanvasLayer/controls.show()
+	$CanvasLayer/controls/ScoreDisplay/CanvasLayer.show()
 
 
 func _on_restart_button_button_up() -> void:
@@ -119,3 +125,19 @@ func _on_restart_button_button_up() -> void:
 	main_scene.add_child(new_game)
 	
 	start_game()
+
+func update_menu_pos():
+	var resolution = get_viewport_rect().size
+	if $CanvasLayer/start.visible:
+		$CanvasLayer/start.position = Vector2(resolution.x/2,resolution.y/2)
+	if $CanvasLayer/controls.visible:
+		set_hud_pos(resolution)
+	if $CanvasLayer/end.visible:
+		set_end_pos(resolution)
+
+func set_hud_pos(resolution):
+	pass
+
+func set_end_pos(resolution):
+	pass
+

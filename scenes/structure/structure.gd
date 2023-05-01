@@ -268,6 +268,7 @@ func _on_structure_area_2d_input_event(viewport: Node, event: InputEvent, shape_
 
 
 func _on_structure_area_2d_mouse_entered():
+	_border.play()
 	_border.show()
 	pass # Replace with function body.
 

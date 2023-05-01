@@ -59,6 +59,8 @@ size = Vector2(27, 12)
 
 [node name="projectile" type="Area2D" groups=["Projectiles"]]
 scale = Vector2(0.2, 0.2)
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("1_yb7ur")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
