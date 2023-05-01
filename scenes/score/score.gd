@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var score_label : Label
+@export var num_only : bool = true
 
 var score = 0
 
@@ -13,5 +14,8 @@ func update_score(value: int):
 	update_label();
 	
 func update_label():
-	score_label.text = str(score)
+	if num_only:
+		score_label.text = str(score)
+	else:
+		score_label.text = "Score: " + str(score)
 	

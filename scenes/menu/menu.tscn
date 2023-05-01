@@ -167,6 +167,7 @@ one_shot = true
 [node name="ScoreDisplay" type="Node2D" parent="CanvasLayer/end" node_paths=PackedStringArray("score_label")]
 script = ExtResource("4_ylrl8")
 score_label = NodePath("CanvasLayer/score")
+num_only = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/end/ScoreDisplay"]
 
@@ -175,7 +176,7 @@ offset_left = 284.0
 offset_top = 396.0
 offset_right = 611.0
 offset_bottom = 470.0
-text = "Score: 9000"
+text = "Score: 0"
 label_settings = SubResource("LabelSettings_2ooo7")
 
 [node name="TruckIndicator" parent="." instance=ExtResource("3_iqm5e")]

@@ -115,7 +115,7 @@ func _on_restart_button_button_up() -> void:
 	
 	var game_nodes = get_tree().get_nodes_in_group("game")
 	
-	for game in game_nodes:		
+	for game in game_nodes:
 		game.queue_free()
 	
 	var main_scene = get_tree().get_first_node_in_group("main")
