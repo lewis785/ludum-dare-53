@@ -99,8 +99,6 @@ func can_attack(enemy):
 func subtract_damage_from_health(damage):
 	var active_before = $entity.active
 	$entity.take_damage(damage)
-	if !$entity.active and active_before:
-		emit_update_ownership()
 
 func reset_tick():
 	time_til_tick = 0
@@ -135,16 +133,12 @@ func handle_death():
 	var alive = $entity.active
 	if is_tower and !alive:
 		_animated_sprite.frame = structure_state.tower_bad
-		update_ownership(false)
 	if !is_tower and !alive:
 		_animated_sprite.frame = structure_state.town_bad
-		update_ownership(false)
 	if !is_tower and alive:
 		_animated_sprite.frame = structure_state.town_good
-		update_ownership(true)
 	if is_tower and alive:
 		_animated_sprite.frame = structure_state.tower_good
-		update_ownership(true)
 	if $entity.active:
 		$Alert.hide()
 	if !$entity.active:
@@ -229,7 +223,6 @@ func _on_structure_area_2d_body_entered(body):
 	if body.name.contains('SupplyTruck'):
 		unload_truck(body)
 		heal(heal_amount)
-		update_ownership(true)
 		
 	var body_parent_name : String = body.get_parent().name
 	if body_parent_name.begins_with(parent_name):
@@ -271,18 +264,6 @@ func _on_score_timer_timeout():
 		popup_score(20)
 		consume_supplies(supplies_consumption)
 		signal_bus.emit_signal("score_update", 20)
-
-
-func update_ownership(value : bool) -> void:
-	if $entity.active != value:
-		print("Updating ownership", value, $entity.active)
-		$entity.set_active(value)
-		print("updating status:", signal_bus)
-		if signal_bus:
-			emit_update_ownership()
-			
-func emit_update_ownership():
-	print("Updating ownership: ", is_tower, $entit)
 
 func _on_entity_owned_updated(is_owned):
 	if signal_bus:

@@ -99,12 +99,10 @@ func spawn_structure(x,y, is_tower=false, first_structure=false):
 		var local_position =  tilemap.map_to_local(Vector2i(x,y))
 		var instanced_structure = structure.instantiate()
 		instanced_structure.global_position = tilemap.to_global(local_position)
-		instanced_structure.update_ownership(false)
 		instanced_structure.set_health(0)
 		if is_tower:
 			instanced_structure.set_tower()
 		if first_structure:
 			instanced_structure.heal(1000) # up to max
-			instanced_structure.update_ownership(true)
 			
 		tree.current_scene.add_child.call_deferred(instanced_structure)
