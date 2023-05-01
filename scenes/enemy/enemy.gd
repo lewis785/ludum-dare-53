@@ -38,7 +38,7 @@ func set_scale_factor(sf : int) -> void:
 
 func set_level(level) -> void:
 	self.level = level
-	$entity.health = level
+	$entity.health = level * 10
 	$entity.damage = level
 	
 	var scaled = Vector2(1,1)*max(1, log(level))
