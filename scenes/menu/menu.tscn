@@ -123,6 +123,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="end" type="Node2D" parent="CanvasLayer"]
 
+[node name="bg" type="Sprite2D" parent="CanvasLayer/end"]
+modulate = Color(0.0980392, 0.0980392, 0.0980392, 0.466667)
+position = Vector2(600, 304.5)
+scale = Vector2(1204, 605)
+texture = SubResource("CanvasTexture_shmol")
+
 [node name="title" type="Label" parent="CanvasLayer/end"]
 texture_filter = 1
 anchors_preset = 8
