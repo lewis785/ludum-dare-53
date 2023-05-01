@@ -30,7 +30,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	update_menu_pos()
 	if paused:
 		return
 		
@@ -133,7 +132,7 @@ func _on_restart_button_button_up() -> void:
 	
 	var game_nodes := get_tree().get_nodes_in_group("game")
 	
-	for game in game_nodes:		
+	for game in game_nodes:
 		game.queue_free()
 	
 	var main_scene = get_tree().get_first_node_in_group("main")
@@ -142,19 +141,3 @@ func _on_restart_button_button_up() -> void:
 	main_scene.add_child(new_game)
 	
 	start_game()
-
-func update_menu_pos():
-	var resolution = get_viewport_rect().size
-	if $CanvasLayer/start.visible:
-		$CanvasLayer/start.position = Vector2(resolution.x/2,resolution.y/2)
-	if $CanvasLayer/controls.visible:
-		set_hud_pos(resolution)
-	if $CanvasLayer/end.visible:
-		set_end_pos(resolution)
-
-func set_hud_pos(resolution):
-	pass
-
-func set_end_pos(resolution):
-	pass
-
