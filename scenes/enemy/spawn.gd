@@ -6,7 +6,7 @@ extends Node2D
 
 var score : int
 var base_wait_time : float
-var enemy_level: float = 1
+var enemy_level: float = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -49,7 +49,7 @@ func new_game():
 
 func _on_enemy_timer_timeout() -> void:	
 	self.level += 1
-	enemy_level = log(self.level)/log(10)+1
+	enemy_level = 1+self.level/100
 	
 	for i in range(enemy_level):
 		spawn_enemy()
@@ -76,7 +76,7 @@ func spawn_enemy() -> void:
 	# var min_speed = 100.0
 	# var max_speed = max(1000, 100*enemy_level)
 	var min_speed = 10
-	var max_speed = 100
+	var max_speed = 100+self.enemy_level
 	var velocity = Vector2(randf_range(min_speed, max_speed), 0.0)
 	enemy.linear_velocity = velocity.rotated(direction)
 	
