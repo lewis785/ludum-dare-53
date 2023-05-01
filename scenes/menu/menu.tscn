@@ -31,6 +31,7 @@ process_mode = 3
 script = ExtResource("1_sm4jw")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="start" type="Node2D" parent="CanvasLayer"]
 position = Vector2(600, 300)
@@ -155,6 +156,9 @@ use_parent_material = true
 color = Color(0.894118, 0.470588, 0.388235, 1)
 
 [node name="process_continue_timer" type="Timer" parent="CanvasLayer/end"]
+process_mode = 3
+wait_time = 2.0
+one_shot = true
 
 [node name="Node2D" type="Node2D" parent="CanvasLayer/end" node_paths=PackedStringArray("score_label")]
 script = ExtResource("4_ylrl8")
@@ -174,3 +178,4 @@ label_settings = SubResource("LabelSettings_2ooo7")
 [connection signal="button_down" from="CanvasLayer/controls/pause_button" to="." method="_on_pause_button_button_down"]
 [connection signal="button_down" from="CanvasLayer/controls/skip_button" to="." method="_on_skip_button_button_down"]
 [connection signal="button_up" from="CanvasLayer/end/restart_button" to="." method="_on_restart_button_button_up"]
+[connection signal="timeout" from="CanvasLayer/end/process_continue_timer" to="." method="_on_process_continue_timer_timeout"]
