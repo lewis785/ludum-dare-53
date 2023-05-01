@@ -166,11 +166,7 @@ func remove_obstacle(obstacle: Obstacle):
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	print(body.name)
-	pass # Replace with function body.
-
 
 func _on_area_2d_body_entered(body):
-	print("Body entered", body.name)
 	if body.name.contains('SupplyTruck'):
 		queue_free()
-	pass # Replace with function body.
