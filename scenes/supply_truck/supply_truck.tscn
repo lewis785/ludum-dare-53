@@ -155,11 +155,14 @@ supplies = 20
 
 [node name="TruckSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(0, -4)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_pqpcf")
 animation = &"truck-empty-moving"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3.5)
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_kjapd")
 one_way_collision = true
 

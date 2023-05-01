@@ -7,8 +7,8 @@ enum structure_state{
 	tower_bad
 	}
 
-@export var health: int = 100
-@export var owned: bool = true
+#@export var health: int = 100
+#@export var owned: bool = true
 @export var tick_threshold: float = 1
 @export var label: Label
 @export var is_tower: bool
@@ -72,7 +72,7 @@ func _init():
 	pass
 	
 func init_progress_bars():
-	_health_bar = $health	
+	_health_bar = $health
 	_supply_bar = $supply
 
 func set_tower():
@@ -91,18 +91,16 @@ func _process(delta):
 	pass
 
 func can_take_damage():
-	return owned
+	return $entity.active
 
 func can_attack(enemy):
 	return is_tower and enemy_store.enemy_in_range_exists(enemy) and can_fire
 
 func subtract_damage_from_health(damage):
-	health -= damage
-	if health <= 0:
-		update_ownership(false)
-
-func update_health_label(new_health):
-	_health_bar.set_percentage(new_health)
+	var active_before = $entity.active
+	$entity.take_damage(damage)
+	if !$entity.active and active_before:
+		emit_update_ownership()
 
 func reset_tick():
 	time_til_tick = 0
@@ -114,13 +112,12 @@ func reset_fire():
 
 func state_manager():
 	handle_death()
-	if health <= 0:
-		update_health_label(0)
+	if !$entity.active:
 		return
 	if tick:
 		if can_take_damage():
 			process_all_enemies_damage()
-			update_health_label(health)
+			#update_health_label(health)
 		reset_tick()
 		
 	for enemy in enemy_store.enemies_in_range:
@@ -135,21 +132,22 @@ func process_all_enemies_damage():
 			subtract_damage_from_health(damage)
 
 func handle_death():
-	if is_tower and health <= 0:
+	var alive = $entity.active
+	if is_tower and !alive:
 		_animated_sprite.frame = structure_state.tower_bad
 		update_ownership(false)
-	if !is_tower and health <= 0:
+	if !is_tower and !alive:
 		_animated_sprite.frame = structure_state.town_bad
 		update_ownership(false)
-	if !is_tower and health >= 1:
+	if !is_tower and alive:
 		_animated_sprite.frame = structure_state.town_good
 		update_ownership(true)
-	if is_tower and health >= 1:
+	if is_tower and alive:
 		_animated_sprite.frame = structure_state.tower_good
 		update_ownership(true)
-	if owned:
+	if $entity.active:
 		$Alert.hide()
-	if !owned:
+	if !$entity.active:
 		$Alert.show()
 		
 
@@ -160,7 +158,7 @@ func subtract_damage_from_enemies(body):
 		
 	var enemy = get_enemy_entity(body)
 	enemy.take_damage(structure_damage)
-	if !enemy.alive:
+	if !enemy.active:
 		enemy_store.add_enemy_to_remove(enemy)
 
 func consume_supplies(amount):
@@ -204,15 +202,13 @@ func unload_truck(truck: SupplyTruck):
 	_asp.play()
 
 func heal(heal):
-	var temp_health = health
-	temp_health += heal
-	if temp_health >= 100:
-		health = 100
-		return
-	health = temp_health
+	$entity.heal(heal)
+	
+func set_health(value):
+	$entity.set_health(value)
 	
 func popup_vis(delta, add=0):
-	if owned and !is_tower:
+	if $entity.active and !is_tower:
 		var tmp_colour = $Score.get_modulate()
 		tmp_colour.a -= delta
 		if tmp_colour.a <= 0:
@@ -222,11 +218,13 @@ func popup_vis(delta, add=0):
 		$Score.set_modulate(tmp_colour)
 
 func update_ownership(value : bool) -> void:
-	if owned != value:
-		owned = value
-		$entity.active = value
+	if $entity.active != value:
+		$entity.set_active(value)
 		if signal_bus:
-			signal_bus.emit_signal('update_ownership', is_tower, value)
+			emit_update_ownership()
+			
+func emit_update_ownership():
+	signal_bus.emit_signal('update_ownership', is_tower, $entity.active)
 
 	
 func popup_score(score_value):
@@ -270,6 +268,7 @@ func _on_structure_area_2d_input_event(viewport: Node, event: InputEvent, shape_
 
 
 func _on_structure_area_2d_mouse_entered():
+	_border.play()
 	_border.show()
 	pass # Replace with function body.
 

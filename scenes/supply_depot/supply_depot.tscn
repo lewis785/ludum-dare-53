@@ -85,7 +85,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2igs"]
-size = Vector2(57.5539, 32.459)
+size = Vector2(96.7769, 55.2295)
 
 [node name="supply_depot" type="Area2D" groups=["depots"]]
 script = ExtResource("1_8fqxo")
@@ -95,26 +95,27 @@ health = 100
 max_health = 100
 
 [node name="DepotSprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(-2, -42)
-scale = Vector2(5, 5)
+position = Vector2(0, -72)
+scale = Vector2(8.375, 8.375)
 sprite_frames = SubResource("SpriteFrames_u2thd")
 animation = &"depot-healthy"
 
 [node name="truck_coordinator" parent="." instance=ExtResource("2_gcobm")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.446152, 0.541)
+position = Vector2(4.22305, 0.7705)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_t2igs")
 
 [node name="HealthBar" parent="." instance=ExtResource("5_qdkt8")]
 offset_left = -61.0
-offset_top = -135.0
+offset_top = -177.0
 offset_right = -61.0
-offset_bottom = -135.0
+offset_bottom = -177.0
 label = "Health"
 percentage = 100
 colour = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_shape_entered" from="." to="truck_coordinator" method="_on_supply_depot_body_shape_entered"]
 [connection signal="health_update" from="entity" to="HealthBar" method="_on_entity_health_update"]

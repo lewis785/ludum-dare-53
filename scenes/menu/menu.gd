@@ -46,7 +46,7 @@ func is_game_over() -> bool:
 	var entities = get_tree().get_nodes_in_group("ally")
 	
 	for entity in entities:
-		if entity.alive and entity.active:
+		if entity.active:
 			
 			return false
 

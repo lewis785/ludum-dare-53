@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://euned6naim70"]
+[gd_scene load_steps=12 format=3 uid="uid://euned6naim70"]
 
 [ext_resource type="Script" path="res://scenes/menu/menu.gd" id="1_sm4jw"]
 [ext_resource type="PackedScene" uid="uid://du2mrpacolk4i" path="res://scenes/score/score_display.tscn" id="2_gqeni"]
 [ext_resource type="FontFile" uid="uid://d0nym5e6k1aje" path="res://fonts/dreadringer.ttf" id="3_73n7m"]
 [ext_resource type="PackedScene" uid="uid://b6nm85tfqs3lg" path="res://scenes/supply_truck/truck_indicator.tscn" id="3_iqm5e"]
+[ext_resource type="Texture2D" uid="uid://d03lqn28fm5bv" path="res://assets/GameTitle.png" id="3_m4vf8"]
 [ext_resource type="Script" path="res://scenes/score/score.gd" id="4_ylrl8"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_shmol"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2qd1q"]
 font = ExtResource("3_73n7m")
@@ -25,7 +28,6 @@ font_size = 70
 
 [node name="menu" type="Node2D"]
 process_mode = 3
-rotation = -0.0144437
 script = ExtResource("1_sm4jw")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -33,11 +35,18 @@ script = ExtResource("1_sm4jw")
 [node name="start" type="Node2D" parent="CanvasLayer"]
 position = Vector2(600, 300)
 
+[node name="bg" type="Sprite2D" parent="CanvasLayer/start"]
+modulate = Color(0.0980392, 0.0980392, 0.0980392, 0.466667)
+position = Vector2(0, 0.499998)
+scale = Vector2(1204, 605)
+texture = SubResource("CanvasTexture_shmol")
+
 [node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/start"]
 position = Vector2(-600, -300)
 color = Color(1, 1, 0.686275, 1)
 
 [node name="title" type="Label" parent="CanvasLayer/start"]
+visible = false
 texture_filter = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -63,18 +72,23 @@ offset_bottom = 152.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_73n7m")
-theme_override_font_sizes/font_size = 200
+theme_override_font_sizes/font_size = 120
 text = "start"
 
 [node name="controls" type="Label" parent="CanvasLayer/start"]
 custom_minimum_size = Vector2(400, 200)
-offset_left = -504.0
-offset_top = -43.0
-offset_right = -104.0
-offset_bottom = 157.0
+offset_left = -492.0
+offset_top = 6.0
+offset_right = -92.0
+offset_bottom = 206.0
 text = "wasd - move
 qe - zoom"
 label_settings = SubResource("LabelSettings_p1axt")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/start"]
+position = Vector2(19, -155)
+scale = Vector2(1.875, 1.875)
+texture = ExtResource("3_m4vf8")
 
 [node name="controls" type="Node2D" parent="CanvasLayer"]
 
