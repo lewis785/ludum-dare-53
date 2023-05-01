@@ -8,6 +8,7 @@ class_name Entity extends Node2D
 @export var priority_weight : int = 1
 
 signal health_update
+signal owned_updated(is_owned: bool)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,12 +29,16 @@ func _process(delta: float) -> void:
 	pass
 
 func set_active(value: bool) -> void:
+	if value == active:
+		return
+		
 	if value:
 		active = true
 	else:
 		active = false
 		health = 0
 	notify_health(health)
+	owned_updated.emit(value)
 
 func take_damage(attack : int) -> void:
 	set_health(max(0, health - attack))
@@ -64,7 +69,7 @@ func heal(healing : int) -> void:
 	
 func set_health(value : int) -> void:
 	health = max(0, min(value, max_health))
-	active = health > 0
+	set_active(health > 0)
 	notify_health(health)
 	
 func init_health(value : int) -> void:
