@@ -52,7 +52,7 @@ func _process(_delta):
 	time_since_target_check += _delta
 	time_since_attack += _delta
 	
-	if !$entity.alive:
+	if !$entity.active:
 		queue_free()
 		return
 	
@@ -106,7 +106,7 @@ func determine_speed() -> float:
 	var target_speed = min(distance, self.base_speed)
 	var speed = min(target_speed, current_speed+100)
 	
-	if target.get_parent().health <= 0:
+	if !target.active:
 		speed = min(current_speed*2, self.base_speed)
 	
 	return speed
@@ -166,11 +166,7 @@ func remove_obstacle(obstacle: Obstacle):
 
 func _on_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	print(body.name)
-	pass # Replace with function body.
-
 
 func _on_area_2d_body_entered(body):
-	print("Body entered", body.name)
 	if body.name.contains('SupplyTruck'):
 		queue_free()
-	pass # Replace with function body.
