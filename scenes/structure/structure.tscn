@@ -156,12 +156,9 @@ sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame_progress = 0.245583
 
 [node name="Borders" type="AnimatedSprite2D" parent="StructureArea2D"]
-modulate = Color(1, 0.768627, 0, 0.737255)
 position = Vector2(11, 6.5)
 scale = Vector2(1.5, 1.10526)
 sprite_frames = SubResource("SpriteFrames_ukjnt")
-frame = 6
-frame_progress = 0.719347
 
 [node name="RangeArea2D" type="Area2D" parent="."]
 
@@ -222,6 +219,7 @@ theme_override_font_sizes/font_size = 60
 text = "+5"
 
 [connection signal="health_update" from="entity" to="health" method="_on_entity_health_update"]
+[connection signal="owned_updated" from="entity" to="." method="_on_entity_owned_updated"]
 [connection signal="body_entered" from="StructureArea2D" to="." method="_on_structure_area_2d_body_entered"]
 [connection signal="body_exited" from="StructureArea2D" to="." method="_on_structure_area_2d_body_exited"]
 [connection signal="input_event" from="StructureArea2D" to="." method="_on_structure_area_2d_input_event"]

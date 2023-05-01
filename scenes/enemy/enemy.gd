@@ -94,8 +94,7 @@ func move_to_target(targets) -> void:
 	if obstacles.size() > 0:
 		vector = adjust_for_obstacles(target, vector)
 	
-	#self.linear_velocity = vector * determine_speed()
-	move_and_collide(vector)
+	self.linear_velocity = vector * determine_speed()
 
 	
 func determine_speed() -> float:

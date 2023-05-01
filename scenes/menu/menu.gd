@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 		
 	if is_game_over():
 		am.stop_audio()
-		pause()
+		Engine.time_scale = 0.5
 		$CanvasLayer/controls.hide()
 		$CanvasLayer/controls/ScoreDisplay/CanvasLayer.hide()
 		$CanvasLayer/end.show()
@@ -111,6 +111,8 @@ func start_game() -> void:
 
 
 func _on_restart_button_button_up() -> void:
+	pause()
+	
 	var game_nodes = get_tree().get_nodes_in_group("game")
 	
 	for game in game_nodes:		

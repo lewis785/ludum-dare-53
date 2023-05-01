@@ -12,7 +12,6 @@ radius = 120.0
 material = SubResource("CanvasItemMaterial_7ebi6")
 position = Vector2(218, 155)
 script = ExtResource("1_v8fc7")
-radius = 80
 metadata/_edit_group_ = true
 
 [node name="Marker2D" type="Marker2D" parent="."]
