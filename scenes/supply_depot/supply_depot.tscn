@@ -87,7 +87,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t2igs"]
 size = Vector2(96.7769, 55.2295)
 
-[node name="supply_depot" type="Area2D" groups=["depots"]]
+[node name="supply_depot" type="Area2D" groups=["depots", "game"]]
 script = ExtResource("1_8fqxo")
 
 [node name="entity" parent="." instance=ExtResource("2_fx2ib")]

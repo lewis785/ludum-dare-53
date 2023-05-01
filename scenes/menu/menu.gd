@@ -45,12 +45,28 @@ func _process(delta: float) -> void:
 func is_game_over() -> bool:
 	var entities = get_tree().get_nodes_in_group("ally")
 	
+	var has_depot : bool
+	var has_town : bool
+	
 	for entity in entities:
-		if entity.active:
+		if !entity.active:
+			continue
 			
+		if entity.get_parent().name.contains("depot"):
+			has_depot = true
+		elif !has_town and is_town(entity):
+			has_town = true
+			
+		if has_depot and has_town:
 			return false
-
+		
 	return true
+	
+func is_town(entity) -> bool:	
+	if !entity.get_parent().is_in_group("structures"):
+		return false
+		
+	return !entity.get_parent().is_tower
 	
 func _on_pause_button_button_down() -> void:
 	if paused:
@@ -58,6 +74,7 @@ func _on_pause_button_button_down() -> void:
 	else:
 		pause()
 	
+
 
 
 func play() -> void:
@@ -112,9 +129,9 @@ func start_game() -> void:
 
 
 func _on_restart_button_button_up() -> void:
-	pause()
+	#pause()
 	
-	var game_nodes = get_tree().get_nodes_in_group("game")
+	var game_nodes := get_tree().get_nodes_in_group("game")
 	
 	for game in game_nodes:		
 		game.queue_free()
