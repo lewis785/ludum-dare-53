@@ -105,8 +105,6 @@ text = "skip"
 metadata/_edit_use_anchors_ = true
 
 [node name="ScoreDisplay" parent="CanvasLayer/controls" instance=ExtResource("2_gqeni")]
-position = Vector2(830, 98)
-rotation = -0.0144437
 
 [node name="end" type="Node2D" parent="CanvasLayer"]
 
@@ -142,11 +140,13 @@ color = Color(0.894118, 0.470588, 0.388235, 1)
 
 [node name="process_continue_timer" type="Timer" parent="CanvasLayer/end"]
 
-[node name="Node2D" type="Node2D" parent="CanvasLayer/end" node_paths=PackedStringArray("score_label")]
+[node name="ScoreDisplay" type="Node2D" parent="CanvasLayer/end" node_paths=PackedStringArray("score_label")]
 script = ExtResource("4_ylrl8")
-score_label = NodePath("score")
+score_label = NodePath("CanvasLayer/score")
 
-[node name="score" type="Label" parent="CanvasLayer/end/Node2D"]
+[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/end/ScoreDisplay"]
+
+[node name="score" type="Label" parent="CanvasLayer/end/ScoreDisplay/CanvasLayer"]
 offset_left = 284.0
 offset_top = 396.0
 offset_right = 611.0
