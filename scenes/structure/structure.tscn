@@ -136,7 +136,7 @@ script = ExtResource("1_lu5co")
 active = false
 health = 200
 max_health = 200
-damage = 20
+damage = 10
 priority_weight = 2
 
 [node name="StructureArea2D" type="Area2D" parent="."]

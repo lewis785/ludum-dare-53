@@ -38,10 +38,10 @@ func set_scale_factor(sf : int) -> void:
 
 func set_level(level) -> void:
 	self.level = level
-	$entity.health = level * 10
-	$entity.damage = level
+	$entity.init_health(level * 10)
+	$entity.damage = level * 2
 	
-	var scaled = Vector2(1,1)*max(1, log(level))
+	var scaled = Vector2(1,1)*max(1, level/10)
 	
 	$Area2D/AnimatedSprite2D.transform = $Area2D/AnimatedSprite2D.transform.scaled(scaled)
 	$Area2D/CollisionShape2D.transform = $Area2D/CollisionShape2D.transform.scaled(scaled)

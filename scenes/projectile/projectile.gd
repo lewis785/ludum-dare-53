@@ -1,6 +1,7 @@
 class_name Projectile extends Area2D
 
 @export var projectile_speed: int = 1000
+@export var projectile_damage: int = 10
 var _animated_sprite
 var _asp : AudioStreamPlayer2D
 
@@ -30,7 +31,17 @@ func destroy():
 
 
 func _on_body_entered(body):
-	signal_bus.emit_signal("do_damage_to_enemy", body)
+	var current_enemy_name = body.name
+	if current_enemy_name.contains('SupplyTruck'):
+		return
+		
+	var enemy = body.find_child("entity")
+	
+	enemy.take_damage(projectile_damage)
+	if !enemy.active:
+		signal_bus.emit_signal("enemy_killed", body)
+		
+	$AnimatedSprite2D.hide()
 	destroy()
 	pass # Replace with function body.
 

@@ -6,7 +6,7 @@ extends Node2D
 
 var score : int
 var base_wait_time : float
-var enemy_level: float = 50
+var enemy_level: float = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -46,10 +46,11 @@ func new_game():
 	
 	$enemy_timer.wait_time = $enemy_timer.wait_time
 	$start_timer.start()
+	spawn_enemy()
 
 func _on_enemy_timer_timeout() -> void:	
 	self.level += 1
-	enemy_level = 1+self.level/100
+	enemy_level = 1+self.level/25
 	
 	for i in range(enemy_level):
 		spawn_enemy()

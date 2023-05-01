@@ -62,7 +62,7 @@ func get_input(delta):
 			clamp(
 				get_zoom() + ((camera_zoom_speed * get_zoom())/10),
 				Vector2(0.5,0.5),
-				Vector2(100,100),
+				Vector2(1000,1000),
 			)
 		)
 	if Input.is_action_pressed("camera_zoom_out") or Input.is_action_just_released("camera_zoom_out"):
@@ -71,7 +71,7 @@ func get_input(delta):
 			clamp(
 				get_zoom() - ((camera_zoom_speed * get_zoom())/10),
 				Vector2(0.5,0.5),
-				Vector2(100,100),
+				Vector2(1000,1000),
 			)
 		)
 	if zoom_change:

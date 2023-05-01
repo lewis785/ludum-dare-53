@@ -43,7 +43,7 @@ func _ready():
 	self.local_name = self.name
 	$ScoreTimer.start()
 	signal_bus = get_node("/root/SignalBus")
-	signal_bus.connect("do_damage_to_enemy", subtract_damage_from_enemies)
+	signal_bus.connect("enemy_killed", _on_sigbus_enemy_killed)
 	
 	_animated_sprite = $StructureArea2D/AnimatedSprite2D
 	_border = $StructureArea2D/Borders
@@ -115,7 +115,6 @@ func state_manager():
 	if tick:
 		if can_take_damage():
 			process_all_enemies_damage()
-			#update_health_label(health)
 		reset_tick()
 		
 	for enemy in enemy_store.enemies_in_range:
@@ -145,15 +144,9 @@ func handle_death():
 		$Alert.show()
 		
 
-func subtract_damage_from_enemies(body):	
-	var current_enemy_name = body.name
-	if current_enemy_name.contains('SupplyTruck'):
-		return
-		
-	var enemy = get_enemy_entity(body)
-	enemy.take_damage(structure_damage)
-	if !enemy.active:
-		enemy_store.add_enemy_to_remove(enemy)
+# move this! 
+func _on_sigbus_enemy_killed(enemy):	
+	enemy_store.add_enemy_to_remove(enemy)
 
 func consume_supplies(amount):
 	$SupplyStore.remove_supply(amount)
@@ -162,6 +155,7 @@ func consume_supplies(amount):
 func fire_turret(enemy):
 	if projectile:
 		var instnaced_projectile = projectile.instantiate()
+		instnaced_projectile.projectile_damage = $entity.damage
 		get_tree().current_scene.add_child(instnaced_projectile)
 		instnaced_projectile.global_position = self.global_position
 		var instnaced_projectile_rotation = self.global_position.direction_to(enemy.global_position).angle()
