@@ -131,15 +131,6 @@ radius = 200.0
 
 [node name="structure" type="Node2D" groups=["game", "structures"]]
 script = ExtResource("1_lu5co")
-tick_threshold = null
-is_tower = null
-structure_damage = null
-supplies_consumption = null
-range = null
-rate_of_fire = null
-parent_name = null
-heal_amount = null
-projectile = null
 
 [node name="entity" parent="." instance=ExtResource("2_f0kq4")]
 active = false
