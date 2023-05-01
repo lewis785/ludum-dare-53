@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bv1oo5bv5o5rs"]
+[gd_scene load_steps=6 format=3 uid="uid://bv1oo5bv5o5rs"]
 
+[ext_resource type="PackedScene" uid="uid://cbd2nrreh7t81" path="res://scenes/projectile/projectile.tscn" id="2_vk1f8"]
 [ext_resource type="PackedScene" uid="uid://dhf8loxej1fdg" path="res://scenes/supply_depot/supply_depot.tscn" id="3_bkg0a"]
 [ext_resource type="PackedScene" uid="uid://cef7nfykxy18e" path="res://scenes/enemy/spawn.tscn" id="4_2hjir"]
 [ext_resource type="PackedScene" uid="uid://df82d8dxjayvh" path="res://scenes/roads/roads.tscn" id="4_av4wr"]
@@ -9,7 +10,15 @@
 
 [node name="turret" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(378, 402)
+tick_threshold = 1.0
 is_tower = true
+structure_damage = 10
+supplies_consumption = 1
+range = 100.0
+rate_of_fire = 0.1
+parent_name = "spawn"
+heal_amount = 20
+projectile = ExtResource("2_vk1f8")
 
 [node name="roads" parent="." instance=ExtResource("4_av4wr")]
 
@@ -21,5 +30,23 @@ supply = 1
 
 [node name="town2" parent="." instance=ExtResource("4_ri4hn")]
 position = Vector2(596, 294)
+tick_threshold = 1.0
+is_tower = false
+structure_damage = 10
+supplies_consumption = 1
+range = 100.0
+rate_of_fire = 0.1
+parent_name = "spawn"
+heal_amount = 20
+projectile = ExtResource("2_vk1f8")
 
 [node name="town" parent="." instance=ExtResource("4_ri4hn")]
+tick_threshold = 1.0
+is_tower = false
+structure_damage = 10
+supplies_consumption = 1
+range = 100.0
+rate_of_fire = 0.1
+parent_name = "spawn"
+heal_amount = 20
+projectile = ExtResource("2_vk1f8")
