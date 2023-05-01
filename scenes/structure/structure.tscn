@@ -165,6 +165,7 @@ sprite_frames = SubResource("SpriteFrames_d1qeo")
 frame_progress = 0.245583
 
 [node name="Borders" type="AnimatedSprite2D" parent="StructureArea2D"]
+modulate = Color(0.643137, 0.615686, 0, 0.643137)
 position = Vector2(11, 6.5)
 scale = Vector2(1.5, 1.10526)
 sprite_frames = SubResource("SpriteFrames_ukjnt")
