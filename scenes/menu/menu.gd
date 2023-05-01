@@ -128,7 +128,7 @@ func start_game() -> void:
 
 
 func _on_restart_button_button_up() -> void:
-	#pause()
+	$CanvasLayer/end/ScoreDisplay/CanvasLayer.hide()
 	
 	var game_nodes := get_tree().get_nodes_in_group("game")
 	

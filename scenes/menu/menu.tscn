@@ -170,6 +170,7 @@ score_label = NodePath("CanvasLayer/score")
 num_only = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/end/ScoreDisplay"]
+visible = false
 
 [node name="score" type="Label" parent="CanvasLayer/end/ScoreDisplay/CanvasLayer"]
 offset_left = 284.0
