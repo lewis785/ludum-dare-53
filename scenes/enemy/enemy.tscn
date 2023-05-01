@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://chfckc0vobg7k" path="res://assets/enemy/Enemy5-Attack2.png" id="3_p58el"]
 [ext_resource type="Texture2D" uid="uid://chmvbs2es1ur8" path="res://assets/enemy/Enemy5-Walk1.png" id="4_75nwu"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_38u1j"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_fv7pk"]
 atlas = ExtResource("2_fcb7n")
 region = Rect2(0, 0, 48, 48)
@@ -178,13 +180,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_krpay"]
-radius = 14.0
-height = 34.0
-
 [node name="enemy" type="RigidBody2D"]
-position = Vector2(64, 70)
+collision_layer = 2
+collision_mask = 2
 gravity_scale = 0.0
+can_sleep = false
 script = ExtResource("1_gyipw")
 metadata/_edit_group_ = true
 
@@ -193,17 +193,26 @@ friendly = false
 max_health = 1
 damage = 1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_38u1j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+z_index = 1
 texture_filter = 1
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_jw21e")
 animation = &"attack1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-light_mask = 0
-shape = SubResource("CapsuleShape2D_krpay")
-debug_color = Color(0, 0.6, 0.701961, 0.054902)
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
+z_index = 1
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_38u1j")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

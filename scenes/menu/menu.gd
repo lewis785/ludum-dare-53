@@ -8,6 +8,7 @@ var audio = preload("res://scenes/audio/audio.tscn")
 #const audio_manager = preload("res://scenes/audio/audio.gd")
 
 var am : AudioManager
+var score
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -35,7 +36,6 @@ func _process(delta: float) -> void:
 		pause()
 		$CanvasLayer/controls.hide()
 		$CanvasLayer/end.show()
-
 
 func is_game_over() -> bool:
 	var entities = get_tree().get_nodes_in_group("ally")
